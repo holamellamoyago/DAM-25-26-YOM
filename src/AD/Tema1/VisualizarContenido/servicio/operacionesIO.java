@@ -25,7 +25,7 @@ public class operacionesIO {
 
         for (int i = 0; i < archivos.length; i++) {
             if (archivos[i].isDirectory()) {
-                filtrarPorExtension(archivos[i].getAbsolutePath(), extension);
+                filtrarPorExtension(archivos[i].getAbsolutePath(), extension); 
                 
             }
         }
