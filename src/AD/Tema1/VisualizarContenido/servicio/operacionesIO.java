@@ -15,32 +15,32 @@ import AD.Tema1.VisualizarContenido.excepciones.fileExceptions;
 
 public class operacionesIO {
 
-    public static File[] filtrarPorExtensionYOrdenar(String ruta, String extension, boolean descendente){
-        File directorio = new File(ruta);
-        FilenameFilter filter = (dir, name) -> name.endsWith(extension);
-        File[] archivos = directorio.listFiles();
-
-        List<File> archivosFiltrados = new ArrayList<>();
-        // File[] archivosfiltrados = new File[0];
-
-        for (int i = 0; i < archivos.length; i++) {
-            if (archivos[i].isDirectory()) {
-                filtrarPorExtension(archivos[i].getAbsolutePath(), extension); 
-                
-            }
-        }
-
+    public static void main(String[] args) {
+        // recorrerRecursivo("src/");
+        System.out.println(filtrarPorExtensionYOrdenar("src/", ".java", false));
     }
 
+    public static File[] filtrarPorExtensionYOrdenar(String ruta, String
+    extension, boolean descendente){
+        File[] archivos = filtrarPorExtension(ruta, extension);
+        List<File> archivosOrdenados = new ArrayList<>(List.of(archivos));
+        
+        if (descendente) {
+            archivosOrdenados.sort((o1, o2) -> o1.compareTo(o2));
+        }
 
+        System.out.println(archivosOrdenados);
 
+        return archivosOrdenados.toArray(new File[0]);
+
+    }
 
     public static File[] filtrarPorExtension(String ruta, String ext) {
         File directorio = new File(ruta);
 
-        FilenameFilter filter = (dir, name) -> name.endsWith(".txt");
+        FilenameFilter filter = (dir, name) -> name.endsWith(ext);
         File[] archivos = directorio.listFiles(filter);
- 
+
         for (File file : archivos) {
             System.out.println(mostrarInformacion(file));
         }
