@@ -1,7 +1,8 @@
 package PSP.Tema1.Ejercicio2;
 
 public class Contador {
-    int contador;
+    private int contador;
+    
 
     public Contador(int contaodr) {
         this.contador = contaodr;

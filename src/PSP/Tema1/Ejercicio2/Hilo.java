@@ -1,7 +1,7 @@
 package PSP.Tema1.Ejercicio2;
 
 public class Hilo extends Thread {
-    Contador contador;
+    private Contador contador;
 
     public Hilo(Contador contador) {
         this.contador = contador;

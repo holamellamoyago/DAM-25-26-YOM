@@ -6,11 +6,18 @@ public class Ejercicio2 {
         Contador contador = new Contador(0);
         final int NUM_HILOS = 2;
 
+        Hilo h = null;
+        Hilo[] hilos = new Hilo[NUM_HILOS];
+
         for (int i = 0; i < NUM_HILOS; i++) {
-            Hilo h = new Hilo(contador);
+            h = new Hilo(contador);
             h.start();
+            hilos[i] = h;
+        }
+
+        for (Hilo hilo : hilos) {
             try {
-                h.join();
+                hilo.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
