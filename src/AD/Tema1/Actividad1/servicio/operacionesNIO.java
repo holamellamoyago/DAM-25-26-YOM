@@ -1,12 +1,16 @@
-package AD.Tema1.VisualizarContenido.servicio;
+package AD.Tema1.Actividad1.servicio;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,35 +34,108 @@ public class operacionesNIO {
         // recorrerRecursivofuncional("src");
         // filtrarPorExtensionFuncional("src/", ".txt");
         // filtrarPorSubcadena("src/", "xt");
-        filtrarPorExtensionYOrdenar("src/", ".txt");
+        // filtrarPorExtensionYOrdenar("src/", ".java");
 
         // filtrarPorExtensionRecursivoFuncional(".", ".txt");
+
+        // copiarArchivo("src/text.txt", "src/text33.txt");
+
+        copiarDirectorio("src", "src/pruebas");
+    }
+
+    private static void copiarDirectorio(String origen, String destino) {
+        Path carpetaOrigen = Paths.get(origen);
+        Path carpetaDestino = Paths.get(destino);
+        try (Stream<Path> stream = Files.walk(carpetaOrigen)) {
+
+            stream.filter(t -> Files.isRegularFile(t))
+                    .forEach(t -> {
+                        Path relative = carpetaOrigen.relativize(t);
+                        Path target = carpetaDestino.resolve(relative);
+
+                        try {
+                            Files.createDirectories(target.getParent());
+
+                            copiarArchivo(t.toString(), target.toString());
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    });
+
+             // stream.forEach(t -> {
+            // System.out.println(t.toAbsolutePath().toString());
+            // copiarArchivo(t.toAbsolutePath().toString(), destino);
+            // });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void moverArchivo(String origen, String destino) {
+        Path archivoOrigen = Paths.get(origen);
+        copiarArchivo(origen, destino);
+
+        try {
+            Files.deleteIfExists(archivoOrigen);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void copiarArchivo(String origen, String destino) {
-        Path archivo = Paths.get(origen);
+        Path archivoOrigen = Paths.get(origen);
+        Path archivoDestino = Paths.get(destino);
 
-        if (Files.isDirectory(archivo)) {
-            throw new ArithmeticException("aa");
+        try {
+            Files.copy(archivoOrigen, archivoDestino, StandardCopyOption.REPLACE_EXISTING);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        ;
-
     }
 
-    public static void filtrarPorExtensionYOrdenar(String ruta, String ext) {
+    public static List<Path> filtrarPorSubcadena(String ruta, String subcadena) {
         Path dir = Paths.get(ruta);
+        ArrayList<Path> totalPaths = new ArrayList<>();
 
-        try (Stream<Path> stream = Files.list(dir)) {
+        try (Stream<Path> stream = Files.walk(dir)) {
+
+            stream.forEach(t -> {
+                if (t.getFileName().toString().contains(subcadena)) {
+                    totalPaths.add(t);
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(totalPaths);
+        return totalPaths;
+    }
+
+    public static ArrayList<Path> filtrarPorExtensionYOrdenar(String ruta, String ext) {
+        Path dir = Paths.get(ruta);
+        ArrayList<Path> lista = new ArrayList<>();
+
+        try (Stream<Path> stream = Files.walk(dir)) {
 
             Stream<Path> filtrados = stream.filter(t -> t.getFileName().toString().endsWith(ext));
             filtrados.forEach(t -> {
-                System.out.println(t.getFileName());
+                lista.add(t);
             });
 
+            lista.sort((o1, o2) -> o1.getFileName().compareTo(o2.getFileName()));
+
+            System.out.println(lista);
 
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
+        return lista;
 
         // El segundo parámetro de DirectoryStream es de comodines
         // try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*" + ext))
@@ -83,26 +160,6 @@ public class operacionesNIO {
         // e.printStackTrace();
         // }
 
-    }
-
-    public static List<Path> filtrarPorSubcadena(String ruta, String subcadena) {
-        Path dir = Paths.get(ruta);
-        ArrayList<Path> totalPaths = new ArrayList<>();
-
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
-
-            stream.forEach(t -> {
-                if (t.getFileName().toString().contains(subcadena)) {
-                    totalPaths.add(t);
-                }
-            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(totalPaths);
-        return totalPaths;
     }
 
     public static void filtrarPorExtensionFuncional(String ruta, String ext) {

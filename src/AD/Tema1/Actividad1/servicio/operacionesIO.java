@@ -1,4 +1,4 @@
-package AD.Tema1.VisualizarContenido.servicio;
+package AD.Tema1.Actividad1.servicio;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -10,8 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import AD.Tema1.VisualizarContenido.excepciones.fileExceptions;
 
 public class operacionesIO {
 

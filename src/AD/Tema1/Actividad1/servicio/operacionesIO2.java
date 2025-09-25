@@ -1,4 +1,4 @@
-package AD.Tema1.VisualizarContenido.servicio;
+package AD.Tema1.Actividad1.servicio;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,8 +6,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-
-import AD.Tema1.VisualizarContenido.excepciones.fileExceptions;
 
 public class operacionesIO2 {
     public static void main(String[] args) {
