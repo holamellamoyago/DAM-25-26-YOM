@@ -10,7 +10,6 @@ public class App {
     public static void main(String[] args) {
         for (int i = 0; i < CENSO; i++) {
 
-            Votante v = new Votante();
             v.start();
 
         }
