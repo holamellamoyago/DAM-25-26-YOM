@@ -1,4 +1,4 @@
-package AD.Tema1.Actividad2;
+package AD.Tema1.Ejercicio3;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,21 +8,21 @@ import java.io.IOException;
 public class escribirTexto extends Archivo {
     BufferedWriter writter;
 
-    public escribirTexto(File ruta) {
+    public escribirTexto(String ruta) {
         super(ruta);
     }
 
     @Override
-    public void abrirArchivo(String archivo) {
+    public void abrirArchivo() {
         try {
-            writter = new BufferedWriter(new FileWriter(archivo));
+            writter = new BufferedWriter(new FileWriter(super.ruta));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void cerrarArchivo(String archivo) {
+    public void cerrarArchivo() {
         try {
             writter.close();
 
