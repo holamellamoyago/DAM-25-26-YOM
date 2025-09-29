@@ -1,37 +1,37 @@
-package AD.Tema1.Actividad2;
+package AD.Tema1.Actividad2B;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class escribirTexto extends Archivo {
+public class escribirTexto extends Archivo{
     BufferedWriter writter;
 
-    public escribirTexto(File ruta) {
+    public escribirTexto(String ruta) {
         super(ruta);
     }
 
     @Override
-    public void abrirArchivo(String archivo) {
+    void abrirFichero()  {
         try {
-            writter = new BufferedWriter(new FileWriter(archivo));
+            writter = new BufferedWriter(new FileWriter(fichero))    ;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void cerrarArchivo(String archivo) {
+    void cerrarFichero() {
         try {
             writter.close();
-
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void escribirLinea(String linea) throws IOException {
-        writter.append(linea);
-    }
+    
 }

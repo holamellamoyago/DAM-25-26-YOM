@@ -1,17 +1,17 @@
-package AD.Tema1.Actividad2;
+package AD.Tema1.Ejercicio3;
 
 import java.io.File;
 
 public abstract class Archivo {
-     File ruta;
+    File ruta;
 
-    public Archivo(File ruta) {
-        this.ruta = ruta;
+    public Archivo(String ruta) {
+        this.ruta = new File(ruta);
     }
 
-    public abstract void abrirArchivo (String archivo);
+    public abstract void abrirArchivo ();
 
-    public abstract void cerrarArchivo (String archivo);
+    public abstract void cerrarArchivo ();
 
     public boolean existe(){
         return ruta.exists();
