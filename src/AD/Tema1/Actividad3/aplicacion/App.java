@@ -24,8 +24,8 @@ public class App {
 
     }
 
-    private void guardarCorredor(Corredor corredor){
-        
+    private void guardarCorredor(Corredor corredor) {
+
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(nombreArchivo));
             DataOutputStream fout = new DataOutputStream(out);
