@@ -23,7 +23,7 @@ public class Ejercicio1 {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            BufferedReader in = new BufferedReader(file);
+            // BufferedReader in = new BufferedReader(file);
         }
     }
 }
