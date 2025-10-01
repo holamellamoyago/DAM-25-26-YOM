@@ -8,6 +8,7 @@ public class Votante extends Thread {
     @Override
     public void run() {
         Partido partido = Votacion.partidos.get(rdm.nextInt(Votacion.NUM_PARTIDOS));
+
         partido.sumarVoto();
     }
 }
