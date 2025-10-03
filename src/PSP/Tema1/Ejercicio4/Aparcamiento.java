@@ -9,15 +9,17 @@ import java.util.ArrayList;
  * 
  */
 
-
 public class Aparcamiento {
     final static int NUM_PLAZAS = 3;
     static Conductor[] conductores = new Conductor[10];
     static Plaza[] plazas = new Plaza[NUM_PLAZAS];
+    static Object objeto = new Object();
 
     public static void main(String[] args) throws InterruptedException {
 
         iniciarPlazasAparcamiento();
+
+        objeto.wait();
 
         for (int i = 0; i < conductores.length; i++) {
             conductores[i] = new Conductor(i);
@@ -30,12 +32,10 @@ public class Aparcamiento {
         }
     }
 
-    private static void iniciarPlazasAparcamiento(){
+    private static void iniciarPlazasAparcamiento() {
         for (int i = 0; i < plazas.length; i++) {
             plazas[i] = new Plaza(i);
         }
     }
 
-    
-    
 }

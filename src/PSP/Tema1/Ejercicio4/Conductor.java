@@ -42,7 +42,8 @@ public class Conductor extends Thread {
                         return plaza;
                     }
                 }
-
+                
+                // Si recorre todo el parking y no hay plazas disponbiles espera en la puerta
                 if (!plazaEncontrada) {
                     Aparcamiento.class.wait();
                 }
@@ -57,9 +58,14 @@ public class Conductor extends Thread {
     // ¿Debe de ser sincronizado? Salir solo va a querer salir a la vez este
     // conductor , no ?
     private void salirPlaza() {
+
+        // Esto para todos los hilos que no sean conductor? 
+        
         synchronized (Aparcamiento.class){
             plazaOcupada.setDisponible(true);
             System.out.println("El conductor " + numconductor + " libero la plaza " + plazaOcupada.getNumeroPlaza());
+
+            // Avisa al siguiente hilo para que coja la plaza
             Aparcamiento.class.notify();
         }
 
