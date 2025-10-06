@@ -1,9 +1,6 @@
-package AD.Tema1.Actividad3.aplicacion;
+package AD.Tema1.Actividad3Corregido.aplicacion;
 
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +8,11 @@ import java.util.List;
 import AD.Tema1.Actividad3.dominio.Corredor;
 import AD.Tema1.Actividad3.dominio.Fondista;
 import AD.Tema1.Actividad3.dominio.Velocista;
-import AD.Tema1.Actividad3.persistencia.EscribirCorredores;
-import AD.Tema1.Actividad3.persistencia.LeerCorredores;
+import AD.Tema1.Actividad3Corregido.persistencia.CorredorWrite;
 
 public class App {
-    private static String nombreArchivo = "Corredores.dat";
-
     public static void main(String[] args) {
-        Corredor corredor1 = new Velocista("Juan Pérez", LocalDate.of(2000, 5, 12), 1, 10.34f);
+                Corredor corredor1 = new Velocista("Juan Pérez", LocalDate.of(2000, 5, 12), 1, 10.34f);
         Corredor corredor2 = new Fondista("Ana Gómez", LocalDate.of(1995, 3, 22), 2, 42.195f);
         Corredor corredor3 = new Velocista("Carlos Ruiz", LocalDate.of(2002, 11, 30), 3, 9.75f);
         Corredor corredor4 = new Fondista("María López", LocalDate.of(2000, 7, 15), 1, 21.097f);
@@ -27,10 +21,8 @@ public class App {
 
         ArrayList<Corredor> corredores = new ArrayList<>(List.of(corredor1, corredor2, corredor3));
 
-        EscribirCorredores.anhadirCorredores(corredores);
+        CorredorWrite writer = new CorredorWrite(new File("CorredoresCorregido.dat"));
 
-        System.out.println(LeerCorredores.leerCorredores());
-
+        
     }
-
 }
