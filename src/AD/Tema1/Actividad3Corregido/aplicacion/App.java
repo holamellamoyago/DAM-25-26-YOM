@@ -12,7 +12,7 @@ import AD.Tema1.Actividad3Corregido.persistencia.CorredorWrite;
 
 public class App {
     public static void main(String[] args) {
-                Corredor corredor1 = new Velocista("Juan Pérez", LocalDate.of(2000, 5, 12), 1, 10.34f);
+        Corredor corredor1 = new Velocista("Juan Pérez", LocalDate.of(2000, 5, 12), 1, 10.34f);
         Corredor corredor2 = new Fondista("Ana Gómez", LocalDate.of(1995, 3, 22), 2, 42.195f);
         Corredor corredor3 = new Velocista("Carlos Ruiz", LocalDate.of(2002, 11, 30), 3, 9.75f);
         Corredor corredor4 = new Fondista("María López", LocalDate.of(2000, 7, 15), 1, 21.097f);
@@ -24,5 +24,6 @@ public class App {
         CorredorWrite writer = new CorredorWrite(new File("CorredoresCorregido.dat"));
 
         
+
     }
 }
