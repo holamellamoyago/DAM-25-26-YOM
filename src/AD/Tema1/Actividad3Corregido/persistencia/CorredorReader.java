@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-import AD.Tema1.Actividad3.dominio.Corredor;
+import AD.Tema1.Actividad3Corregido.*;
+import AD.Tema1.Actividad3Corregido.clases.Corredor;
 
 public class CorredorReader extends Archivo {
 

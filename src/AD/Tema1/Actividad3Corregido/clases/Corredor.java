@@ -30,6 +30,28 @@ public abstract class Corredor implements Serializable {
     }
 
 
+
+    public int getDorsal() {
+        return dorsal;
+    }
+
+
+
+    public void setDorsal(int dorsal) {
+        this.dorsal = dorsal;
+    }
+
+
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    
+
+   
+
+
     
 
     

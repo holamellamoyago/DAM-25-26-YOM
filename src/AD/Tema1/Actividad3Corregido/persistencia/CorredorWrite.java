@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import AD.Tema1.Actividad3.dominio.Corredor;
+import AD.Tema1.Actividad3Corregido.clases.Corredor;
 
 public class CorredorWrite extends Archivo {
     private ObjectOutputStream out;

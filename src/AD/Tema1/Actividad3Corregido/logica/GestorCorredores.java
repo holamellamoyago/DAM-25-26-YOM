@@ -2,9 +2,9 @@ package AD.Tema1.Actividad3Corregido.logica;
 
 import java.io.File;
 
-import AD.Tema1.Actividad3.dominio.Corredor;
-import AD.Tema1.Actividad3.dominio.Fondista;
-import AD.Tema1.Actividad3.dominio.Velocista;
+import AD.Tema1.Actividad3Corregido.clases.Corredor;
+import AD.Tema1.Actividad3Corregido.clases.Fondista;
+import AD.Tema1.Actividad3Corregido.clases.Velocista;
 import AD.Tema1.Actividad3Corregido.persistencia.CorredorReader;
 import AD.Tema1.Actividad3Corregido.persistencia.CorredorWrite;
 
