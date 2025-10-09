@@ -8,7 +8,7 @@ public class App {
             // operacionesIO.recorrerRecursivo("src/");
             operacionesIO.filtrarPorExtension("src/", ".txt");
 
-        } catch (Exception e) {
+        } catch (Exception e) {f
             fileExceptions.noExiste(e.toString());
         }
     }

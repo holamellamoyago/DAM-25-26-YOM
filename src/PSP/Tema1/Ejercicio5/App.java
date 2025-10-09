@@ -1,21 +1,25 @@
 package PSP.Tema1.Ejercicio5;
 
-import java.util.Random;
 
 public class App {
     public static void main(String[] args) {
-        
+        desperatarPersonas();
     }
 
-
-    private void desperatarPersonas(){
-        Random rdm = new Random();
-
-        Empleado e1 = new Empleado("Manolo");
-        Empleado e2 = new Empleado("Pepe");
-        Empleado e3 = new Empleado("faustino");
-        Jefe jefe = new Jefe("Perro Sanxe");
-
+    private static void desperatarPersonas() {
+        Oficina ofi = new Oficina();
         
+        Empleado e1 = new Empleado("Manolo", ofi);
+        Empleado e2 = new Empleado("Pepe", ofi);
+        Empleado e3 = new Empleado("faustino", ofi);
+        Jefe jefe = new Jefe("Perro Sanxe", ofi);
+        Persona[] personas = new Persona[] { e1, e2, e3, jefe };
+        
+        ofi.setPersonas(personas);
+        ofi.ficharEmpleados();
+
+
+
+
     }
 }
