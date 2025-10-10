@@ -48,6 +48,7 @@ public class Oficina {
                 // TODO ¿Da igual el orden del wait con mis funciones?
                 dormirEmpleado(e);
                 wait();
+
             }
 
             despertarEmpleado(e);

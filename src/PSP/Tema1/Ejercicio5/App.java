@@ -15,6 +15,7 @@ public class App {
         Jefe jefe = new Jefe("Perro Sanxe", ofi);
         Persona[] personas = new Persona[] { e1, e2, e3, jefe };
         
+        
         ofi.setPersonas(personas);
         ofi.ficharEmpleados();
 
