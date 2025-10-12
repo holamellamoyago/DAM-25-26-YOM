@@ -14,14 +14,12 @@ import AD.Tema1.Actividad3Corregido.clases.Patrocinador;
 
 public class RandomFile extends Archivo {
 
+    RandomAccessFile rdmFile;
     final int ESPACIO_INDIVIDUAL = 200;
 
-    public RandomFile(File ruta) {
-        super(ruta);
+    public RandomFile(String ruta) {
+        super(new File(ruta));
     }
-
-    String ruta;
-    RandomAccessFile rdmFile = null;
 
     public boolean existeEquipo() {
         return false;
@@ -29,56 +27,96 @@ public class RandomFile extends Archivo {
 
     public boolean guardarEquipo(Equipo e) {
         try {
-            // Si no esta vacio:
+            // Si esta vacio:
             if (rdmFile.length() <= 0) {
                 rdmFile.seek(0);
 
                 // Que no supere los 200 bytes
                 if (calcularTamanhoEquipo(e)) {
-                    // Guarda cada campo 
+                    // Guarda cada campo
                     guardarCamposEquipo(e);
                 }
 
-
-                
             } else {
-                // Calcula la siguiente posicion
-                rdmFile.seek(cogerSiguientePosicion());
+                // Calcula la siguiente posicion, SI LA POSICION ES 2 la 3 empieza en 200
+                rdmFile.seek((cogerUltPosicion()) * ESPACIO_INDIVIDUAL);
+
+                e.setIdEquipo(cogerUltPosicion() + 1);
+                if (calcularTamanhoEquipo(e)) {
+                    // Guarda cada campo
+                    guardarCamposEquipo(e);
+                }
             }
-            
+
         } catch (IOException o) {
             o.printStackTrace();
-            return false;
         }
-        
-        return true;
-        
-    }
 
-    public long cogerSiguientePosicion() throws IOException {
-        return (int) Math.ceil((double) rdmFile.length() / ESPACIO_INDIVIDUAL);
+        return true;
+
     }
 
     private void guardarCamposEquipo(Equipo e) throws IOException {
         rdmFile.writeInt(e.getIdEquipo());
         rdmFile.writeInt(e.getNumPatrocinadores());
+        System.out.println("Los n " + e.getNumPatrocinadores());
         rdmFile.writeUTF(e.getNombre());
         rdmFile.writeBoolean(e.isBorrado());
 
-        // rdmFile.writeUTF(ruta);
+        for (Patrocinador p : e.getPatrocinadores()) {
+            rdmFile.writeUTF(p.getNombre());
+            rdmFile.writeFloat(p.getDonacion());
+            rdmFile.writeUTF(String.valueOf(p.getFechaInicio()));
+        }
     }
 
-    private boolean calcularTamanhoEquipo(Equipo e) throws UnsupportedEncodingException{
+    private Equipo leerCampos() {
+        try {
+            int idEquipo = rdmFile.readInt();
+            int numPatrocinadores = rdmFile.readInt();
+            String nombre = rdmFile.readUTF();
+            boolean borrado = rdmFile.readBoolean();
+
+            if (borrado) {
+                throw new ArithmeticException("El equipo indicado esta borrado");
+            }
+
+            Set<Patrocinador> patrocinadores = new TreeSet<>();
+            for (int i = 0; i < numPatrocinadores; i++) {
+
+                String nombrePAtrocinador = rdmFile.readUTF();
+                Float donacionPatrocinador = rdmFile.readFloat();
+                LocalDate date = LocalDate.parse(rdmFile.readUTF());
+
+                Patrocinador pa = new Patrocinador(nombrePAtrocinador, donacionPatrocinador, date);
+                patrocinadores.add(pa);
+                System.out.println("Se leyó el patrocinador: " + pa);
+
+            }
+
+            Equipo e = new Equipo(nombre, patrocinadores);
+            e.setIdEquipo(idEquipo);
+            e.setNumPatrocinadores(patrocinadores.size());
+            return e;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private boolean calcularTamanhoEquipo(Equipo e) throws UnsupportedEncodingException {
         int total = 0;
         total += e.getIdEquipo();
         total += e.getNumPatrocinadores();
-        total += e.getNombre().getBytes("UTF-8").length +2;
-        
+        total += e.getNombre().getBytes("UTF-8").length + 2;
+
         for (Patrocinador patrocinador : e.getPatrocinadores()) {
 
             total += patrocinador.getDonacion();
-            total += patrocinador.getFechaInicio().toString().getBytes("UTF-8").length +2;
-            total += patrocinador.getNombre().getBytes("UTF-8").length+2;
+            total += patrocinador.getFechaInicio().toString().getBytes("UTF-8").length + 2;
+            total += patrocinador.getNombre().getBytes("UTF-8").length + 2;
         }
 
         if (total > ESPACIO_INDIVIDUAL) {
@@ -92,7 +130,7 @@ public class RandomFile extends Archivo {
     @Override
     public void abrirArchivo() {
         try {
-            rdmFile = new RandomAccessFile(new File(ruta), "rw");
+            rdmFile = new RandomAccessFile(archivo, "rw");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -109,46 +147,37 @@ public class RandomFile extends Archivo {
         }
     }
 
-    // private Equipo() {
-    //     (int) Math.ceil(double) raf.length() / TAMAÑo_REGISTRO
-    // }
+    public Equipo cogerEquipo(int id) {
 
-    public Equipo cogerEquipo(int id) throws IOException{
-        Equipo e;
+        System.out.println("LA id es: " + id);
+        System.out.println("La ult pos " + cogerUltPosicion());
 
         if (id > cogerUltPosicion()) {
+            throw new ArithmeticException("No existe ese equipo");
+        }
+
+        try {
+            int posicionEquipo = id * ESPACIO_INDIVIDUAL;
+            System.out.println("La pos es: " + posicionEquipo);
+
+            rdmFile.seek(posicionEquipo);
+
+            return leerCampos();
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
             return null;
         }
 
-        int posicionEquipo = (int) Math.ceil((double) rdmFile.length() / ESPACIO_INDIVIDUAL);
-        rdmFile.seek(posicionEquipo);
-
-        int id2 = rdmFile.readInt();
-        int numPatrocinadores = rdmFile.readInt();
-        String nombreEquipo = rdmFile.readUTF();
-        boolean borrado = rdmFile.readBoolean();
-
-        if (borrado) {
-            return null;
-        }
-
-        Set<Patrocinador> patrocinadores = new TreeSet<>();
-        for (int i = 0; i < numPatrocinadores; i++) {
-            int donacion = rdmFile.readInt();
-            String fecha = rdmFile.readUTF();
-            String nombrePatrocinador = rdmFile.readUTF();
-
-            LocalDate fechaParseada = LocalDate.parse(fecha);
-            patrocinadores.add(new Patrocinador(nombrePatrocinador, donacion, fechaParseada));
-        }
-
-        e = new Equipo(nombreEquipo, patrocinadores);
-        
-        return e;
     }
 
-    private int cogerUltPosicion() throws IOException{
-        return (int) Math.ceil((double) rdmFile.length() / ESPACIO_INDIVIDUAL);
+    public int cogerUltPosicion() {
+        try {
+            return (int) Math.ceil((double) rdmFile.length() / ESPACIO_INDIVIDUAL);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
 }

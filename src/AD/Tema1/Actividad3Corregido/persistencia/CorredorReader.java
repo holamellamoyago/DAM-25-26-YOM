@@ -20,9 +20,9 @@ public class CorredorReader extends Archivo {
 
     @Override
     public void abrirArchivo() {
-        if (ruta.exists()) {
+        if (archivo.exists()) {
             try {
-                in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(ruta)));
+                in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(archivo)));
             } catch (IOException e) {
                 e.printStackTrace();
             }

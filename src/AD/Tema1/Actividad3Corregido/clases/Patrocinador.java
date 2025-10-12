@@ -2,7 +2,7 @@ package AD.Tema1.Actividad3Corregido.clases;
 
 import java.time.LocalDate;
 
-public class Patrocinador {
+public class Patrocinador implements Comparable<Patrocinador> {
     private String nombre;
     private float donacion;
     private LocalDate fechaInicio;
@@ -60,6 +60,11 @@ public class Patrocinador {
         } else if (!nombre.equals(other.nombre))
             return false;
         return true;
+    }
+
+    @Override
+    public int compareTo(Patrocinador o) {
+        return this.nombre.compareTo(o.nombre);
     }
 
 }

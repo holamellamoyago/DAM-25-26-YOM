@@ -12,6 +12,8 @@ public class Equipo {
     public Equipo(String nombre, Set<Patrocinador> patrocinadores) {
         this.nombre = nombre;
         this.patrocinadores = patrocinadores;
+        this.borrado = false;
+        this.numPatrocinadores = patrocinadores.size();
     }
 
     public int getIdEquipo() {
@@ -78,5 +80,12 @@ public class Equipo {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Equipo " + idEquipo + "(" + nombre + "), numPatrocinadores=" + numPatrocinadores;
+    }
+
+    
 
 }

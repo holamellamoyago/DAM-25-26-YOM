@@ -1,29 +1,39 @@
 package AD.Tema1.Actividad3Corregido.logica;
 
 import java.io.File;
-import java.io.IOException;
 
 import AD.Tema1.Actividad3Corregido.clases.Equipo;
 import AD.Tema1.Actividad3Corregido.persistencia.RandomFile;
 
 public class GestorEquipos {
-    private RandomFile randomFile;
+    RandomFile rdmFile;
 
     public GestorEquipos(String ruta) {
-        this.randomFile = new RandomFile(new File(ruta));
+        this.rdmFile = new RandomFile(ruta);
     }
 
-    public void guardarEquipo(Equipo e) throws IOException {
-        randomFile.abrirArchivo();
+    public void guardarEquipo(Equipo e) {
 
-        e.setIdEquipo(randomFile.cogerIdUltimoEquipo()-1);
+        rdmFile.abrirArchivo();
 
-        randomFile.guardarEquipo(e);
+        // e.setIdEquipo(randomFile.cogerIdUltimoEquipo()-1);
 
+        rdmFile.guardarEquipo(e);
 
-
-        randomFile.cerrarArchivo();
+        rdmFile.cerrarArchivo();
     }
-    
+
+    public Equipo cogerEquipo(int id) {
+        Equipo equipo;
+        rdmFile.abrirArchivo();
+        equipo = rdmFile.cogerEquipo(id);
+        rdmFile.cerrarArchivo();
+
+        return equipo;
+    }
+
+    public void borrarArchivo(){
+        rdmFile.borrarFichero();
+    }
 
 }

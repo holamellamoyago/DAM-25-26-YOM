@@ -17,15 +17,15 @@ public class CorredorWrite extends Archivo {
 
     @Override
     public void abrirArchivo() {
-        boolean appendMode = existe() && ruta.length() > 0;
+        boolean appendMode = existe() && archivo.length() > 0;
 
         try {
             if (appendMode) {
-                out = new AppendObjectOutputStream(new BufferedOutputStream(new FileOutputStream(ruta, appendMode)));
-                System.out.println("Archivo de escritura abierto: " + ruta);
+                out = new AppendObjectOutputStream(new BufferedOutputStream(new FileOutputStream(archivo, appendMode)));
+                System.out.println("Archivo de escritura abierto: " + archivo);
             } else {
-                out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(ruta, appendMode)));
-                System.out.println("Archivo de escritura creado: " + ruta);
+                out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(archivo, appendMode)));
+                System.out.println("Archivo de escritura creado: " + archivo);
             }
 
         } catch (IOException e) {
