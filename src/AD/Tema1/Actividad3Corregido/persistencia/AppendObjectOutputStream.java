@@ -10,9 +10,13 @@ public class AppendObjectOutputStream extends ObjectOutputStream {
         super(out);
     }
 
+    protected AppendObjectOutputStream() throws SecurityException, IOException{
+        super();
+    }
+
     @Override
     protected void writeStreamHeader() throws IOException {
-        super.writeStreamHeader();
+        
     }
 
 }

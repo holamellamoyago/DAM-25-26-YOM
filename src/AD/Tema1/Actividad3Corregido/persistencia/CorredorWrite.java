@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import AD.Tema1.Actividad3Corregido.clases.Corredor;
+import AD.Tema1.Actividad3Corregido.clases.Equipo;
 
 public class CorredorWrite extends Archivo {
     private ObjectOutputStream out;
@@ -41,6 +42,22 @@ public class CorredorWrite extends Archivo {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private boolean verificarEquipoValido(int idEquipo) {
+        RandomFile randomEquipos = new RandomFile("equipos.dat");
+
+        try {
+            randomEquipos.abrirArchivo();
+            Equipo equipo = randomEquipos.cogerEquipo(idEquipo);
+
+            return equipo != null && !equipo.isBorrado();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            randomEquipos.cerrarArchivo();
         }
     }
 

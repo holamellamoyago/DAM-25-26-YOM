@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
 import AD.Tema1.Actividad3Corregido.*;
@@ -22,8 +23,9 @@ public class CorredorReader extends Archivo {
     public void abrirArchivo() {
         if (archivo.exists()) {
             try {
-                in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(archivo)));
+                in = new ObjectInputStream(new FileInputStream(archivo));
             } catch (IOException e) {
+                in = null;
                 e.printStackTrace();
             }
         }
@@ -35,8 +37,11 @@ public class CorredorReader extends Archivo {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return null;
+        } catch (StreamCorruptedException e) {
+            System.err.println("Flujo corrupto, posiblemente debido a problemas de anexión: " + e.getMessage());
+            return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return null;
         }
     }
@@ -56,8 +61,6 @@ public class CorredorReader extends Archivo {
     public int obtenerultDorsal() {
         int ultDorsal = 0;
 
-        abrirArchivo();
-
         if (in == null) {
             return 0;
         }
@@ -65,11 +68,17 @@ public class CorredorReader extends Archivo {
         Corredor c;
 
         try {
+            abrirArchivo();
+            if (in == null) {
+                return 0;
+            }
+            ;
+
             while ((c = leer()) != null) {
                 ultDorsal = c.getDorsal();
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         } finally {
             cerrarArchivo();
         }
@@ -95,7 +104,7 @@ public class CorredorReader extends Archivo {
                 }
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         } finally {
             cerrarArchivo();
         }
@@ -104,6 +113,7 @@ public class CorredorReader extends Archivo {
     }
 
     public ArrayList<Corredor> obtenerTodosCorredores() {
+        abrirArchivo();
         ArrayList<Corredor> corredores = new ArrayList<>();
         if (in == null) {
             return new ArrayList<>();
@@ -114,6 +124,7 @@ public class CorredorReader extends Archivo {
             corredores.add(c);
         }
 
+        cerrarArchivo();
         return corredores;
     }
 

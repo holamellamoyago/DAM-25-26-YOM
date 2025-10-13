@@ -149,7 +149,7 @@ public class RandomFile extends Archivo {
 
     public Equipo cogerEquipo(int id) {
 
-        System.out.println("LA id es: " + id);
+        System.out.println("La id es: " + id);
         System.out.println("La ult pos " + cogerUltPosicion());
 
         if (id > cogerUltPosicion()) {

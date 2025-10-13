@@ -7,11 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import AD.Tema1.Actividad3.dominio.Corredor;
-import AD.Tema1.Actividad3.dominio.Fondista;
-import AD.Tema1.Actividad3.dominio.Velocista;
-import AD.Tema1.Actividad3Corregido.clases.Equipo;
+import AD.Tema1.Actividad3Corregido.clases.Corredor;
+import AD.Tema1.Actividad3Corregido.clases.*;
 import AD.Tema1.Actividad3Corregido.clases.Patrocinador;
+import AD.Tema1.Actividad3Corregido.logica.GestorCorredores;
 import AD.Tema1.Actividad3Corregido.logica.GestorEquipos;
 import AD.Tema1.Actividad3Corregido.persistencia.CorredorWrite;
 
@@ -23,8 +22,6 @@ public class App {
         Corredor corredor4 = new Fondista("María López", LocalDate.of(2000, 7, 15), 1, 21.097f);
         Corredor corredor5 = new Velocista("Pedro García", LocalDate.of(1995, 8, 5), 1, 11.20f);
         Corredor corredor6 = new Fondista("Laura Martínez", LocalDate.of(2002, 9, 10), 4, 35.00f);
-
-        ArrayList<Corredor> corredores = new ArrayList<>(List.of(corredor1, corredor2, corredor3));
 
         CorredorWrite writer = new CorredorWrite(new File("CorredoresCorregido.dat"));
 
@@ -53,12 +50,26 @@ public class App {
         lista5.add(new Patrocinador("Mahou", 17000.0f, LocalDate.of(2023, 11, 5)));
         Equipo equipo5 = new Equipo("Union Atlética", lista5);
 
-        GestorEquipos gestorEquipos = new GestorEquipos("equipos.dat");
-        gestorEquipos.guardarEquipo(equipo1);
-        gestorEquipos.guardarEquipo(equipo2);
+        // Corredores
+        ArrayList<Corredor> corredores = new ArrayList<>(List.of(corredor1, corredor2, corredor3));
+        GestorCorredores gestorCorredores = new GestorCorredores("corredores.dat");
 
-        System.out.println(gestorEquipos.cogerEquipo(0).toString());
-        gestorEquipos.borrarArchivo();
+        for (Corredor corredor : corredores) {
+            gestorCorredores.guardarCorredor(corredor);
+        }
+
+        
+        gestorCorredores.anhadirEquipo(1, equipo5);
+
+        System.out.println(gestorCorredores.getCorredores());
+
+        // Equipos
+        GestorEquipos gestorEquipos = new GestorEquipos("equipos.dat");
+        // gestorEquipos.guardarEquipo(equipo1);
+        // gestorEquipos.guardarEquipo(equipo2);
+
+        // System.out.println(gestorEquipos.cogerEquipo(0).toString());
+        // gestorEquipos.borrarArchivo();
 
     }
 }
