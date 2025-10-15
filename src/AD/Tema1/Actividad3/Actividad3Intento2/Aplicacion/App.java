@@ -50,5 +50,10 @@ public class App {
 
         GestorCorredores gestorCorredores = new GestorCorredores("corredores2.dat");
         gestorCorredores.anhadirCorredor(corredor1);
+        gestorCorredores.anhadirCorredor(corredor2);
+
+        gestorCorredores.mostrarCorredores();
+
+        
     }
 }

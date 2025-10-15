@@ -1,6 +1,7 @@
 package AD.Tema1.Actividad3.Actividad3Intento2.Persistencia;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,13 +17,24 @@ public class CorredoresReader extends Archivo {
         super(ruta);
     }
 
-    public ArrayList<Corredor> listarCorredores() { 
-        ArrayList<Corredor> corredors = new ArrayList<>();
+    public Corredor leerCorredor() {
+        try {
+            return (Corredor) archivo.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            return null;
+        }
+    }
 
-            Corredor corredor = (Corredor) archivo.readObject();
-            corredors.add(corredor);
+    public ArrayList<Corredor> listarcorredores() {
+        ArrayList<Corredor> corredores = new ArrayList<>();
+        Corredor corredor;
 
-            
+        while ((corredor = leerCorredor()) != null) {
+            corredores.add(corredor);
+        }
+
+        return corredores;
+
     }
 
     @Override

@@ -19,4 +19,8 @@ public abstract class Archivo {
 
         return false;
     }
+
+    public boolean eliminarArchivo(){
+        return file.delete();
+    }
 }

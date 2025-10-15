@@ -2,10 +2,11 @@ package AD.Tema1.Actividad3.Actividad3Intento2.Logica;
 
 import AD.Tema1.Actividad3.Actividad3Intento2.Clases.*;
 import AD.Tema1.Actividad3.Actividad3Intento2.Persistencia.CorredorWritter;
+import AD.Tema1.Actividad3.Actividad3Intento2.Persistencia.CorredoresReader;
 import AD.Tema1.Actividad3.Actividad3Intento2.*;
 
 public class GestorCorredores {
-    String ruta ;
+    String ruta;
 
     public GestorCorredores(String ruta) {
         this.ruta = ruta;
@@ -19,4 +20,17 @@ public class GestorCorredores {
 
         writter.cerararchivo();
     }
+
+    public void mostrarCorredores(){
+        CorredoresReader reader = new CorredoresReader(ruta);
+        reader.abrirarchivo();
+
+        System.out.println(reader.listarcorredores());
+
+        reader.cerararchivo();
+    }
+
+    
+
+    
 }

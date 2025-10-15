@@ -13,12 +13,12 @@ public class CorredorWritter extends Archivo {
 
     @Override
     public void abrirarchivo() {
-        boolean existe = file.exists() && file.length() != 0;
+        boolean existe = existe() && file.length()> 0;
         try {
             if (existe) {
-                archivo = new AppendObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+                archivo = new AppendObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file, existe)));
             } else {
-                archivo = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+                archivo = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file, existe)));
             }
         } catch (Exception e) {
             e.printStackTrace();
