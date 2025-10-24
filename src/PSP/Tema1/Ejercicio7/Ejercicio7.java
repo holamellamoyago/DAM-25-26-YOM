@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Ejercicio7 {
-    static final int NUM_EMPLEADOS = 100;
+    static final int NUM_EMPLEADOS = 50;
     static ArrayList<Empleado> empleados = new ArrayList<>();
     static ArrayList<Empleado> empleadosGanados = new ArrayList<>();
     static Resultado resultado = new Resultado();
@@ -58,12 +58,13 @@ public class Ejercicio7 {
 
         for (Empleado empleado : empleadosGanados) {
             System.out.println(empleado);
-            System.out.println("Gano un total de: " + calcularDineroRepartirIndividualmente() * empleado.porra.getCantidadApuestas());
+            System.out.println("Gano un total de: "
+                    + calcularDineroRepartirIndividualmente() * empleado.porra.getCantidadApuestas() + "€");
         }
     }
 
-    private static int calcularDineroRepartirIndividualmente(){
+    private static int calcularDineroRepartirIndividualmente() {
         return totalIngresos / totalApuestasIndividuales;
-        
+
     }
 }

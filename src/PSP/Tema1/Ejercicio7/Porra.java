@@ -8,6 +8,7 @@ public class Porra {
     int golesPRF;
     int cantidadApuestas;
     int dineroApuesta;
+    Apuesta apuesta;
 
     Random rdm = new Random();
 
