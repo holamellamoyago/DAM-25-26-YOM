@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE corredores SYSTEM "CorredoresDTD.dtd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE corredores SYSTEM "corredoresDTD.dtd">
 <corredores>
     <velocista codigo="C01" dorsal="1" equipo="E1">
         <nombre>Lucía Fernández Álvarez</nombre>
@@ -134,20 +134,5 @@
             <puntuacion anio="2023">79.5</puntuacion>
         </historial>
     </fondista>
-    <velocista codigo="C19" dorsal="19" equipo="E3">
-        <nombre>Rubén Molina</nombre>
-        <fecha_nacimiento>2004-03-15</fecha_nacimiento>
-        <velocidad_media>10.6</velocidad_media>
-    </velocista>
-    <fondista codigo="C20" dorsal="20" equipo="E1">
-        <nombre>Clara Varela</nombre>
-        <fecha_nacimiento>1997-11-02</fecha_nacimiento>
-        <distancia_max>9000.0</distancia_max>
-        <historial>
-            <puntuacion anio="2019">76.0</puntuacion>
-            <puntuacion anio="2021">79.4</puntuacion>
-            <puntuacion anio="2022">71.5</puntuacion>
-            <puntuacion anio="2023">73.5</puntuacion>
-        </historial>
-    </fondista>
+    <Fondista/>
 </corredores>

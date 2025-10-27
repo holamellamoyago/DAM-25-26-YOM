@@ -13,14 +13,25 @@ import AD.Tema1.Actividad4.Actividad4.model.Corredor;
 import AD.Tema1.Actividad4.Actividad4.model.Fondista;
 import AD.Tema1.Actividad4.Actividad4.model.Puntuacion;
 import AD.Tema1.Actividad4.Actividad4.model.Velocista;
-import AD.Tema1.Actividad4.model.*;
 
 public class CorredorXML {
     String rutaXML;
-    private Document documentXML ; 
 
-    public void cargarDocumentoDOM(String rutaXML, TipoValidacion validacion) throws ExcepcionXML {
-        this.documentXML = XMLDOMUtils.cargarDocumentoXML(rutaXML, validacion);
+    // Cargar documento
+    public Document cargarDocumentoDOM(String rutaXML, TipoValidacion validacion) throws ExcepcionXML {
+        return XMLDOMUtils.cargarDocumentoXML(rutaXML, validacion);
+    }
+
+    public boolean guardarDocumento(Document doc) {
+        try {
+            XMLDOMUtils.guardarDocumentoXML(doc, "Archivos/corredores.xml", "corredoresDTD.dtd");
+            System.out.println("Documento guardado");
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return false;
+        }
+
     }
 
     public List<Corredor> cargarCorredores(Document doc) {
@@ -92,7 +103,7 @@ public class CorredorXML {
     }
 
     public void insertarCorredor(Corredor corredor, Document doc) {
-        Element raiz =  documentXML.getDocumentElement();
+        Element raiz = doc.getDocumentElement();
 
         String tipo = corredor instanceof Velocista ? "velocista" : "fondista";
 
@@ -105,11 +116,10 @@ public class CorredorXML {
 
         // Anhadir subelementos comunes
 
-        
     }
 
-    public int obetenerSiguienteDorsal() {
-        Element raiz = documentXML.getDocumentElement();
+    public int obetenerSiguienteDorsal(Document doc) {
+        Element raiz = doc.getDocumentElement();
         NodeList hijos = raiz.getChildNodes();
 
         for (int i = hijos.getLength(); i >= 0; i--) {
@@ -120,7 +130,7 @@ public class CorredorXML {
 
                 if (dorsalStr != null && !dorsalStr.isBlank()) {
                     try {
-                        return Integer.parseInt(dorsalStr) +1 ;
+                        return Integer.parseInt(dorsalStr) + 1;
                     } catch (Exception e) {
                         throw new ExcepcionXML("Dorsal inválido");
                     }
@@ -131,18 +141,22 @@ public class CorredorXML {
         return 0;
     }
 
-    public boolean eliminarCrredorPorDorsal(String dorsal){
-        // Corredor corredorAeliminar =    
+    public boolean eliminarCorredorPorDorsal(Document doc, String dorsal) {
+        Element raiz = doc.getDocumentElement();
+        NodeList corredores = raiz.getChildNodes();
+
+        for (int i = 0; i < corredores.getLength(); i++) {
+            Element corredor = (Element) corredores.item(i);
+            if (corredor.getAttribute("dorsal").equals(dorsal)) {
+                XMLDOMUtils.eliminarElemento(corredor);
+                guardarDocumento(doc);
+                return true;
+            }
+
+        }
+
+        return false;
+
     }
-
-
-
-    public void insertarEquipo(Corredor corredor, Document doc) {
-        Element raiz =  documentoXML.getDocument0o();
-
-        Element nodeEquipo = XMLDOMUtils.addElement(doc, rutaXML, rutaXML, raiz); 
-        
-    }
-
 
 }

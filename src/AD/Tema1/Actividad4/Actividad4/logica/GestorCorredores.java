@@ -8,19 +8,17 @@ import org.w3c.dom.Document;
 import AD.Tema1.Actividad4.Actividad4.model.Corredor;
 import AD.Tema1.Actividad4.Actividad4.persistencia.CorredorXML;
 import AD.Tema1.Actividad4.Actividad4.persistencia.TipoValidacion;
-
-
-
+import AD.Tema1.Actividad4.Actividad4.persistencia.XMLDOMUtils;
 
 public class GestorCorredores {
     private final CorredorXML gestor;
     private Document documentoXML;
 
-    public GestorCorredores() { 
+    public GestorCorredores() {
         this.gestor = new CorredorXML();
     }
 
-    public void cargarDocumento(String rutaXML, TipoValidacion validacion){
+    public void cargarDocumento(String rutaXML, TipoValidacion validacion) {
         try {
             this.documentoXML = gestor.cargarDocumentoDOM(rutaXML, validacion);
             System.out.println("Documento xml cargado correctamente");
@@ -29,13 +27,12 @@ public class GestorCorredores {
         }
     }
 
-
     public void leerCorredores() {
         gestor.cargarCorredores(documentoXML);
     }
 
     public Corredor leerCorredorCodigo(String cod) {
- 
+
         for (Corredor corredor : gestor.cargarCorredores(documentoXML)) {
             if (corredor.getCodigo().equals(cod)) {
                 return corredor;
@@ -46,7 +43,7 @@ public class GestorCorredores {
     }
 
     public Corredor leerCorredorDorsal(int dorsal) {
- 
+
         for (Corredor corredor : gestor.cargarCorredores(documentoXML)) {
             if (corredor.getDorsal() == dorsal) {
                 return corredor;
@@ -57,7 +54,16 @@ public class GestorCorredores {
     }
 
     public void anhadirCorredor(Corredor corredor) {
-        //  ExcepcionXML();
+        XMLDOMUtils.addElement(documentoXML, corredor.getClass().getSimpleName(), documentoXML.getDocumentElement());
+        gestor.guardarDocumento(documentoXML);
     }
-    
+
+    public void eliminarCorredor(String dorsal) {
+        if (gestor.eliminarCorredorPorDorsal(documentoXML, dorsal)) {
+            System.out.println("Corredor eliminador correctamente");
+        } else {
+            System.out.println("Error al eliminar el corredor");
+        }
+    }
+
 }

@@ -41,7 +41,7 @@ public class XMLDOMUtils {
                 db.setErrorHandler(new SimpleErrorHandler());
             }
 
-            // Cargar el documento en memoria 
+            // Cargar el documento en memoria
             Document documento = db.parse(new File(rutaFichero));
 
             // El getDocumentElement es para conseguir para la raiz del documento
@@ -80,35 +80,36 @@ public class XMLDOMUtils {
     public static String obtenerTexto(Element padre, String etiqueta) {
         NodeList lista = padre.getElementsByTagName(etiqueta);
 
-        if (lista.getLength() > 0 ) {
-          return lista.item(0).getTextContent();  
+        if (lista.getLength() > 0) {
+            return lista.item(0).getTextContent();
         }
 
         return "";
     }
 
-
-    public static void guardarDocumentoXML (Document doc, String rutaDestino){
+    public static void guardarDocumentoXML(Document doc, String rutaDestino, String rutaValidacion) {
         try {
             TransformerFactory factory = TransformerFactory.newInstance();
 
             Transformer transformer = factory.newTransformer();
 
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("(http://xml.apache.org/xslt) indent-amount", "4" );
+            transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, rutaValidacion );
+            // transformer.setOutputProperty(OutputKeys.INDENT, "yes" );
+            // transformer.setOutputProperty("(http://xml.apache.org/xslt) indent-amount", "4");
 
-            DOMSource source = new DOMSource();
+            doc.getDocumentElement().normalize();
+            
+            DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new FileWriter(rutaDestino));
             transformer.transform(source, result);
-
 
         } catch (Exception e) {
             throw new ExcepcionXML("Error al guardar");
         }
     }
 
-
-    public static Attr addAtributo(Document doc,String nombre, String valor , Element elemento) { 
+    public static Attr addAtributo(Document doc, String nombre, String valor, Element elemento) {
         Attr attrib = doc.createAttribute(nombre);
         attrib.setValue(valor);
         elemento.setAttributeNode(attrib);
@@ -117,7 +118,7 @@ public class XMLDOMUtils {
 
     }
 
-    public static Attr addAtributoId(Document doc,String nombre, String valor , Element elemento) { 
+    public static Attr addAtributoId(Document doc, String nombre, String valor, Element elemento) {
         Attr attribId = doc.createAttribute(nombre);
         attribId.setValue(valor);
         elemento.setAttributeNode(attribId);
@@ -128,18 +129,7 @@ public class XMLDOMUtils {
 
     }
 
-
-    // public static Element addElement(Document doc, String nombre, String valor, Element padre){
-    //     Element elemento = doc.createElement(nombre);
-    //     Text texto = doc.createTextNode(valor);
-
-    //     padre.appendChild(elemento);
-    //     elemento.appendChild(texto);
-
-    //     return elemento;
-    // }
-
-    public static Element addElement(Document doc, String nombre, Element padre){
+    public static Element addElement(Document doc, String nombre, Element padre) {
         Element elemento = doc.createElement(nombre);
         // Text texto = doc.createTextNode(valor);
 
@@ -149,8 +139,7 @@ public class XMLDOMUtils {
         return elemento;
     }
 
-
-    public static boolean eliminarElemento(Element elemento) { 
+    public static boolean eliminarElemento(Element elemento) {
         if (elemento != null && elemento.getParentNode() != null) {
             elemento.getParentNode().removeChild(elemento);
             return true;
@@ -158,23 +147,22 @@ public class XMLDOMUtils {
         return false;
     }
 
-
-    public static void modificarAtributo(Element elemento, String nombre, Object valor){
+    public static void modificarAtributo(Element elemento, String nombre, Object valor) {
         String valorSTR = String.valueOf(valor);
 
         elemento.setAttribute(nombre, valorSTR);
 
     }
 
-    public static void modificarValorElemento(Element elemento, String nombre , Object valor){
+    public static void modificarValorElemento(Element elemento, String nombre, Object valor) {
         elemento.setTextContent(String.valueOf(valor));
     }
 
-    public static Element buscarelementoPorId(Document doc , String idValor){
+    public static Element buscarelementoPorId(Document doc, String idValor) {
         return doc.getElementById(idValor);
     }
 
-    private static Object evaluarXPath(Object contexto , String expresion, QName tipoResultado) {
+    private static Object evaluarXPath(Object contexto, String expresion, QName tipoResultado) {
         XPath xPath = XPathFactory.newInstance().newXPath();
 
         try {
@@ -184,26 +172,20 @@ public class XMLDOMUtils {
         }
     }
 
-    public static boolean evaluarXPathBoolean(Object contexto ,String expression) { 
+    public static boolean evaluarXPathBoolean(Object contexto, String expression) {
         return (boolean) evaluarXPath(expression, expression, XPathConstants.BOOLEAN); // ns si es asi
     }
 
-    public static Node evaluarXPathNode(Object contexto ,String expression) { 
+    public static Node evaluarXPathNode(Object contexto, String expression) {
         return (Node) evaluarXPath(expression, expression, XPathConstants.NODE); // ns si es asi
     }
 
-    public static NodeList evaluarXPathNodeList(Object contexto ,String expression) { 
+    public static NodeList evaluarXPathNodeList(Object contexto, String expression) {
         return (NodeList) evaluarXPath(expression, expression, XPathConstants.NODESET); // ns si es asi
     }
 
-    public static double evaluarXPathDouble(Object contexto ,String expression) { 
+    public static double evaluarXPathDouble(Object contexto, String expression) {
         return (double) evaluarXPath(expression, expression, XPathConstants.NUMBER); // ns si es asi
     }
 
-
-
-
-    
-
-    
 }

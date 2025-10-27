@@ -8,9 +8,16 @@ public class Fondista extends Corredor {
 
     private float distanciaMax;
 
-    public Fondista(String codigo, int dorsal, String equipo, String nombre, LocalDate fechaNacimiento,
+        public Fondista(String codigo, int dorsal, String equipo, String nombre, LocalDate fechaNacimiento,
             float distanciaMax) {
         super(codigo, dorsal, equipo, nombre, fechaNacimiento);
+        this.distanciaMax = distanciaMax;
+    }
+
+
+    public Fondista(int dorsal, String equipo, String nombre, LocalDate fechaNacimiento,
+            float distanciaMax) {
+        super(null, dorsal, equipo, nombre, fechaNacimiento);
         this.distanciaMax = distanciaMax;
     }
 

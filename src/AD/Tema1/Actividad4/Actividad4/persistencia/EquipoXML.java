@@ -12,13 +12,13 @@ public class EquipoXML {
         this.documentXML = XMLDOMUtils.cargarDocumentoXML(rutaXML, validacion);
     }
 
-    public Equipo buscarEquipoPorNombre(String nombre) {
-        String xPath = String.format("//equipo[nombre='%s']", nombre);
+    // public Equipo buscarEquipoPorNombre(String nombre) {
+    //     String xPath = String.format("//equipo[nombre='%s']", nombre);
 
-        try {
-            Element equipoElement = (Element) XMLDOMUtils.evaluarXPathNodo
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
+    //     try {
+    //         // Element equipoElement = (Element) XMLDOMUtils.evaluarXPathNodo
+    //     } catch (Exception e) {
+    //         // TODO: handle exception
+    //     }
+    // }
 }
