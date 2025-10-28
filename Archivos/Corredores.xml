@@ -134,5 +134,5 @@
             <puntuacion anio="2023">79.5</puntuacion>
         </historial>
     </fondista>
-    <Fondista/>
+    <Fondista codigo="C19" dorsal="19" equipo="C19"/>
 </corredores>

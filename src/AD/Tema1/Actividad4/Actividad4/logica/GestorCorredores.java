@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import AD.Tema1.Actividad4.Actividad4.model.Corredor;
+import AD.Tema1.Actividad4.Actividad4.model.Puntuacion;
 import AD.Tema1.Actividad4.Actividad4.persistencia.CorredorXML;
 import AD.Tema1.Actividad4.Actividad4.persistencia.TipoValidacion;
 import AD.Tema1.Actividad4.Actividad4.persistencia.XMLDOMUtils;
@@ -54,7 +56,21 @@ public class GestorCorredores {
     }
 
     public void anhadirCorredor(Corredor corredor) {
-        XMLDOMUtils.addElement(documentoXML, corredor.getClass().getSimpleName(), documentoXML.getDocumentElement());
+        // TODO Hacer que los atributos se añadan con el addAtribute
+        Element elementoAnadido = XMLDOMUtils.addElement(documentoXML, corredor.getClass().getSimpleName(),
+                documentoXML.getDocumentElement());
+        elementoAnadido.setAttribute("codigo", corredor.getCodigo());
+        elementoAnadido.setAttribute("dorsal", String.valueOf(corredor.getDorsal()));
+        elementoAnadido.setAttribute("equipo", corredor.getCodigo());
+
+        if (corredor.getPuntuaciones() != null) {
+            for (Puntuacion puntuacion : corredor.getPuntuaciones()) {
+                Element puntuacioElement = XMLDOMUtils.addElement(documentoXML, "Puntuacion", elementoAnadido);
+                puntuacioElement.setTextContent(String.valueOf(puntuacion.getPuntos()));
+                puntuacioElement.setAttribute("anio", String.valueOf(puntuacion.getAnio()));
+            }
+        }
+
         gestor.guardarDocumento(documentoXML);
     }
 
