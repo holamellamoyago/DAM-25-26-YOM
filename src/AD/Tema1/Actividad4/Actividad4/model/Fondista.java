@@ -21,6 +21,12 @@ public class Fondista extends Corredor {
         this.distanciaMax = distanciaMax;
     }
 
+    public float getDistanciaMax() {
+        return distanciaMax;
+    }
+
+    
+
     // public Fondista(int codigo, String nombre, LocalDate fechaNacimiento, int
     // dorsal, float distanciaMax) {
     // this(codigo, dorsal, dorsal, nombre, fechaNacimiento, new ArrayList<>(),

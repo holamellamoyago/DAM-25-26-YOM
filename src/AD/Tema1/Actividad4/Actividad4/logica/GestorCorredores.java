@@ -5,9 +5,13 @@ import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import AD.Tema1.Actividad4.Actividad4.model.Corredor;
+import AD.Tema1.Actividad4.Actividad4.model.Fondista;
 import AD.Tema1.Actividad4.Actividad4.model.Puntuacion;
+import AD.Tema1.Actividad4.Actividad4.model.Velocista;
 import AD.Tema1.Actividad4.Actividad4.persistencia.CorredorXML;
 import AD.Tema1.Actividad4.Actividad4.persistencia.TipoValidacion;
 import AD.Tema1.Actividad4.Actividad4.persistencia.XMLDOMUtils;
@@ -56,16 +60,40 @@ public class GestorCorredores {
     }
 
     public void anhadirCorredor(Corredor corredor) {
-        // TODO Hacer que los atributos se añadan con el addAtribute
-        Element elementoAnadido = XMLDOMUtils.addElement(documentoXML, corredor.getClass().getSimpleName(),
-                documentoXML.getDocumentElement());
-        elementoAnadido.setAttribute("codigo", corredor.getCodigo());
-        elementoAnadido.setAttribute("dorsal", String.valueOf(corredor.getDorsal()));
-        elementoAnadido.setAttribute("equipo", corredor.getCodigo());
+        Fondista fondista = null;
+        Velocista velocista = null;
+
+        if (corredor instanceof Fondista) {
+            fondista = (Fondista) corredor;
+        } else {
+            velocista = (Velocista) corredor;
+        }
+
+        String tipoCorredor = corredor.getClass().getSimpleName().toLowerCase();
+
+        Element corredorAnadido = XMLDOMUtils.addElement(documentoXML, tipoCorredor, documentoXML.getDocumentElement());
+
+        corredorAnadido.setAttribute("codigo", corredor.getCodigo());
+        corredorAnadido.setAttribute("dorsal", String.valueOf(corredor.getDorsal()));
+        corredorAnadido.setAttribute("equipo", corredor.getEquipo());
+
+        Element nombre = XMLDOMUtils.addElement(documentoXML, "nombre", corredorAnadido);
+        nombre.setTextContent(corredor.getNombre());
+
+        Element fechaNacimiento = XMLDOMUtils.addElement(documentoXML, "fecha_nacimiento", corredorAnadido);
+        fechaNacimiento.setTextContent(corredor.getFechaNacimiento().toString());
+
+        if (fondista != null) {
+            Element distancia_max = XMLDOMUtils.addElement(documentoXML, "distancia_max", corredorAnadido);
+            distancia_max.setTextContent(String.valueOf(fondista.getDistanciaMax()));
+        } else {
+            Element velocidad_media = XMLDOMUtils.addElement(documentoXML, "velocidad_media", corredorAnadido);
+            velocidad_media.setTextContent(String.valueOf(velocista.getVelocidadMedia()));
+        }
 
         if (corredor.getPuntuaciones() != null) {
             for (Puntuacion puntuacion : corredor.getPuntuaciones()) {
-                Element puntuacioElement = XMLDOMUtils.addElement(documentoXML, "Puntuacion", elementoAnadido);
+                Element puntuacioElement = XMLDOMUtils.addElement(documentoXML, "Puntuacion", corredorAnadido);
                 puntuacioElement.setTextContent(String.valueOf(puntuacion.getPuntos()));
                 puntuacioElement.setAttribute("anio", String.valueOf(puntuacion.getAnio()));
             }
@@ -82,4 +110,13 @@ public class GestorCorredores {
         }
     }
 
+    public int siguienteCodigoCorredor() {
+        Node parent = documentoXML.getDocumentElement();
+        NodeList corredores = parent.getChildNodes();
+        Element ultCorredor = (Element) corredores.item(corredores.getLength() - 1);
+
+        String[] codigos = ultCorredor.getAttribute("codigo").split("C");
+
+        return Integer.valueOf(codigos[1]) + 1 ;
+    }
 }

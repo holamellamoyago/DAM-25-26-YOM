@@ -13,6 +13,12 @@ public class Velocista extends Corredor{
         this.velocidadMedia = velocidadMedia;
     }
 
+    public float getVelocidadMedia() {
+        return velocidadMedia;
+    }
+
+
+    
     
     
 
