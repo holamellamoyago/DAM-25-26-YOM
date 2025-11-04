@@ -2,6 +2,7 @@ package AD.Tema1.Actividad5.Persistencia;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Handler;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -16,9 +17,9 @@ import AD.Tema1.Actividad5.model.TipoValidacion;
 public class XMLSAXUtils {
     File rutaFichero;
     TipoValidacion validacion;
-    Manejador manejador;
+    Handler manejador;
 
-    public XMLSAXUtils(String rutaFichero, TipoValidacion validacion, Manejador manejador) {
+    public XMLSAXUtils(String rutaFichero, TipoValidacion validacion, Handler manejador) {
 
         if (rutaFichero.equals("") || rutaFichero == null) {
             System.out.println("La ruta no debe de ser vacía");
@@ -45,7 +46,8 @@ public class XMLSAXUtils {
         return rutaFichero.exists();
     }
 
-    public SAXParser cargarDocumentoSAX() throws SAXNotRecognizedException, SAXNotSupportedException, ParserConfigurationException, SAXException, IOException {
+    public SAXParser cargarDocumentoSAX() throws SAXNotRecognizedException, SAXNotSupportedException,
+            ParserConfigurationException, SAXException, IOException {
         SAXParser parser = configurarSAX().newSAXParser();
         parser.parse(rutaFichero, manejador);
 

@@ -21,9 +21,20 @@ public class Fondista extends Corredor {
         this.distanciaMax = distanciaMax;
     }
 
+    public Fondista(){
+        super("", -1, "", "", LocalDate.now());
+    }
+
     public float getDistanciaMax() {
         return distanciaMax;
     }
+
+
+    public void setDistanciaMax(float distanciaMax) {
+        this.distanciaMax = distanciaMax;
+    }
+
+    
 
     
 

@@ -15,7 +15,12 @@ public class Ejercicio5 {
         try {
             gestor.abrirDocumento("Archivos/corredores.xml", TipoValidacion.DTD);
 
-            
+            System.out.println();
+            System.out.println(gestor.cargarCorredores());
+
+            System.out.println();
+            gestor.mostrarInformacionCorredor("C02");
+
         } catch (SAXException | ParserConfigurationException | IOException e) {
             e.printStackTrace();
         }
