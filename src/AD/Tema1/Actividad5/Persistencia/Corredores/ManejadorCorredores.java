@@ -1,4 +1,4 @@
-package AD.Tema1.Actividad5.Persistencia;
+package AD.Tema1.Actividad5.Persistencia.Corredores;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -61,9 +61,9 @@ public class ManejadorCorredores extends DefaultHandler {
     }
 
     private void cogerAtributosCorredor(Attributes attributes) {
+ 
         codigo = attributes.getValue("codigo");
         dorsal = Integer.valueOf(attributes.getValue("dorsal"));
-        equipo = attributes.getValue("equipo");
 
     }
 

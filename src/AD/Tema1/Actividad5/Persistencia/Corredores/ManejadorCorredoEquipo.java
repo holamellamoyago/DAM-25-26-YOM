@@ -1,4 +1,4 @@
-package AD.Tema1.Actividad5.Persistencia;
+package AD.Tema1.Actividad5.Persistencia.Corredores;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,18 +29,28 @@ public class ManejadorCorredoEquipo extends DefaultHandler {
     String nombre;
     float contenidoPuntuacion;
 
+    boolean corredorDelEquipo = true;
+    String equipoObligatiorio;
+
+    public ManejadorCorredoEquipo(String equipoObligatiorio) {
+        this.equipoObligatiorio = equipoObligatiorio;
+    }
+
     @Override
     public void startDocument() throws SAXException {
-        System.out.println("El documento comienza a leerse");
     }
 
     @Override
     public void endDocument() throws SAXException {
-        System.out.println("Terminando documento");
+
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+
+        System.out.println("Atributos de " + qName);
+        System.out.println(attributes.toString());
+        System.out.println();
 
         if (qName.equals("velocista")) {
             tipoCorredor = "velocista";
@@ -56,14 +66,20 @@ public class ManejadorCorredoEquipo extends DefaultHandler {
             cogerAtributosPuntuacion(attributes);
         }
 
-        System.out.println("Empezando un elemento " + qName);
-
     }
 
     private void cogerAtributosCorredor(Attributes attributes) {
+        System.out.println(attributes.toString());
+
+        equipo = attributes.getValue("equipo");
+
+        if (!equipo.equals(equipoObligatiorio)) {
+            corredorDelEquipo = false;
+            return;
+        }
+
         codigo = attributes.getValue("codigo");
         dorsal = Integer.valueOf(attributes.getValue("dorsal"));
-        equipo = attributes.getValue("equipo");
 
     }
 
@@ -73,6 +89,11 @@ public class ManejadorCorredoEquipo extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
+
+        if (!corredorDelEquipo) {
+            return;
+        }
+
         if (qName.equals("velocista")) {
             Velocista v = new Velocista(codigo, dorsal, equipo, nombre, fechaNacimiento, especial);
             v.setPuntuaciones(historial);
@@ -101,8 +122,6 @@ public class ManejadorCorredoEquipo extends DefaultHandler {
             fechaNacimiento = LocalDate.parse(contenidoActual);
         }
 
-        System.out.println("Terminando el dodocumento " + qName);
-
     }
 
     private void vaciarCampos() {
@@ -126,11 +145,6 @@ public class ManejadorCorredoEquipo extends DefaultHandler {
     }
 
     public ArrayList<Corredor> getCorredores() throws SAXException {
-        return corredores;
-    }
-
-    public ArrayList<Corredor> getCorredoresPorEquipo(String equipo) throws SAXException {
-        corredores.removeIf(t -> t.getEquipo() != equipo);
         return corredores;
     }
 

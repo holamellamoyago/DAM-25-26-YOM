@@ -11,15 +11,16 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import AD.Tema1.Actividad5.model.TipoValidacion;
 
 public class XMLSAXUtils {
     File rutaFichero;
     TipoValidacion validacion;
-    Handler manejador;
+    DefaultHandler manejador;
 
-    public XMLSAXUtils(String rutaFichero, TipoValidacion validacion, Handler manejador) {
+    public XMLSAXUtils(String rutaFichero, TipoValidacion validacion, DefaultHandler manejador) {
 
         if (rutaFichero.equals("") || rutaFichero == null) {
             System.out.println("La ruta no debe de ser vacía");

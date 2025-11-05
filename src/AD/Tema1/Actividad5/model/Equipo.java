@@ -16,6 +16,10 @@ public class Equipo {
         this.numPatrocinadores = patrocinadores.size();
     }
 
+    public Equipo() {
+
+    }
+
     public int getIdEquipo() {
         return idEquipo;
     }
@@ -85,7 +89,5 @@ public class Equipo {
     public String toString() {
         return "Equipo " + idEquipo + "(" + nombre + "), numPatrocinadores=" + numPatrocinadores;
     }
-
-    
 
 }
