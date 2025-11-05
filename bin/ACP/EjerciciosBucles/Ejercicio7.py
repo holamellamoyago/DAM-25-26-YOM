@@ -1,3 +1,7 @@
 for i in range(1,11):
-    print("10 *", i, "=", 10*i)
+    for j in range(1,11):
+        print(str(i) + " * " + str(j) + " = " + str(i * j))
     pass
+    print()
+
+
