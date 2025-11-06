@@ -13,6 +13,10 @@ public class Patrocinador implements Comparable<Patrocinador> {
         this.fechaInicio = fechaInicio;
     }
 
+    public Patrocinador(){
+
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -66,5 +70,13 @@ public class Patrocinador implements Comparable<Patrocinador> {
     public int compareTo(Patrocinador o) {
         return this.nombre.compareTo(o.nombre);
     }
+
+    @Override
+    public String toString() {
+        return "Patrocinado=" + nombre + "]";
+    }
+
+
+    
 
 }

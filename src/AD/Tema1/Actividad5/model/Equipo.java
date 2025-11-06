@@ -3,7 +3,8 @@ package AD.Tema1.Actividad5.model;
 import java.util.Set;
 
 public class Equipo {
-    private int idEquipo, numPatrocinadores;
+    private String idEquipo;
+    private int numPatrocinadores;
     private String nombre;
     private boolean borrado;
 
@@ -20,11 +21,11 @@ public class Equipo {
 
     }
 
-    public int getIdEquipo() {
+    public String getIdEquipo() {
         return idEquipo;
     }
 
-    public void setIdEquipo(int idEquipo) {
+    public void setIdEquipo(String idEquipo) {
         this.idEquipo = idEquipo;
     }
 
@@ -54,6 +55,16 @@ public class Equipo {
 
     public Set<Patrocinador> getPatrocinadores() {
         return patrocinadores;
+    }
+
+    public void anadirPatrocinador(Patrocinador patrocinador) {
+        this.patrocinadores.add(patrocinador);
+    }
+
+    public void anadirPatrocinadores(Set<Patrocinador> patrocinador) {
+        for (Patrocinador patrocinador2 : patrocinador) {
+            this.patrocinadores.add(patrocinador2);
+        }
     }
 
     public void setPatrocinadores(Set<Patrocinador> patrocinadores) {
@@ -87,7 +98,7 @@ public class Equipo {
 
     @Override
     public String toString() {
-        return "Equipo " + idEquipo + "(" + nombre + "), numPatrocinadores=" + numPatrocinadores;
+        return "Equipo " + idEquipo + "(" + nombre + "), patrocinadores: " + patrocinadores;
     }
 
 }

@@ -2,7 +2,6 @@ package AD.Tema1.Actividad5.Persistencia.Corredores;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

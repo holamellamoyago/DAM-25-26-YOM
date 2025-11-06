@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.Attribute;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -48,13 +50,15 @@ public class ManejadorCorredoEquipo extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
-        System.out.println("Atributos de " + qName);
-        System.out.println(attributes.toString());
-        System.out.println();
+        // System.out.println("Atributos de " + qName);
+        // System.out.println(attributes.toString());
+        // System.out.println();
 
         if (qName.equals("velocista")) {
+
             tipoCorredor = "velocista";
             cogerAtributosCorredor(attributes);
+
         }
 
         if (qName.equals("fondista")) {
@@ -69,14 +73,15 @@ public class ManejadorCorredoEquipo extends DefaultHandler {
     }
 
     private void cogerAtributosCorredor(Attributes attributes) {
-        System.out.println(attributes.toString());
-
-        equipo = attributes.getValue("equipo");
+        equipo = attributes.getValue("equipo").trim();
 
         if (!equipo.equals(equipoObligatiorio)) {
             corredorDelEquipo = false;
             return;
+        } else {
+            corredorDelEquipo = true;
         }
+
 
         codigo = attributes.getValue("codigo");
         dorsal = Integer.valueOf(attributes.getValue("dorsal"));
@@ -116,6 +121,7 @@ public class ManejadorCorredoEquipo extends DefaultHandler {
 
         if (qName.equals("nombre")) {
             nombre = contenidoActual;
+            System.out.println("Nombre: " + qName + " " + nombre);
         }
 
         if (qName.equals("fecha_nacimiento")) {
