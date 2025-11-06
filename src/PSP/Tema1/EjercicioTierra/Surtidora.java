@@ -9,27 +9,41 @@ public class Surtidora extends Nave {
 
     @Override
     public void run() {
-        Meteorito meteorito = Empresa.meteoritos.get(rdm.nextInt(Empresa.meteoritos.size()));
 
-        try {
-            if (meteorito.comenzarTaladra(nombre)) {
-                sleep(rdm.nextInt(100));
-
+        while (!Empresa.meteoritos.isEmpty()) {
+            if (!buscarNavesParaRepostar()) {
+                try {
+                    synchronized(Empresa.class) {
+                        Empresa.class.wait();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-
     }
 
-    private synchronized void surtirNave(Nave nave) throws InterruptedException {
+    private boolean buscarNavesParaRepostar() {
+        for (int i = 0; i < Empresa.naves.size(); i++) {
+            if (Empresa.naves.get(i).isNecesitaRepostar()) {
+                try {
+                    echarGasolina(Empresa.naves.get(i));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public synchronized void echarGasolina(Nave nave) throws InterruptedException {
         navesurtiendo = nave;
-        navesurtiendo.setRespostando(true);
+        navesurtiendo.setNecesitaRepostar(true);
 
         sleep(200);
 
         navesurtiendo = null;
-        navesurtiendo.setRespostando(false);;
+        navesurtiendo.setNecesitaRepostar(false);
     }
 }

@@ -7,6 +7,11 @@ public class Empresa {
     public static ArrayList<Meteorito> meteoritos = new ArrayList<>();
 
     public static void main(String[] args) throws InterruptedException {
+        iniciarNaves();
+
+    }
+
+    private static void iniciarNaves() {
         final int NUM_METEORITOS = 10;
         final int NUM_NAVES_A = 5;
         final int NUM_NAVES_SURTIDORA = 3;
@@ -28,9 +33,11 @@ public class Empresa {
         }
 
         for (Nave nave : naves) {
-
-            nave.join();
+            try {
+                nave.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 }

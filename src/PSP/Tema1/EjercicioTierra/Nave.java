@@ -7,15 +7,15 @@ enum TipoNave {
 }
 
 public abstract class Nave extends Thread {
-    Random rdm = new Random();
-    String nombre;
-    TipoNave tipoNave;
-    boolean respostando;
+    protected Random rdm = new Random();
+    protected String nombre;
+    protected TipoNave tipoNave;
+    protected boolean necesitaRepostar;
 
     public Nave(String nombre, TipoNave tipoNave) {
         this.nombre = nombre;
         this.tipoNave = tipoNave;
-        respostando = false;
+        necesitaRepostar = false;
     }
 
 
@@ -27,12 +27,12 @@ public abstract class Nave extends Thread {
         this.tipoNave = tipoNave;
     }
 
-    public synchronized boolean isRespostando() {
-        return respostando;
+    public boolean isNecesitaRepostar() {
+        return necesitaRepostar;
     }
 
-    public synchronized void setRespostando(boolean respondando) {
-        this.respostando = respondando;
+    public void setNecesitaRepostar(boolean respondando) {
+        this.necesitaRepostar = respondando;
     }
 
     public String getNombre() {
