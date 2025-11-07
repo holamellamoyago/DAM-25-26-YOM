@@ -13,7 +13,9 @@ public class Armageddon extends Nave {
         try {
             while (Empresa.meteoritos.size() > 0) {
                 if (meteorito.comenzarTaladrar(this)) {
-                    Empresa.meteoritos.remove(meteorito);
+                    synchronized (Empresa.class) {
+                        Empresa.meteoritos.remove(meteorito);
+                    }
                     System.out.println("Meteoritos disponibles: " + Empresa.meteoritos);
 
                 } else {

@@ -21,6 +21,8 @@ public class Surtidora extends Nave {
                 }
             }
         }
+
+        System.out.println("La nave surtidora " + getNombre() + " aterriza, se terminaron los meteoritos");
     }
 
     private boolean buscarNavesParaRepostar() {
@@ -28,6 +30,7 @@ public class Surtidora extends Nave {
             if (Empresa.naves.get(i).isNecesitaRepostar()) {
                 try {
                     echarGasolina(Empresa.naves.get(i));
+                    System.out.println("La nave " + getNombre() + " reposto a " + Empresa.naves.get(i).getNombre());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

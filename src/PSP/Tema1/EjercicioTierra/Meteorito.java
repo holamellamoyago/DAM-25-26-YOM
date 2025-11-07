@@ -26,7 +26,8 @@ public class Meteorito {
 
         if (naveTaladrando != null) {
             System.out.println(
-                    "La nave " + nave.getNombre() + "intento taladrar a: " + referencia + " pero ya esta: " + naveTaladrando.getNombre());
+                    "La nave " + nave.getNombre() + "intento taladrar a: " + referencia + " pero ya esta: "
+                            + naveTaladrando.getNombre());
         }
 
         // Tiempo que tarda en taladrar
