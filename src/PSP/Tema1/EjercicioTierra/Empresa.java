@@ -40,4 +40,23 @@ public class Empresa {
             }
         }
     }
+
+    public static boolean estanTodasExplotadas() {
+        for (Meteorito meteorito : meteoritos) {
+            if (!meteorito.isExplotado()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static synchronized ArrayList<Nave> getNaves() {
+        return naves;
+    }
+
+    public static synchronized ArrayList<Meteorito> getMeteoritos() {
+        return meteoritos;
+    }
+
 }

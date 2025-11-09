@@ -3,7 +3,7 @@ package PSP.Tema1.EjercicioTierra;
 public class Armageddon extends Nave {
 
     public Armageddon(String nombre) {
-        super(nombre, TipoNave.Armageddon);
+        super(nombre);
     }
 
     @Override
@@ -11,17 +11,16 @@ public class Armageddon extends Nave {
         Meteorito meteorito = Empresa.meteoritos.get(rdm.nextInt(Empresa.meteoritos.size()));
 
         try {
-            while (Empresa.meteoritos.size() > 0) {
+            while (!Empresa.estanTodasExplotadas()) {
                 if (meteorito.comenzarTaladrar(this)) {
-                    synchronized (Empresa.class) {
-                        Empresa.meteoritos.remove(meteorito);
-                    }
-                    System.out.println("Meteoritos disponibles: " + Empresa.meteoritos);
+                    // System.out.println("Meteoritos disponibles: " + Empresa.meteoritos);
 
+                    // Error 3 : no era explotadop
+                    // meteorito.explotar();
                 } else {
                     // Busca otro meteorito al que atacar
                     // Si la lista esta vacía nunca va a encontrar
-                    if (Empresa.meteoritos.isEmpty()) {
+                    if (Empresa.estanTodasExplotadas()) {
                         System.out.println("La nave " + nombre + " aterriza, se termianron los meteoritos");
                         return;
                     } else {

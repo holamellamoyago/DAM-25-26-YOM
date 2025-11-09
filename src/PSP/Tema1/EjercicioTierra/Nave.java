@@ -2,29 +2,14 @@ package PSP.Tema1.EjercicioTierra;
 
 import java.util.Random;
 
-enum TipoNave {
-    SURTIDORA, Armageddon
-}
-
 public abstract class Nave extends Thread {
     protected Random rdm = new Random();
     protected String nombre;
-    protected TipoNave tipoNave;
     protected boolean necesitaRepostar;
 
-    public Nave(String nombre, TipoNave tipoNave) {
+    public Nave(String nombre) {
         this.nombre = nombre;
-        this.tipoNave = tipoNave;
         necesitaRepostar = false;
-    }
-
-
-    public TipoNave getTipoNave() {
-        return tipoNave;
-    }
-
-    public void setTipoNave(TipoNave tipoNave) {
-        this.tipoNave = tipoNave;
     }
 
     public boolean isNecesitaRepostar() {
