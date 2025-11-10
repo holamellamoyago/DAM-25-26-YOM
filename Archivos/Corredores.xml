@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE corredores SYSTEM "CorredoresDTD.dtd">
 <corredores>
     <velocista codigo="C01" dorsal="1" equipo="E1">
         <nombre>Lucía Fernández Álvarez</nombre>
