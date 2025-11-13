@@ -17,19 +17,23 @@ import AD.Tema1.PersistenciaSTAX.model.TipoValidacion;
 
 public class GestorCorredores {
     String rutaArchivo;
+    XMLStreamReader reader;
 
-    public GestorCorredores(String rutaArchivo) {
-        this.rutaArchivo = rutaArchivo;
+    public GestorCorredores(String rutaArchivo, TipoValidacion tipoValidacion) {
+        try {
+            this.rutaArchivo = rutaArchivo;
+            XMLInputFactory factory = ConfiguracionStAX.configurarYCrearReader(rutaArchivo, tipoValidacion);
+			reader = factory.createXMLStreamReader(new FileInputStream(new File(rutaArchivo)));
+		} catch (FileNotFoundException | XMLStreamException e) {
+			e.printStackTrace();
+		}
     }
 
     public void leerCorredoresCursor() {
         try {
-            XMLInputFactory factory = ConfiguracionStAX.configurarYCrearReader("Archivos/Corredores.xml", TipoValidacion.NO_VALIDAR);
-            XMLStreamReader reader = factory.createXMLStreamReader(new FileInputStream(new File(rutaArchivo)));
             CorredoresSAXCursor.leerCorredor(reader);
             
-
-        } catch (FileNotFoundException | XMLStreamException e) {
+        } catch (XMLStreamException e) {
             e.printStackTrace();
         }
 

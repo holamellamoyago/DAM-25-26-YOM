@@ -1,1 +1,1 @@
-Cambiar la función de sumar votación a la bd a que sea  una transacción 
+    Cambiar la función de sumar votación a la bd a que sea  una transacción 

@@ -10,8 +10,7 @@ import AD.Tema1.PersistenciaSTAX.model.Velocista;
 
 public class CorredoresSAXCursor {
     private static String etiquetaActual = "";
-    private Velocista velocista = new Velocista();
-    private Fondista fondista = new Fondista();
+    private static Corredor corredor;
 
     public static void leerCorredor(XMLStreamReader reader) throws XMLStreamException {
         if (reader == null)
@@ -49,8 +48,14 @@ public class CorredoresSAXCursor {
 
     private static Corredor crearCorredor(XMLStreamReader reader) {
         if (etiquetaActual.equals("velocista")) {
+            corredor = new Velocista();
+        }
+
+        if (etiquetaActual.equals("fondista")) {
             
         }
+
+
         String codigo = reader.getAttributeValue(null, "codigo");
         System.out.println("Velocista: " + codigo);
 
