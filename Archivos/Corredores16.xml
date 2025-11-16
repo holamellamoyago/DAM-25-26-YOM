@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE corredores SYSTEM "CorredoresDTD.dtd">
+<corredores>
+    <velocista codigo="C01" dorsal="1" equipo="E1">
+        <nombre>Lucía Fernández Álvarez</nombre>
+        <fecha_nacimiento>2000-10-20</fecha_nacimiento>
+        <velocidad_media>10.4</velocidad_media>
+        <historial>
+            <puntuacion anio="2019">78.5</puntuacion>
+            <puntuacion anio="2020">85.0</puntuacion>
+            <puntuacion anio="2021">69.4</puntuacion>
+            <puntuacion anio="2022">61.5</puntuacion>
+            <puntuacion anio="2023">83.5</puntuacion>
+        </historial>
+    </velocista>
+    <fondista codigo="C02" dorsal="2" equipo="E2">
+        <nombre>Ana Pérez</nombre>
+        <fecha_nacimiento>1995-06-02</fecha_nacimiento>
+        <distancia_max>10000.0</distancia_max>
+    </fondista>
+    <velocista codigo="C03" dorsal="3" equipo="E1">
+        <nombre>Yago Otero</nombre>
+        <fecha_nacimiento>2025-11-16</fecha_nacimiento>
+        <velocidad_media>10.4</velocidad_media>
+    </velocista>
+</corredores>
