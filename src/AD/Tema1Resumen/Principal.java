@@ -8,14 +8,16 @@ import AD.Tema1Resumen.DOM.Gestores.GestorCorredorDOM;
 
 public class Principal {
     public static void main(String[] args) {
-        GestorCorredorDOM gestorCorredoresDOM = new GestorCorredorDOM("Archivos/corredores.xml",
+        GestorCorredorDOM gestorCorredoresDOM = new GestorCorredorDOM("Archivos/corredores16.xml",
                 TipoValidacion.DTD);
 
         // Cargar corredores
-        // System.out.println(gestorCorredoresDOM.getCorredores().get(1).getPuntuaciones());
+        System.out.println(gestorCorredoresDOM.getCorredores().get(0).getPuntuaciones());
 
         // Añadir corredor
         Velocista velocista = new Velocista("C03", "E1", "Yago Otero", LocalDate.now(), Float.valueOf("10.4"));
-        gestorCorredoresDOM.anadirCorredor(velocista, "Archivos/corredores16.xml");
+        // gestorCorredoresDOM.anadirCorredor(velocista, "Archivos/corredores16.xml");
+
+        gestorCorredoresDOM.eliminarCorredor(3);
     }
 }

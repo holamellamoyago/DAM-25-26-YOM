@@ -177,6 +177,7 @@ public class XMLDOMUtils {
         return false;
     }
 
+
     public static void modificarAtributo(Element elemento, String nombre, Object valor) {
         String valorSTR = String.valueOf(valor);
 
@@ -217,5 +218,7 @@ public class XMLDOMUtils {
     public static double evaluarXPathDouble(Object contexto, String expression) {
         return (double) evaluarXPath(expression, expression, XPathConstants.NUMBER); // ns si es asi
     }
+
+
 
 }

@@ -17,9 +17,11 @@ import AD.Tema1Resumen.Clases.Velocista;
 
 public class GestorCorredorDOM {
     private Document document;
+    private String rutaArchivo;
 
     public GestorCorredorDOM(String file, TipoValidacion tipoValidacion) {
         this.document = XMLDOMUtils.cargarDocumentoXML(file, tipoValidacion);
+        this.rutaArchivo = file;
     }
 
     public ArrayList<Corredor> getCorredores() {
@@ -46,6 +48,60 @@ public class GestorCorredorDOM {
         }
 
         return corredores;
+    }
+
+    public void anadirCorredor(Corredor corredor, String rutaDestino) {
+        String tipo = corredor.getClass().getSimpleName().toLowerCase();
+        corredor.setDorsal(calcularSiguienteDorsal());
+
+        Element elementoAnadido = XMLDOMUtils.addElement(document, tipo, document.getDocumentElement());
+        XMLDOMUtils.addAtributo(document, "codigo", corredor.getCodigo(), elementoAnadido);
+        XMLDOMUtils.addAtributo(document, "dorsal", String.valueOf(corredor.getDorsal()), elementoAnadido);
+        XMLDOMUtils.addAtributo(document, "equipo", corredor.getEquipo(), elementoAnadido);
+
+        Element nombre = XMLDOMUtils.addElement(document, "nombre", elementoAnadido);
+        XMLDOMUtils.modificarValorElemento(nombre, corredor.getNombre());
+
+        Element fecha = XMLDOMUtils.addElement(document, "fecha_nacimiento", elementoAnadido);
+        XMLDOMUtils.modificarValorElemento(fecha, corredor.getFechaNacimiento().toString());
+
+        Element especial;
+        if (tipo.equals("velocista")) {
+            especial = XMLDOMUtils.addElement(document, "velocidad_media", elementoAnadido);
+            XMLDOMUtils.modificarValorElemento(especial, ((Velocista) corredor).getVelocidadMedia());
+        } else {
+            especial = XMLDOMUtils.addElement(document, "distancia_max", elementoAnadido);
+            XMLDOMUtils.modificarValorElemento(especial, ((Fondista) corredor).getDistanciaMax());
+        }
+
+        // for (int i = 0; i < corredores.getLength(); i++) {
+        // System.out.println(corredores.item(i));
+        // }
+
+        XMLDOMUtils.guardarDocumentoXML(document, rutaDestino, "CorredoresDTD.dtd");
+
+    }
+
+    public void eliminarCorredor(int dorsal) {
+        NodeList corredores = document.getDocumentElement().getChildNodes();
+
+        for (int i = 0; i < corredores.getLength(); i++) {
+            Element corredor = (Element) corredores.item(i);
+            int dorsalCorredor = Integer.valueOf(corredor.getAttribute("dorsal"));
+
+            if (dorsalCorredor == dorsal) {
+                if (XMLDOMUtils.eliminarElemento(corredor)) {
+                    XMLDOMUtils.guardarDocumentoXML(document, rutaArchivo, "CorredoresDTD.dtd");
+                    System.out.println("Corredor eliminado");
+                } else {
+                    System.out.println("No se pudo elimninar el corredor");
+                }
+
+                return;
+            }
+        }
+
+        System.out.println("No se encontro a un corredor con ese dorsal");
     }
 
     private Corredor getCorredor(Element padre) {
@@ -111,38 +167,6 @@ public class GestorCorredorDOM {
         }
 
         return puntuacionesAnadidas;
-    }
-
-    public void anadirCorredor(Corredor corredor, String rutaDestino) {
-        String tipo = corredor.getClass().getSimpleName().toLowerCase();
-        corredor.setDorsal(calcularSiguienteDorsal());
-
-        Element elementoAnadido = XMLDOMUtils.addElement(document, tipo, document.getDocumentElement());
-        XMLDOMUtils.addAtributo(document, "codigo", corredor.getCodigo(), elementoAnadido);
-        XMLDOMUtils.addAtributo(document, "dorsal", String.valueOf(corredor.getDorsal()), elementoAnadido);
-        XMLDOMUtils.addAtributo(document, "equipo", corredor.getEquipo(), elementoAnadido);
-
-        Element nombre = XMLDOMUtils.addElement(document, "nombre", elementoAnadido);
-        XMLDOMUtils.modificarValorElemento(nombre, corredor.getNombre());
-
-        Element fecha = XMLDOMUtils.addElement(document, "fecha_nacimiento", elementoAnadido);
-        XMLDOMUtils.modificarValorElemento(fecha, corredor.getFechaNacimiento().toString());
-
-        Element especial;
-        if (tipo.equals("velocista")) {
-            especial = XMLDOMUtils.addElement(document, "velocidad_media", elementoAnadido);
-            XMLDOMUtils.modificarValorElemento(especial, ((Velocista) corredor).getVelocidadMedia());
-        } else {
-            especial = XMLDOMUtils.addElement(document, "distancia_max", elementoAnadido);
-            XMLDOMUtils.modificarValorElemento(especial, ((Fondista) corredor).getDistanciaMax());
-        }
-
-        // for (int i = 0; i < corredores.getLength(); i++) {
-        // System.out.println(corredores.item(i));
-        // }
-
-        XMLDOMUtils.guardarDocumentoXML(document, rutaDestino, "CorredoresDTD.dtd");
-
     }
 
     private int calcularSiguienteDorsal() {
