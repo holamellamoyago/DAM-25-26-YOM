@@ -31,11 +31,6 @@ public class GestorCorredorDOM {
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
 
-            // Compruebo que sea de tipo node
-            // if (node.getNodeType() != Node.ELEMENT_NODE) {
-            // break;
-            // }
-
             if (node.getNodeName().equals("corredores")) {
                 NodeList nodeListCorredores = node.getChildNodes();
                 for (int j = 0; j < nodeListCorredores.getLength(); j++) {
