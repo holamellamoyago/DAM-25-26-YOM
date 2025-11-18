@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Velocista extends Corredor{
+    
+    @XmlElement(name = "velocidad_media")
     private float velocidadMedia;
 
     public Velocista () {}

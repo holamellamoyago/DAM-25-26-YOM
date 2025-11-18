@@ -11,7 +11,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "corredores")
 @XmlAccessorType(XmlAccessType.FIELD) // ????????????
 public class Corredores {
-    
+
     @XmlElements({
             @XmlElement(name = "velocista", type = Velocista.class),
             @XmlElement(name = "fondista", type = Fondista.class)
@@ -25,6 +25,11 @@ public class Corredores {
 
     public Corredores(ArrayList<Corredor> corredores) {
         this.corredores = corredores;
+    }
+
+    @Override
+    public String toString() {
+        return "Corredores " + corredores;
     }
 
 }

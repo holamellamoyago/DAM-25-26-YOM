@@ -1,10 +1,25 @@
 package AD.Tema1Resumen.Clases;
 
-public class Puntuacion implements Comparable<Puntuacion> {
-        private static final long serialVersionUID = 1L;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlValue;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Puntuacion {
+    // private static final long serialVersionUID = 1L;
+
+    @XmlAttribute(name = "anio", required = true)
     private int anio;
+
+    @XmlValue
     private float puntos;
+
+    
+
+    public Puntuacion() {
+    }
 
     public Puntuacion(int anio, float puntos) {
         this.anio = anio;
@@ -28,15 +43,8 @@ public class Puntuacion implements Comparable<Puntuacion> {
     }
 
     @Override
-    public int compareTo(Puntuacion o) {
-        return this.anio - o.anio;
-    }
-
-    @Override
     public String toString() {
         return "Puntuacion " + anio + ", puntos=" + puntos + "]";
     }
-
-    
 
 }

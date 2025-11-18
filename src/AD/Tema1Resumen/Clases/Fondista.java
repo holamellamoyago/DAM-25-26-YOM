@@ -3,9 +3,12 @@ package AD.Tema1Resumen.Clases;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Fondista extends Corredor {
-    private static final long serialVersionUID = 1L;
+import jakarta.xml.bind.annotation.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Fondista extends Corredor {
+
+    @XmlElement(name = "distancia_max")
     private float distanciaMax;
 
         public Fondista(String codigo, int dorsal, String equipo, String nombre, LocalDate fechaNacimiento,
