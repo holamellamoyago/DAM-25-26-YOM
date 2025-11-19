@@ -3,14 +3,19 @@ package AD.Tema1Resumen.STAX;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -23,7 +28,7 @@ import AD.Tema1Resumen.Clases.TipoValidacion;
 import AD.Tema1Resumen.DOM.Clases.SimpleErrorHandler;
 
 public class ConfiguracionSTAX {
-    public static XMLInputFactory configurarSTAX(String rutaArchivo, TipoValidacion tipoValidacion) {
+    public static XMLInputFactory crearInputFactory(String rutaArchivo, TipoValidacion tipoValidacion) {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         try {
             // 2. CONFIGURAR PROPIEDADES CLAVE (Validación y Seguridad)
@@ -59,6 +64,10 @@ public class ConfiguracionSTAX {
         return null; // Devuelve null si falla la creación
     }
 
+    public static XMLOutputFactory crearOutputFactory(){
+        return  XMLOutputFactory.newInstance();
+    }
+
     private static void validarConXSD(File file) {
         try {
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -87,7 +96,6 @@ public class ConfiguracionSTAX {
             reader.setErrorHandler(new SimpleErrorHandler()); // Tu manejador
             // reader.parse(new InputSource(new FileInputStream(file)));
 
-            
         } catch (Exception e) {
             System.out.println(e.toString());
         }
@@ -97,6 +105,15 @@ public class ConfiguracionSTAX {
         try {
             return factory.createXMLStreamReader(new FileInputStream(new File(rutaArchivo)));
         } catch (FileNotFoundException | XMLStreamException e) {
+            throw new ArithmeticException(e.toString());
+        }
+
+    }
+
+    public static XMLStreamWriter crearStreamWritter(XMLOutputFactory outputFactory, String rutaArchivo) {
+        try {
+            return outputFactory.createXMLStreamWriter(new FileWriter(rutaArchivo));
+        } catch (IOException | XMLStreamException e) {
             throw new ArithmeticException(e.toString());
         }
 

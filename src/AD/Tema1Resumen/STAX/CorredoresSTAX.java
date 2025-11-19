@@ -15,6 +15,7 @@ import AD.Tema1Resumen.Clases.Velocista;
 
 public class CorredoresSTAX {
     private static Corredor corredor;
+    private static Puntuacion puntuacion;
     private static String elementoActual = "";
 
     private static ArrayList<Puntuacion> puntuaciones = new ArrayList<>();
@@ -48,7 +49,9 @@ public class CorredoresSTAX {
                                 getAtributosCorredor(reader);
                                 break;
                             case "puntuacion":
-                                // TODO Coger atributos puntuacion
+                                puntuacion = new Puntuacion();
+                                puntuacion.setAnio(Integer.parseInt(reader.getAttributeValue(null, "anio")));
+                                System.out.println("** Puntuacion empieza a leerse");
                             default:
                                 break;
                         }
@@ -61,14 +64,24 @@ public class CorredoresSTAX {
                         switch (elementoActual) {
                             case "fondista":
                                 Fondista fondista = (Fondista) corredor;
+                                fondista.setPuntuaciones(new ArrayList<>(puntuaciones));
                                 corredores.add(fondista);
                                 corredor = null;
-
+                                puntuaciones.clear();
                                 break;
                             case "velocista":
                                 Velocista velocista = (Velocista) corredor;
+                                velocista.setPuntuaciones(new ArrayList<>(puntuaciones));
+                                System.out.println("** Set puntuaciones");
                                 corredores.add(velocista);
                                 corredor = null;
+                                puntuaciones.clear();
+                                break;
+                            case "puntuacion":
+                                puntuaciones.add(puntuacion);
+                                System.out.println("** Puntuacion termina a leerse");
+                                System.out.println("** Puntuaciones: " + puntuaciones);
+                                break;
 
                             default:
                                 break;
@@ -79,9 +92,14 @@ public class CorredoresSTAX {
                         String texto = reader.getText().trim();
                         switch (elementoActual) {
                             case "nombre":
-                                System.out.println("** Nombre: " + texto);
                                 if (!texto.isEmpty()) {
                                     corredor.setNombre(texto);
+                                }
+                                break;
+                            case "puntuacion":
+                                if (!texto.isEmpty()) {
+                                    System.out.println("** Puntuacion: " + texto);
+                                    puntuacion.setPuntos(Float.valueOf(texto));
                                 }
                                 break;
 

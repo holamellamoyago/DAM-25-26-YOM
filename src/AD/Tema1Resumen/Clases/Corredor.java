@@ -42,7 +42,8 @@ public abstract class Corredor {
 
     @Override
     public String toString() {
-        return "Corredor [" + dorsal + "] nombre: " + nombre;
+        return "\nCorredor [" + dorsal + "]\nNombre: " + nombre + ", códigio: " + codigo + ", equipo: " + equipo
+                + "\nPuntuaciones: " + puntuaciones + "\n";
     }
 
     public int getDorsal() {

@@ -1,7 +1,11 @@
 package AD.Tema1Resumen;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import AD.Tema1Resumen.Clases.Corredor;
+import AD.Tema1Resumen.Clases.Fondista;
 import AD.Tema1Resumen.Clases.TipoValidacion;
 import AD.Tema1Resumen.Clases.Velocista;
 import AD.Tema1Resumen.DOM.Gestores.GestorCorredorDOM;
@@ -12,7 +16,8 @@ public class Principal {
         final String rutaArchivo = "Archivos/Corredores.xml";
 
         // DOM
-        GestorCorredorDOM gestorCorredoresDOM = new GestorCorredorDOM(rutaArchivo, TipoValidacion.DTD);
+        // GestorCorredorDOM gestorCorredoresDOM = new GestorCorredorDOM(rutaArchivo,
+        // TipoValidacion.DTD);
 
         // Cargar corredores
         // System.out.println(gestorCorredoresDOM.getCorredores().get(0).getPuntuaciones());
@@ -26,6 +31,8 @@ public class Principal {
 
         // STAX ------------------------------------------
         GestorCorredoresSTAX gestorCorredoresSTAX = new GestorCorredoresSTAX(rutaArchivo, TipoValidacion.DTD);
-        gestorCorredoresSTAX.leerCorredores();
+        // ArrayList<Corredor> corredores = gestorCorredoresSTAX.leerCorredores();
+
+        gestorCorredoresSTAX.escribirCorredores(new ArrayList<>(List.of(new Fondista())));
     }
 }
