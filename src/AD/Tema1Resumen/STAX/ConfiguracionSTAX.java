@@ -85,7 +85,8 @@ public class ConfiguracionSTAX {
             // Validator validator = schema.newValidator();
 
             reader.setErrorHandler(new SimpleErrorHandler()); // Tu manejador
-            reader.parse(new InputSource(new FileInputStream(file)));
+            // reader.parse(new InputSource(new FileInputStream(file)));
+
             
         } catch (Exception e) {
             System.out.println(e.toString());

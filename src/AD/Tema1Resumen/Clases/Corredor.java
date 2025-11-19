@@ -5,16 +5,14 @@ import java.util.ArrayList;
 
 public abstract class Corredor {
     private String codigo, equipo;
-     private Integer dorsal ;
+    private Integer dorsal;
     private String nombre;
     private LocalDate fechaNacimiento;
     private ArrayList<Puntuacion> puntuaciones;
 
-    public Corredor () {
+    public Corredor() {
 
     };
-
-    
 
     public Corredor(String codigo, int dorsal, String equipo, String nombre, LocalDate fechaNacimiento,
             ArrayList<Puntuacion> puntuaciones) {
@@ -25,8 +23,6 @@ public abstract class Corredor {
         this.fechaNacimiento = fechaNacimiento;
         this.puntuaciones = puntuaciones;
     }
-
-    
 
     public Corredor(String codigo, Integer dorsal, String equipo, String nombre, LocalDate fechaNacimiento) {
         this.codigo = codigo;
@@ -44,11 +40,9 @@ public abstract class Corredor {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-
-
     @Override
     public String toString() {
-        return "Corredor [" + dorsal + "] " + nombre;
+        return "Corredor [" + dorsal + "] nombre: " + nombre;
     }
 
     public int getDorsal() {
@@ -62,6 +56,7 @@ public abstract class Corredor {
     public String getNombre() {
         return nombre;
     }
+
     public String getEquipo() {
         return equipo;
     }
@@ -85,12 +80,6 @@ public abstract class Corredor {
     public void setPuntuaciones(ArrayList<Puntuacion> puntuaciones) {
         this.puntuaciones = puntuaciones;
     }
-
-
-
-    
-
-    
 
     @Override
     public int hashCode() {
@@ -124,8 +113,6 @@ public abstract class Corredor {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-
-
 
     public void setEquipo(String equipo) {
         this.equipo = equipo;

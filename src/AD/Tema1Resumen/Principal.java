@@ -25,7 +25,7 @@ public class Principal {
         // gestorCorredoresDOM.eliminarCorredor(3);
 
         // STAX ------------------------------------------
-        GestorCorredoresSTAX gestorCorredoresSTAX = new GestorCorredoresSTAX(rutaArchivo, TipoValidacion.NO_VALIDAR);
-        // gestorCorredoresSTAX.leerCorredores();
+        GestorCorredoresSTAX gestorCorredoresSTAX = new GestorCorredoresSTAX(rutaArchivo, TipoValidacion.DTD);
+        gestorCorredoresSTAX.leerCorredores();
     }
 }

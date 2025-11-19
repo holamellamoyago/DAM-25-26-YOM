@@ -6,6 +6,7 @@ import java.io.FileWriter;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
@@ -20,14 +21,8 @@ public class GestorCorredoresSTAX {
     }
 
     public void leerCorredores() {
-        try {
-            if (reader.hasNext()) {
-                reader.next();
-                System.out.println(reader.getLocalName());
-            }
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
+        System.out.println("\n" + CorredoresSTAX.leerCorrredores(reader));
+
     }
 
 }
