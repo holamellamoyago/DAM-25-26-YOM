@@ -3,7 +3,7 @@ package AD.Tema1.Actividad7.Clases;
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Estudiante {
+public class Estudiante extends Persona {
     @XmlElement(name = "Carrera", required = true)
     private String carrera;
 
@@ -29,5 +29,8 @@ public class Estudiante {
         this.universidad = universidad;
     }
 
-    
+        @Override
+    public String toString() {
+        return "\nEstudiante: " + getNombre() + ", carrera: " + carrera + "$, email: " + getEmail();
+    }
 }

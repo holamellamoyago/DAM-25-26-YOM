@@ -17,5 +17,5 @@
         <nombre>Ana Pérez</nombre>
         <fecha_nacimiento>1995-06-02</fecha_nacimiento>
         <distancia_max>10000.0</distancia_max>
-    </fondista>
+    </fondista> 
 </corredores>

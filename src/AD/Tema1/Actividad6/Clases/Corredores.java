@@ -17,7 +17,7 @@ public class Corredores {
             @XmlElement(name = "fondista", type = Fondista.class)
     })
 
-    private ArrayList<Corredor> corredores;
+    public ArrayList<Corredor> corredores;
 
     public Corredores() {
         this.corredores = new ArrayList<>();

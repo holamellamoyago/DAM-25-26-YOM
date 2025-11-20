@@ -19,7 +19,12 @@ public class XMLJAXBUtils {
             marshaller.marshal(objeto, new File(rutaArchivo));
 
         } catch (JAXBException e) {
-            e.printStackTrace();
+            System.out.println("JAXB EXCEPTION " + e);
+            Throwable linked = e.getLinkedException();
+            if (linked != null) {
+                System.out.println("LINKED EXCEPTION: " + linked.getMessage());
+                linked.printStackTrace();
+            }
         }
     }
 
@@ -31,7 +36,13 @@ public class XMLJAXBUtils {
 
             return clase.cast(unmarshaller.unmarshal(new File(rutaArchivo)));
         } catch (JAXBException e) {
-            e.printStackTrace();
+            System.out.println("JAXB EXCEPTION " + e);
+            Throwable linked = e.getLinkedException();
+            if (linked != null) {
+                System.out.println("LINKED EXCEPTION: " + linked.getMessage());
+                linked.printStackTrace();
+            }
+
             return null;
         }
 

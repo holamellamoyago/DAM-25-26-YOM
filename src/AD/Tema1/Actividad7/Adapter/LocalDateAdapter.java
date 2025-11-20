@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
-public class LocalDateAdapter extends XmlAdapter<String, LocalDate>{
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YY");
+public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-M-yy");
 
     @Override
     public String marshal(LocalDate v) throws Exception {
@@ -23,6 +23,6 @@ public class LocalDateAdapter extends XmlAdapter<String, LocalDate>{
             return null;
         }
 
-        return LocalDate.parse(v,formatter);
+        return LocalDate.parse(v, formatter);
     }
 }

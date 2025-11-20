@@ -1,0 +1,6 @@
+E9, Celta, Patrocinadores: Nike|1500.0|2025-01-15;Adidas|2500.0|2024-03-15
+E10, Deportivo, Patrocinadores: Abanca|3000.0|2025-02-10
+E11, Lugo, Patrocinadores: Gadis|1200.0|2025-03-05;Estrella Galicia|2000.0|2025-04-01;Nike|1800.0|2025-05-10
+E5, Castilblanco, Patrocinadores: SponsorX|1000.0|2025-06-01
+E12, Celta, Patrocinadores: SponsorY|1200.0|2025-07-01
+E13, Ourense, Patrocinadores: Nike|1500.0|2025-01-15;Nike|2000.0|2025-02-20;Decathlon|800.0|2025-03-10

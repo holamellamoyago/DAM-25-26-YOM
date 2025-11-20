@@ -2,15 +2,18 @@ package AD.Tema1.Actividad7.Clases;
 
 import java.time.LocalDate;
 
+import AD.Tema1.Actividad7.Adapter.LocalDateAdapter;
 import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlSeeAlso({Trabajador.class, Estudiante.class})
 public abstract class Persona {
     @XmlElement(name = "Nombre", required = true)
     private String nombre;
 
     @XmlElement(name = "FechaNacimiento", required = true)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaNacimiento;
 
     @XmlElement(name = "Email")

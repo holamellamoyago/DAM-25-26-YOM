@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import jakarta.xml.bind.annotation.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Trabajador extends Persona {
 
     @XmlElementWrapper(name = "Telefonos")
-    @XmlElement(name = "Telefono", required = true)
+    @XmlElement(name = "Telefono", required = false)
     private ArrayList<String> telefonos;
 
     @XmlElement(name = "Salario")
@@ -32,5 +33,10 @@ public class Trabajador extends Persona {
         this.salario = salario;
     }
 
-    
+    @Override
+    public String toString() {
+        return "\nTrabajador " + getNombre() + ", salario: " + salario + "$, email: " + getEmail() + " "
+                + getFechaNacimiento();
+    }
+
 }
