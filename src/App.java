@@ -7,6 +7,7 @@ public class App {
             // operacionesIO.visualizarContenido(".");
             // operacionesIO.recorrerRecursivo("src/");
             operacionesIO.filtrarPorExtension("src/", ".txt");
+            System.out.println();
 
         } catch (Exception e) {f
             fileExceptions.noExiste(e.toString());
