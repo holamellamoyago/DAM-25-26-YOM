@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1d17e421-ffeb-4461-b6b5-a0f2d0c9ab5b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Asignaturas/DINT/.~lock.Usabilidad.odt#" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Asignaturas/DINT/Usabilidad.odt" beforeDir="false" afterPath="$PROJECT_DIR$/Asignaturas/DINT/Usabilidad.odt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ACP/Juego/records.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/ACP/Juego/records.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Aplicacion/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Clases/Corredor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Clases/Equipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Clases/Fondista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Clases/Patrocinador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Clases/Puntuacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Clases/Velocista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Logica/GestorCorredores.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Logica/GestorEquipos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Persistencia/AppendObjectOutputStream.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Persistencia/Archivo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Persistencia/CorredorWritter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Persistencia/CorredoresReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad3/Actividad3Intento2/Persistencia/EquiposRandom.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Corredor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Corredores.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Equipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Equipos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Fondista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Patrocinador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Patrocinadores.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Puntuacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/TipoValidacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Clases/Velocista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/CorredoresJAXB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/EquiposJAXB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/GestorCorredoresJAXB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/GestorEquiposJAXB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/LocalDateAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/Principal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad6/XmlJaxbUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Adapter/LocalDateAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Categorias.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Contacto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Email.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Estudiante.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Persona.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Personas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Registro.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Registros.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Telefonos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Clases/Trabajador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Persistencia/GestorRegistro.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Persistencia/RegistroJAXB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Persistencia/XMLJAXBUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad7/Principal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad8/Persistencia/EquiposTXTUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad8/Persistencia/GestorEquipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/Actividad8/Principal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/Aplicacion/PersistenciaSTAX.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/ExcepcionXML.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/PROBLEMA.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/Persistencia/ConfiguracionStAX.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/Persistencia/Cursor/CorredoresSAXCursor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/Persistencia/Cursor/EquiposSTAXCursor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/Persistencia/Cursor/XMLSTAXUtilsCursor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/Persistencia/Eventos/EquiposSTAXEventos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/Persistencia/Eventos/XMLSTAXUtilsEventos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/Persistencia/GestorCorredores.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/model/Corredor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/model/Equipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/model/Fondista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/model/Patrocinador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/model/Puntuacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/model/TipoValidacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1/PersistenciaSTAX/model/Velocista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/ArchivosRandom/Clases/AppendObjectOutputStream.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/ArchivosRandom/Clases/Archivo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/ArchivosRandom/Persistencia/CorredorWritter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/ArchivosRandom/Persistencia/CorredoresReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/ArchivosRandom/Persistencia/EquiposRandom.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/Clases/Corredor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/Clases/Equipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/Clases/Fondista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/Clases/Patrocinador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/Clases/Puntuacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/Clases/TipoValidacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/Clases/Velocista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/DOM/Clases/ExcepcionXML.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/DOM/Clases/SimpleErrorHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/DOM/Gestores/GestorCorredorDOM.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/DOM/Gestores/XMLDOMUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/Principal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/STAX/ConfiguracionSTAX.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/STAX/CorredoresSTAX.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AD/Tema1Resumen/STAX/GestorCorredoresSTAX.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="360dpcLvadiFYonM2dd5jTeewuI" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.Juego.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hola_mundo.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/yotermart/Repositorios/DAM-25-26-YOM&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\yotermart\Repositorios\DAM-25-26-YOM\src\ACP" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PY-252.27397.106" />
+        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1d17e421-ffeb-4461-b6b5-a0f2d0c9ab5b" name="Changes" comment="" />
+      <created>1764147616997</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1764147616997</updated>
+      <workItem from="1764245511428" duration="708000" />
+      <workItem from="1764246336586" duration="249000" />
+      <workItem from="1764246983962" duration="14000" />
+      <workItem from="1764332457892" duration="1886000" />
+      <workItem from="1764573776584" duration="258000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/DAM_25_26_YOM$main.coverage" NAME="main Coverage Results" MODIFIED="1764573953450" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ACP/Juego" />
+  </component>
+</project>
