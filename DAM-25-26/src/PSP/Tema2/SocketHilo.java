@@ -37,7 +37,7 @@ public class SocketHilo extends Thread {
             }
 
         } catch (IOException e) {
-            throw new ArithmeticException("No se encuentra el servidor");
+            //throw new ArithmeticException("No se encuentra el servidor");
         }
     }
 }

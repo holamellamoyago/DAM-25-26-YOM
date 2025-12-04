@@ -17,28 +17,38 @@ public class Cliente {
 
         Socket socket;
         try {
-             socket = new Socket(servidor, puerto);
+            socket = new Socket(servidor, puerto);
         } catch (Exception e) {
             throw new ArithmeticException("No se encuentra el servidor");
         }
-
 
         DataInputStream in = new DataInputStream(socket.getInputStream());
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
         System.out.println("Conectado con el servidor");
 
         while (!mensaje.equalsIgnoreCase(FIN)) {
+
             // ENVIAMOS ...
             mensaje = sc.nextLine();
             out.writeUTF(mensaje);
             System.out.println("Cliente envía: " + mensaje);
+
             // RECIBIMOS ...
             String strRecibido = in.readUTF();
             System.out.println("Cliente recibe: " + strRecibido);
-            if (!mensaje.equals(strRecibido))
+
+            if (!mensaje.equals(strRecibido)) {
                 System.out.println("Ha ocurrido un problema: las cadenas son distintas.");
+            }
+
+            // Si es fin cerramos conexion
+            if (strRecibido.equals(FIN) && socket.isConnected()) {
+                socket.close();
+                System.out.println("Se cierra el cliente..");
+            }
             System.out.println("**************************************");
         }
         socket.close();
+        sc.close();
     }
 }
