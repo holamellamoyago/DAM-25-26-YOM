@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package sql.dam.pkg25.pkg26;
+
 import java.sql.*;
 
 /**
@@ -14,7 +14,7 @@ public class Main {
         String baseDatos = "BDEMPRESA25";
         String usuario;
         String contrasena = "abc123.";
-        TipoSGBD tipo = TipoSGBD.SQLITE;
+        TipoSGBD tipo = TipoSGBD.SQLSERVER;
         
         usuario = switch (tipo) {
             case MYSQL -> "root";

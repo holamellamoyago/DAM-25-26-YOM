@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package sql.dam.pkg25.pkg26;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,7 +27,7 @@ public class GestorConexion {
                 "jdbc:sqlserver://localhost:1433;" + "databaseName=" + baseDatos + ";" + "encrypt=true;" + "trustServerCertificate=true";
             case MYSQL ->
                 "jdbc:mysql://localhost:3306/" + baseDatos + "?serverTimezone=UTC";
-                //"jdbc:mysql://localhost:3306/" + baseDatos;
+            //"jdbc:mysql://localhost:3306/" + baseDatos;
             case SQLITE ->
                 "jdbc:sqlite:" + baseDatos;
             default ->
@@ -49,7 +49,7 @@ public class GestorConexion {
     public static String obtenerMetaDatos(Connection con) {
         try {
             var meta = con.getMetaData();
-            
+
             StringBuilder sb = new StringBuilder();
             sb.append("Driver name: " + meta.getDriverName()).append("\n");
             sb.append("Driver version: " + meta.getDriverVersion()).append("\n");
@@ -64,4 +64,13 @@ public class GestorConexion {
         }
     }
 
+    public static ResultSet ejecutarConsulta(Connection conn, String sqlConsulta, ArrayList<Object> parametros) throws SQLException, SQLException {
+        PreparedStatement stmt = conn.prepareStatement(sqlConsulta);
+
+        for (int i = 0; i < parametros.size(); i++) {
+            stmt.setObject(i, parametros.get(i));
+        }
+
+        return stmt.executeQuery();
+    }
 }
