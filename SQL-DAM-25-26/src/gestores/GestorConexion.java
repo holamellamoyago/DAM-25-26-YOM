@@ -1,10 +1,12 @@
-/*
+package gestores;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
 import java.sql.*;
 import java.util.ArrayList;
+
+import clases.*;
 
 /**
  *
@@ -24,14 +26,11 @@ public class GestorConexion {
         String url;
         url = switch (tipo) {
             case SQLSERVER ->
-                "jdbc:sqlserver://localhost:1433;" + "databaseName=" + baseDatos + ";" + "encrypt=true;" + "trustServerCertificate=true";
-            case MYSQL ->
-                "jdbc:mysql://localhost:3306/" + baseDatos + "?serverTimezone=UTC";
+                    "jdbc:sqlserver://localhost:1433;" + "databaseName=" + baseDatos + ";" + "encrypt=true;" + "trustServerCertificate=true";
+            case MYSQL -> "jdbc:mysql://localhost:3306/" + baseDatos + "?serverTimezone=UTC";
             //"jdbc:mysql://localhost:3306/" + baseDatos;
-            case SQLITE ->
-                "jdbc:sqlite:" + baseDatos;
-            default ->
-                "";
+            case SQLITE -> "jdbc:sqlite:" + baseDatos;
+            default -> "";
         };
         try {
             if (tipo == TipoSGBD.SQLITE) {
@@ -72,5 +71,11 @@ public class GestorConexion {
         }
 
         return stmt.executeQuery();
+    }
+
+    public static void cerrarConexion(Connection conn) throws SQLException {
+        if (conn != null) {
+            conn.close();
+        }
     }
 }

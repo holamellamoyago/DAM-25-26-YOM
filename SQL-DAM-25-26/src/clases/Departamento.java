@@ -9,9 +9,9 @@ package clases;
  * @author usuario
  */
 public class Departamento {
-    int numDepartamento;
-    String nomeDepartamento;
-    String nssDirector;
+    private int numDepartamento;
+    private String nomeDepartamento;
+    private String nssDirector;
 
     public Departamento() {
     }
@@ -45,6 +45,9 @@ public class Departamento {
     public void setNssDirector(String nssDirector) {
         this.nssDirector = nssDirector;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "DEPARTAMENTO: " + nomeDepartamento + "[" + numDepartamento + "] director: " + nssDirector;
+    }
 }

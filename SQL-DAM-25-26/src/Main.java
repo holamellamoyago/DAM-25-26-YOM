@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import clases.TipoSGBD;
+import gestores.GestorConexion;
+import gestores.GestorEmpresa;
+
 import java.sql.*;
 
 /**
@@ -23,10 +27,13 @@ public class Main {
             default -> throw new AssertionError();
         };
 
-        Connection connection =  GestorConexion.getConnection(tipo, baseDatos,usuario,contrasena);
-        
-        System.out.println(GestorConexion.obtenerMetaDatos(connection));
+        //Connection connection =  GestorConexion.getConnection(tipo, baseDatos,usuario,contrasena);
+        //System.out.println(GestorConexion.obtenerMetaDatos(connection));
+        //System.out.println(connection);
 
-        System.out.println(connection);
+
+        GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos,usuario, contrasena);
+        gestorEmpresa.obtenerDepartamentos();
+
     }
 }
