@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import clases.Departamento;
 import clases.TipoSGBD;
 import gestores.GestorConexion;
 import gestores.GestorEmpresa;
@@ -33,7 +34,21 @@ public class Main {
 
 
         GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos,usuario, contrasena);
-        gestorEmpresa.obtenerDepartamentos();
+        System.out.println(gestorEmpresa.obtenerDepartamentos());
+
+        Departamento departamento = new Departamento( "Inteligencia Artificial", "1111111");
+        gestorEmpresa.anadirNuevoDepartamento(departamento);
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+

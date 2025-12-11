@@ -13,14 +13,18 @@ public class Departamento {
     private String nomeDepartamento;
     private String nssDirector;
 
-    public Departamento() {
-    }
-
     public Departamento(int numDepartamento, String nomeDepartamento, String nssDirector) {
         this.numDepartamento = numDepartamento;
         this.nomeDepartamento = nomeDepartamento;
         this.nssDirector = nssDirector;
     }
+
+    public Departamento(String nomeDepartamento, String nssDirector) {
+        this.nomeDepartamento = nomeDepartamento;
+        this.nssDirector = nssDirector;
+    }
+
+    public Departamento() {}
 
     public int getNumDepartamento() {
         return numDepartamento;

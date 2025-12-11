@@ -73,6 +73,16 @@ public class GestorConexion {
         return stmt.executeQuery();
     }
 
+    public static ResultSet insertarDatos(Connection conn, String sqlConsulta, ArrayList<Object> parametros) throws SQLException, SQLException {
+        PreparedStatement stmt = conn.prepareStatement(sqlConsulta);
+
+        for (int i = 1; i < parametros.size(); i++) {
+            stmt.setObject(i, parametros.get(i));
+        }
+
+        return stmt.executeQuery();
+    }
+
     public static void cerrarConexion(Connection conn) throws SQLException {
         if (conn != null) {
             conn.close();

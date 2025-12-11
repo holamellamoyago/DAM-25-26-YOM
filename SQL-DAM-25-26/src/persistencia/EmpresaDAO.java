@@ -46,4 +46,37 @@ public class EmpresaDAO {
         return lista;
     }
 
+    public void anadirDepartamento (Departamento dp) {
+        final String SQL = "INSERT INTO DEPARTAMENTO (NumDepartamento, NomeDepartamento, NSSDirector) VALUES (DEFAULT, ?, ?)";
+        ArrayList<Object> infoDepa = new ArrayList<>(List.of("DEPARTAMENTO", dp.getNomeDepartamento(), dp.getNssDirector()));
+
+        try {
+//            GestorConexion.ejecutarConsulta(conn, SQL, infoDepa);
+//            PreparedStatement ps = conn.prepareStatement(SQL);
+//            ps.setInt(0, dp.getNumDepartamento());
+
+            GestorConexion.insertarDatos(conn, SQL, infoDepa);
+
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el departamento");
+            throw new RuntimeException(e);
+        }
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
