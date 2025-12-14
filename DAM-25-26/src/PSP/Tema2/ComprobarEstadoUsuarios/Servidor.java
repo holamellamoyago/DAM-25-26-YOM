@@ -32,12 +32,14 @@ public class Servidor {
             try {
                 Socket socket = serverSocket.accept();
                 new ConexionServidor(gestorConexiones, socket).start();
+                
             } catch (IOException e) {
-                System.out.println("El servidor ha caído");
+                if (!salir) {
+                    System.out.println("El servidor ha caído");
+                }
             }
-            
-        }
 
+        }
 
     }
 }
