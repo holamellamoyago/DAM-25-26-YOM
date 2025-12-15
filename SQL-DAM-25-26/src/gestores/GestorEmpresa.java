@@ -27,8 +27,13 @@ public class GestorEmpresa {
             return;
         }
 
+        //empresaDAO.anadirDepartamento(departamento);
         empresaDAO.anadirDepartamento(departamento);
         System.out.println("Departamento anadido");
+    }
+
+    public void añadirTablaFamiliares(){
+        empresaDAO.crearTablaFamiliar();
     }
 
 

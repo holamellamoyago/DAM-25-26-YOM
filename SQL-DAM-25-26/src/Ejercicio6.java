@@ -5,21 +5,18 @@
 
 import clases.Departamento;
 import clases.TipoSGBD;
-import gestores.GestorConexion;
 import gestores.GestorEmpresa;
-
-import java.sql.*;
 
 /**
  *
  * @author usuario
  */
-public class Main {
+public class Ejercicio6 {
     public static void main(String[] args) {
         String baseDatos = "BDEMPRESA25";
         String usuario;
         String contrasena = "abc123.";
-        TipoSGBD tipo = TipoSGBD.SQLSERVER;
+        TipoSGBD tipo = TipoSGBD.MYSQL;
         
         usuario = switch (tipo) {
             case MYSQL -> "root";
@@ -38,6 +35,9 @@ public class Main {
 
         Departamento departamento = new Departamento( "Inteligencia Artificial", "1111111");
         gestorEmpresa.anadirNuevoDepartamento(departamento);
+
+        System.out.println();
+        System.out.println(gestorEmpresa.obtenerDepartamentos());
 
     }
 }

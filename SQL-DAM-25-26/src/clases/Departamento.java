@@ -4,6 +4,8 @@
  */
 package clases;
 
+import java.util.Objects;
+
 /**
  *
  * @author usuario
@@ -53,5 +55,17 @@ public class Departamento {
     @Override
     public String toString() {
         return "DEPARTAMENTO: " + nomeDepartamento + "[" + numDepartamento + "] director: " + nssDirector;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Departamento that = (Departamento) o;
+        return Objects.equals(nomeDepartamento, that.nomeDepartamento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(nomeDepartamento);
     }
 }

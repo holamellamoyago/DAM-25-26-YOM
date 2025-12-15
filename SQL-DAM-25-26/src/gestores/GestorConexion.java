@@ -14,13 +14,6 @@ import clases.*;
  */
 public class GestorConexion {
 
-    /*
-
-    String driverClass = switch (tipo) {
-        case SQLSERVER -> "com.icrosoft.sqlserver.jdbc.SQLSer"
-    }
-
-     */
     public static Connection getConnection(TipoSGBD tipo, String baseDatos, String usuario, String contrasena) {
         System.out.println(usuario);
         String url;
@@ -66,16 +59,6 @@ public class GestorConexion {
     public static ResultSet ejecutarConsulta(Connection conn, String sqlConsulta, ArrayList<Object> parametros) throws SQLException, SQLException {
         PreparedStatement stmt = conn.prepareStatement(sqlConsulta);
 
-        for (int i = 0; i < parametros.size(); i++) {
-            stmt.setObject(i, parametros.get(i));
-        }
-
-        return stmt.executeQuery();
-    }
-
-    public static ResultSet insertarDatos(Connection conn, String sqlConsulta, ArrayList<Object> parametros) throws SQLException, SQLException {
-        PreparedStatement stmt = conn.prepareStatement(sqlConsulta);
-
         for (int i = 1; i < parametros.size(); i++) {
             stmt.setObject(i, parametros.get(i));
         }
@@ -83,9 +66,103 @@ public class GestorConexion {
         return stmt.executeQuery();
     }
 
+    public static void insertarDatos(Connection conn, String sqlConsulta, Object... parametros) throws SQLException, SQLException {
+
+        try (PreparedStatement stmt = conn.prepareStatement(sqlConsulta)) {
+            conn.setAutoCommit(false);
+            for (int i = 0; i < parametros.length; i++) {
+                stmt.setObject(i + 1, parametros[i]);
+            }
+
+            stmt.executeUpdate();
+            conn.commit();
+
+        } catch (Exception e) {
+            conn.rollback();
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+//    public static void insertarDatosMultiples(Connection conn, String sqlConsulta, Object... parametros) throws SQLException, SQLException {
+//
+//        conn.setAutoCommit(false);
+//
+//        try (PreparedStatement stmt = conn.prepareStatement(sqlConsulta)) {
+//
+//            for (int i = 0; i < parametros.length; i++) {
+//                stmt.setObject(i + 1, parametros[i]);
+//            }
+//
+//            stmt.addBatch();
+//
+//            stmt.executeBatch();
+//            System.out.println(("Hasta qui"));
+//            conn.commit();
+//
+//        } catch (Exception e) {
+//            conn.rollback();
+//            e.printStackTrace();
+//        }
+//
+//    }
+
+
     public static void cerrarConexion(Connection conn) throws SQLException {
         if (conn != null) {
             conn.close();
+        }
+    }
+
+    public static void borrarTablas(Connection conn, String... tablas) {
+        try {
+            conn.setAutoCommit(false);
+
+            try (Statement stmt = conn.createStatement()) {
+                for (String tabla : tablas) {
+                    if (tablaExiste(conn, tabla)) {
+                        stmt.addBatch("DROP TABLE " + tabla);
+                    }
+                }
+
+                stmt.executeBatch();
+                conn.commit();
+            } catch (SQLException ex) {
+                conn.rollback();
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static boolean tablaExiste(Connection conn, String tabla)  {
+        try (ResultSet rs = conn.getMetaData().getTables(null, null, tabla, null)) {
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println("Error al consultar tablas existentes");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void ejecutarLoteTransacioneal(Connection conn, String... sentenciasSQL) {
+        try {
+            conn.setAutoCommit(false);
+            Statement stmt = conn.createStatement();
+
+            for (String sql : sentenciasSQL) {
+                stmt.addBatch(sql);
+            }
+
+            stmt.executeBatch();
+            conn.commit();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
