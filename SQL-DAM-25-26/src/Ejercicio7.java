@@ -21,9 +21,11 @@ public class Ejercicio7 {
         //System.out.println(connection);
 
 
-        GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos,usuario, contrasena);
+        GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos, usuario, contrasena);
 
         gestorEmpresa.añadirTablaFamiliares();
+
+
 
     }
 }

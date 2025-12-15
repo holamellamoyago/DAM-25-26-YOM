@@ -93,33 +93,37 @@ public class EmpresaDAO {
     }
 
     public void crearTablaFamiliar() {
-        if (GestorConexion.tablaExiste(conn, "FAMILIARES")){
+        if (GestorConexion.tablaExiste(conn, "FAMILIARES")) {
             System.out.println("Ya existe la tabla FAMILIARES");
             return;
         }
 
 
-
-        String familiar = "" +
-                "CREATE TABLE FAMILIAR " +
-                "NSS_empregado VARCHAR(15) NOT NULL," +
-                "Numero SMALLINT NOT NULL AUTO_INCREMENT" +
-                "";
+        String familiar =
+                "CREATE TABLE FAMILIAR (" +
+                        "Numero SMALLINT NOT NULL AUTO_INCREMENT," +
+                        "NSS_familiar VARCHAR(15) NOT NULL, " +
+                        "NSS_empregado VARCHAR(15) NOT NULL," +
+                        "Nome VARCHAR(15) NOT NULL," +
+                        "Apelido1 VARCHAR(15) NOT NULL," +
+                        "Apelido2 VARCHAR(15) NULL," +
+                        "Parentesco VARCHAR(20) NOT NULL," +
+                        "Sexo CHAR(1) NOT NULL," +
+                        "constraint PK_FAMILIAR PRIMARY KEY (Numero))";
         //DataNacemento DATE,
 
 
-        String pkFamiliar = "" +
-                "ALTER TABLE FAMILIAR " +
-                "ADD CONSTRAINT PK_FAMILIAR";
+        String pkFamiliar = "ALTER TABLE FAMILIAR " +
+                "ADD CONSTRAINT PK_FAMILIAR PRIMARY KEY (Numero)";
 
-        String uqFamiliar = "" +
+        String uqFamiliar = "ALTER TABLE FAMILIAR" +
+                " ADD CONSTRAINT UQ_FAMILIAR_NSS UNIQUE (NSS_familiar)";
+
+        String eqSexo = "" +
                 "ALTER TABLE FAMILIAR" +
-                "ADD CONSTRAINT UQ_FAMILIAR_NSS UNIQUE (----)";
+                    " ADD CONSTRAINT CK_SEXO_FAMILIAR CHECK (Sexo = 'H' OR Sexo = 'M') ";
 
-        // TODO checksexxo
-        /*
-
-         */
+        GestorConexion.ejecutarLoteTransacioneal(conn, familiar, uqFamiliar, eqSexo);
 
     }
 
@@ -132,6 +136,23 @@ public class EmpresaDAO {
          * CONSTRAINT PK , UK, FK ....
          * */
     }
+
+public boolean comprobarExistenciaTabla(String nombreTabla) {
+    final String SQL = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
+
+
+    try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, SQL, nombreTabla)) {
+        if (rs.next()) {
+            return true;
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al comprobar la existencia de la tabla");
+        e.printStackTrace();
+    }
+
+    return false;
+}
 
 
 }

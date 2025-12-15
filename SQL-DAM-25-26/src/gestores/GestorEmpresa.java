@@ -33,10 +33,17 @@ public class GestorEmpresa {
     }
 
     public void añadirTablaFamiliares(){
+
+        empresaDAO.comprobarExistenciaTabla()
+
         empresaDAO.crearTablaFamiliar();
+        System.out.println("Tabla añadida");
     }
 
 
+    public void añadirTablaVehiculos() {
+        //empresaDAO
+    }
 
 
 }

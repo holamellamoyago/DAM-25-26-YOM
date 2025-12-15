@@ -1,7 +1,7 @@
 package gestores;/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+                 * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+                 * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+                 */
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,9 +19,10 @@ public class GestorConexion {
         String url;
         url = switch (tipo) {
             case SQLSERVER ->
-                    "jdbc:sqlserver://localhost:1433;" + "databaseName=" + baseDatos + ";" + "encrypt=true;" + "trustServerCertificate=true";
+                "jdbc:sqlserver://localhost:1433;" + "databaseName=" + baseDatos + ";" + "encrypt=true;"
+                        + "trustServerCertificate=true";
             case MYSQL -> "jdbc:mysql://localhost:3306/" + baseDatos + "?serverTimezone=UTC";
-            //"jdbc:mysql://localhost:3306/" + baseDatos;
+            // "jdbc:mysql://localhost:3306/" + baseDatos;
             case SQLITE -> "jdbc:sqlite:" + baseDatos;
             default -> "";
         };
@@ -56,7 +57,8 @@ public class GestorConexion {
         }
     }
 
-    public static ResultSet ejecutarConsulta(Connection conn, String sqlConsulta, ArrayList<Object> parametros) throws SQLException, SQLException {
+    public static ResultSet ejecutarConsulta(Connection conn, String sqlConsulta, ArrayList<Object> parametros)
+            throws SQLException, SQLException {
         PreparedStatement stmt = conn.prepareStatement(sqlConsulta);
 
         for (int i = 1; i < parametros.size(); i++) {
@@ -66,7 +68,19 @@ public class GestorConexion {
         return stmt.executeQuery();
     }
 
-    public static void insertarDatos(Connection conn, String sqlConsulta, Object... parametros) throws SQLException, SQLException {
+    public static ResultSet ejecutarConsulta(Connection conn, String sqlConsulta, Object... parametros)
+            throws SQLException, SQLException {
+        PreparedStatement stmt = conn.prepareStatement(sqlConsulta);
+
+        for (int i = 0; i < parametros.length; i++) {
+            stmt.setObject(i + 1, parametros[i]);
+        }
+
+        return stmt.executeQuery();
+    }
+
+    public static void insertarDatos(Connection conn, String sqlConsulta, Object... parametros)
+            throws SQLException, SQLException {
 
         try (PreparedStatement stmt = conn.prepareStatement(sqlConsulta)) {
             conn.setAutoCommit(false);
@@ -84,31 +98,29 @@ public class GestorConexion {
 
     }
 
-
-
-//    public static void insertarDatosMultiples(Connection conn, String sqlConsulta, Object... parametros) throws SQLException, SQLException {
-//
-//        conn.setAutoCommit(false);
-//
-//        try (PreparedStatement stmt = conn.prepareStatement(sqlConsulta)) {
-//
-//            for (int i = 0; i < parametros.length; i++) {
-//                stmt.setObject(i + 1, parametros[i]);
-//            }
-//
-//            stmt.addBatch();
-//
-//            stmt.executeBatch();
-//            System.out.println(("Hasta qui"));
-//            conn.commit();
-//
-//        } catch (Exception e) {
-//            conn.rollback();
-//            e.printStackTrace();
-//        }
-//
-//    }
-
+    // public static void insertarDatosMultiples(Connection conn, String
+    // sqlConsulta, Object... parametros) throws SQLException, SQLException {
+    //
+    // conn.setAutoCommit(false);
+    //
+    // try (PreparedStatement stmt = conn.prepareStatement(sqlConsulta)) {
+    //
+    // for (int i = 0; i < parametros.length; i++) {
+    // stmt.setObject(i + 1, parametros[i]);
+    // }
+    //
+    // stmt.addBatch();
+    //
+    // stmt.executeBatch();
+    // System.out.println(("Hasta qui"));
+    // conn.commit();
+    //
+    // } catch (Exception e) {
+    // conn.rollback();
+    // e.printStackTrace();
+    // }
+    //
+    // }
 
     public static void cerrarConexion(Connection conn) throws SQLException {
         if (conn != null) {
@@ -133,14 +145,13 @@ public class GestorConexion {
                 conn.rollback();
             }
 
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public static boolean tablaExiste(Connection conn, String tabla)  {
+    public static boolean tablaExiste(Connection conn, String tabla) {
         try (ResultSet rs = conn.getMetaData().getTables(null, null, tabla, null)) {
             return rs.next();
         } catch (SQLException e) {
@@ -162,7 +173,14 @@ public class GestorConexion {
             conn.commit();
 
         } catch (SQLException e) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Error al hacer el rollback");
+                throw new RuntimeException(ex);
+            }
             throw new RuntimeException(e);
         }
     }
+
 }
