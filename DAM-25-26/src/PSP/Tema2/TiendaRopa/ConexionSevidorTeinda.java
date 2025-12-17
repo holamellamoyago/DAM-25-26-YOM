@@ -5,6 +5,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class ConexionSevidorTeinda extends Thread {
     private Socket socket;
     private DataInputStream in;
@@ -30,18 +33,17 @@ public class ConexionSevidorTeinda extends Thread {
             try {
                 mensaje = in.readUTF();
 
-                String[] mensajes =  mensaje.split(" ");
+                String[] mensajes = mensaje.split(" ");
 
                 switch (mensajes[0].toUpperCase()) {
-                    case "COMPRAR":
-                        
+                    case "STOCK":
+                        out.writeUTF(transformarJSON());
                         break;
-                
+
                     default:
                         break;
                 }
                 System.out.println(mensaje);
-
 
             } catch (IOException e) {
                 System.out.println("Problemas leyendo el mensaje");
@@ -50,6 +52,21 @@ public class ConexionSevidorTeinda extends Thread {
         }
     }
 
+    private String transformarJSON() {
+        JSONArray jsonArray = new JSONArray(Inventario.productos.length);
 
+        for (Producto pro : Inventario.productos) {
+            JSONObject obj = new JSONObject(pro);
+
+            obj.put("titulo", pro.getTitulo());
+            obj.put("subtitulo", pro.getSubtitulo());
+            obj.put("rutaImagen", pro.getRutaImagen());
+            obj.put("precio", pro.getPrecio());
+
+            jsonArray.put(obj);
+        }
+
+        return jsonArray.toString();
+    }
 
 }
