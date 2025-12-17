@@ -4,15 +4,15 @@
 
 -- Define o nome da base de datos
 DECLARE @dbName NVARCHAR(128)
-SET @dbName = N'BDEMPRESA25';
+SET @dbName = 'BDEMPRESA25';
 
 
 -- Comproba se a base de datos existe e bórraa (Usando a vista de catálogo sys.databases)
 IF EXISTS (SELECT name FROM sys.databases WHERE name = @dbName)
 BEGIN
     -- Forzar a desconexión de todos os usuarios para permitir o borrado
-    ALTER DATABASE EMPRESA25 SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE EMPRESA25;
+    ALTER DATABASE BDEMPRESA25 SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE BDEMPRESA25;
     PRINT 'Base de datos BDEMPRESA25 borrada con éxito.';
 END
 GO

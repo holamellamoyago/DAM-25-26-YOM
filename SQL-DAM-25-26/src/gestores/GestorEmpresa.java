@@ -1,11 +1,9 @@
 package gestores;
 
-import clases.Departamento;
 import clases.TipoSGBD;
 import persistencia.EmpresaDAO;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
 public class GestorEmpresa {
 
@@ -17,32 +15,8 @@ public class GestorEmpresa {
         empresaDAO = new EmpresaDAO(conn);
     }
 
-    public ArrayList<Departamento> obtenerDepartamentos() {
-        return empresaDAO.mostrarDepartamentos();
-    }
-
-    public void anadirNuevoDepartamento(Departamento departamento) {
-        if (obtenerDepartamentos().contains(departamento)) {
-            System.out.println("Departamento ya existe");
-            return;
-        }
-
-        //empresaDAO.anadirDepartamento(departamento);
-        empresaDAO.anadirDepartamento(departamento);
-        System.out.println("Departamento anadido");
-    }
-
-    public void añadirTablaFamiliares(){
-
-        empresaDAO.comprobarExistenciaTabla()
-
-        empresaDAO.crearTablaFamiliar();
-        System.out.println("Tabla añadida");
-    }
-
-
-    public void añadirTablaVehiculos() {
-        //empresaDAO
+    public void ejercicio1(){
+        final 
     }
 
 
