@@ -1,31 +1,29 @@
-package PSP.Tema2.TiendaRopa;
+package PSP.Tema2.TiendaRopaRegular;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Servidor {
-    private static ServerSocket serverSocket;
-    private static boolean salir = false;
+    public static boolean salir = false;
 
     public static void main(String[] args) {
+        ServerSocket serverSocket = null;
 
         try {
             serverSocket = new ServerSocket(Config.NUM_PUERTO);
         } catch (IOException e) {
-            System.out.println("Problemas al levantar el servidor");
+            System.out.println("Error al levantar el servidor");
             e.printStackTrace();
         }
 
-        System.out.println("Servidor levantado tiendas");
-
         while (!salir) {
             try {
-                new ConexionSevidorTeinda(serverSocket.accept()).start();
+                Socket socket = serverSocket.accept();
             } catch (IOException e) {
-                System.out.println("Problemas al crear la conexion con un socket");
+                System.out.println("Problema al aceptar la conexión");
                 e.printStackTrace();
             }
-            ;
         }
 
     }

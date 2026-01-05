@@ -1,4 +1,4 @@
-package PSP.Tema2.TiendaRopa;
+package PSP.Tema2.TiendaRopaRegular;
 
 public class Config {
     public final static int NUM_PUERTO = 3000;
@@ -8,4 +8,7 @@ public class Config {
     
     public final static String CERRAR =  "Cerrar Tienda";
     public final static String APAGAR = "Apagar";
+
+    String erComando = "([a-zñ]+)\\s+([a-zñ]+)\\s+(\\d+)";
+
 }
