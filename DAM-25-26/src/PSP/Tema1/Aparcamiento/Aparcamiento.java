@@ -1,35 +1,48 @@
-package PSP.Tema1.Aparcamiento;
+package PSP.Tema1.aparcamiento;
 
 public class Aparcamiento {
-    final static int NUM_PLAZAS = 10;
-    public static Plaza[] plazas = new Plaza[NUM_PLAZAS];
+    private final int PLAZAS_TOTALES = 4;
+    private Conductor[] plazas;
 
     public Aparcamiento() {
-        for (int i = 0; i < NUM_PLAZAS; i++) {
-            plazas[i] = new Plaza(i);
-        }
+        this.plazas = new Conductor[PLAZAS_TOTALES];
     }
 
-    public synchronized Plaza obtenerPlaza(Conductor conductor) {
-        for (int i = 0; i < plazas.length; i++) {
-            if (!plazas[i].ocupada) {
-                plazas[i].ocupada = true;
-                plazas[i].conductor = conductor;
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("Aparcamiento: \n");
 
-                System.out.println(conductor + " obtenió la " + plazas[i]);
-                return plazas[i];
+        for (int i = 0; i < plazas.length; i++) {
+            if (plazas[i] != null) {
+                str.append("[OCUPADA] | ");
+            } else {
+                str.append("[LIBRE] | ");
             }
         }
 
-        return null;
+        return str.toString();
     }
 
-    public synchronized void devolverPlaza(Conductor conductor, int numeroPlaza) {
-        plazas[numeroPlaza].ocupada = false;
-        System.out.println(conductor + " el conductor deja la plaza " + plazas[numeroPlaza]);
-        
-        plazas[numeroPlaza].conductor = null;
+    public synchronized boolean ocuparPlaza(Conductor conductor) {
+        for (int i = 0; i < plazas.length; i++) {
+            if (plazas[i] == null) {
+                plazas[i] = conductor;
+                return true;
+            }
+        }
 
-        notify();
+        return false;
     }
+
+    public void dejarPlaza(Conductor conductor) {
+        for (int i = 0; i < plazas.length; i++) {
+            if (plazas[i] == conductor) {
+                plazas[i] = null;
+                return;
+            }
+        }
+
+        System.out.println("Problemas al dejar la plaza del conductor " + conductor);
+    }
+
 }

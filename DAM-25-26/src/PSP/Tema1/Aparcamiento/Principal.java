@@ -1,23 +1,22 @@
-package PSP.Tema1.Aparcamiento;
+package PSP.Tema1.aparcamiento;
 
 public class Principal {
-    final static int TOTAL_CONDUCTORES = 50;
-    public static Conductor[] conductores = new Conductor[TOTAL_CONDUCTORES];
 
     public static void main(String[] args) {
+        final int TOTAL_CONDUCTORES = 50;
+        
         Aparcamiento aparcamiento = new Aparcamiento();
-        for (int i = 0; i < TOTAL_CONDUCTORES; i++) {
+        System.out.println(aparcamiento.toString());
+
+        Conductor[] conductores = new Conductor[TOTAL_CONDUCTORES];
+
+
+        for (int i = 0; i < conductores.length; i++) {
             conductores[i] = new Conductor(i, aparcamiento);
             conductores[i].start();
         }
 
+        
 
-        for (Conductor plaza : conductores) {
-            try {
-                plaza.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

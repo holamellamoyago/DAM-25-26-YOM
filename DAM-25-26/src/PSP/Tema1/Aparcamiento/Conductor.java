@@ -1,42 +1,73 @@
-package PSP.Tema1.Aparcamiento;
+package PSP.Tema1.aparcamiento;
 
 import java.util.Random;
 
 public class Conductor extends Thread {
-    Aparcamiento aparcamiento;
+    private int id;
+    private boolean estanciaTerminada;
+    private Aparcamiento aparcamiento;
 
-    public Conductor(int i, Aparcamiento aparcamiento) {
-        super("Conductor" + String.valueOf(i));
+    public Conductor(int id, Aparcamiento aparcamiento) {
         this.aparcamiento = aparcamiento;
+        this.estanciaTerminada = false;
+        this.id = id;
     }
 
     @Override
     public void run() {
-        Plaza plaza;
 
-        while ((plaza = aparcamiento.obtenerPlaza(this)) == null) {
-            try {
-                synchronized (aparcamiento) {
-                    aparcamiento.wait();
+        while (!estanciaTerminada) {
+            
+            if (aparcamiento.ocuparPlaza(this)) {
+                try {
+                    System.out.println("El conductor " + id + " ocupa plaza de aparcamiento.");
+                    System.out.println(aparcamiento.toString());
+
+                    sleep(new Random().nextInt(500));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+                estanciaTerminada = true;
+                System.out.println("El conductor " + id + " dejó su plaza de aparcamiento.");
+
+                synchronized (aparcamiento) {
+                    aparcamiento.notify();
+                }
+
+            } else {
+                synchronized (aparcamiento) {
+                    try {
+                        aparcamiento.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
-
-        try {
-            sleep(new Random().nextInt(500) + 2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        aparcamiento.devolverPlaza(this, plaza.numeroPlaza);
 
     }
 
     @Override
-    public String toString() {
-        return getName();
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Conductor other = (Conductor) obj;
+        if (id != other.id)
+            return false;
+        return true;
     }
 
 }
