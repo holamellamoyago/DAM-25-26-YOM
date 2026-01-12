@@ -29,6 +29,7 @@ public class Conductor extends Thread {
                 }
 
                 estanciaTerminada = true;
+                aparcamiento.dejarPlaza(this);
                 System.out.println("El conductor " + id + " dejó su plaza de aparcamiento.");
 
                 synchronized (aparcamiento) {
