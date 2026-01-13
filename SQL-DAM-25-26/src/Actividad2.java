@@ -33,7 +33,11 @@ public class Actividad2 {
         familiar.setNombre("Yago");
         familiar.setApelido1("Otero");
 
-        gestorEmpresa.anadirFamiliar(familiar);
+        //gestorEmpresa.anadirFamiliar(familiar);
+
+        // Ejercicio 4. 
+        gestorEmpresa.eliminarProxecto(11);
+
         
 
 

@@ -302,7 +302,8 @@ public class EmpresaDAO {
                 INSERT INTO VEHICULO (MATRICULA, MARCA, MODELO) VALUES (?,?,?)
                 """;
 
-        GestorConexion.ejecutarSentencia(conn, sql_general, vehiculo.getMatricula(), vehiculo.getMarca(), vehiculo.getModelo());
+        GestorConexion.ejecutarSentencia(conn, sql_general, vehiculo.getMatricula(), vehiculo.getMarca(),
+                vehiculo.getModelo());
 
         if (vehiculo instanceof VehiculoPropio) {
             insertarVehiculoPropio(vehiculo);
@@ -315,11 +316,10 @@ public class EmpresaDAO {
                 """;
     }
 
-
-    // Ejercicio 3 
+    // Ejercicio 3
     public int cambiarDepartamentoProxecto(String nomeDepartamento, String nomeProxecto) {
         String sql = """
-                UPDATE PROXECTO 
+                UPDATE PROXECTO
                 SET NumDepartControla = (
                         SELECT NumDepartamento FROM DEPARTAMENTO WHERE NomeDepartamento = ?
                 )  WHERE NomeProxecto = ?
@@ -334,6 +334,79 @@ public class EmpresaDAO {
         return 0; // Todo OK
     }
 
+    public Proxecto comprobarExistenciaProxecto(int codigo) {
+        String sql = """
+                SELECT NumProxecto , NomeProxecto, Lugar, NumDepartControla FROM PROXECTO WHERE NumProxecto = ?
+                """;
+
+        try {
+            ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql, codigo);
+            if (rs.next()) {
+                Proxecto pro = new Proxecto();
+
+                pro.setNumProxecto(rs.getInt(1));
+                pro.setNomeProxecto(rs.getString(2));
+                pro.setLugar(rs.getString(3));
+                pro.setNumDepartControla(rs.getInt(4));
+
+                return pro;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public List<Empregado> obtenerEmpregadosProxecto(int numProxecto) {
+        List<Empregado> empregados = new ArrayList<>();
+
+        String sql = """
+                SELECT NSS, NOME, APELIDO1
+                FROM EMPREGADO E
+                INNER JOIN EMPREGADO_PROXECTO EP ON E.NSS = EP.NSSEmpregado
+                WHERE EP.NumProxecto  = ?
+                    """;
+
+        try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql, numProxecto)) {
+
+            while (rs.next()) {
+                Empregado em = new Empregado();
+
+                em.setNss(rs.getString(1));
+                em.setNome(rs.getString(2));
+                em.setApelido1(rs.getString(3));
+
+                empregados.add(em);
+            }
+
+            return empregados;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return empregados;
+        }
+
+    }
+
+    public int eliminarEmpregadosDeProxecto( int numProxecto) {
+        String sql = """
+                DELETE FROM EMPREGADO_PROXECTO WHERE NumProxecto = ?
+                """;
+
+        return GestorConexion.ejecutarSentencia(conn, sql, numProxecto);
+    }
+
+    public void eliminarProxecto(Proxecto proxecto) {
+        String sql = """
+                DELETE FROM PROXECTO WHERE NumProxecto = ?
+                """;
+
+        GestorConexion.ejecutarSentencia(conn, sql, proxecto.getNumProxecto());
+    }
 
     // public List<EmpregadoSalarioFixoDTO>
     // mostrarDepartamentosSalarioMayorQue(String valor) {

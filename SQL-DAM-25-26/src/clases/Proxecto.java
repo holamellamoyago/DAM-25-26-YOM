@@ -14,6 +14,11 @@ public class Proxecto {
     private int numProxecto, numDepartControla;
     private String nomeProxecto, lugar;
 
+    
+
+    public Proxecto() {
+    }
+
     public Proxecto(int numProxecto, int numDepartControla, String nomeProxecto, String lugar) {
         this.numProxecto = numProxecto;
         this.numDepartControla = numDepartControla;

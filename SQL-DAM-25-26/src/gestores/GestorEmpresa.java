@@ -2,6 +2,7 @@ package gestores;
 
 import clases.Departamento;
 import clases.Familiar;
+import clases.Proxecto;
 import clases.TipoSGBD;
 import persistencia.EmpresaDAO;
 
@@ -70,6 +71,42 @@ public class GestorEmpresa {
             System.out.println("Familiar añadido correctamente");
         } else {
             System.out.println("Error al añadir el familiar");
+        }
+    }
+
+    public void eliminarProxecto(int identificador) {
+        Proxecto proxecto = empresaDAO.comprobarExistenciaProxecto(identificador);
+
+        if (proxecto == null) {
+            System.out.println("No se puede eliminar el proxecto porque no existe");
+            return;
+        } 
+
+        try {
+            conn.setAutoCommit(false);
+
+            System.out.println("Información proxecto: \n" + proxecto);
+            System.out.println(empresaDAO.obtenerEmpregadosProxecto(proxecto.getNumProxecto()));
+    
+            empresaDAO.eliminarEmpregadosDeProxecto(proxecto.getNumProxecto());
+            empresaDAO.eliminarProxecto(proxecto);
+            System.out.println("\nProxecto eliminado");
+
+            conn.commit();
+
+        } catch (SQLException e) {
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
