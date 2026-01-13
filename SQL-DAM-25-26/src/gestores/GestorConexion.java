@@ -28,7 +28,13 @@ public class GestorConexion {
         };
         try {
             if (tipo == TipoSGBD.SQLITE) {
-                return DriverManager.getConnection(url);
+
+                Connection con =  DriverManager.getConnection(url);
+
+                Statement stmt = con.createStatement();
+                stmt.execute("PRAGMA foreign_keys = ON");
+                return con;
+
 
             } else {
                 return DriverManager.getConnection(url, usuario, contrasena);
@@ -98,6 +104,13 @@ public class GestorConexion {
 
     }
 
+
+    private static void setParametros(PreparedStatement ps, Object... params) throws SQLException {
+        for (int i = 0; i < params.length; i++) {
+            ps.setObject(i +1 , params[i]);
+        }
+    }
+
     // public static void insertarDatosMultiples(Connection conn, String
     // sqlConsulta, Object... parametros) throws SQLException, SQLException {
     //
@@ -160,7 +173,7 @@ public class GestorConexion {
         }
     }
 
-    public static void ejecutarLoteTransacioneal(Connection conn, String... sentenciasSQL) {
+    public static void ejecutarLoteTransacioneal(Connection conn, String... sentenciasSQL) throws SQLException {
         try {
             conn.setAutoCommit(false);
             Statement stmt = conn.createStatement();
@@ -173,13 +186,49 @@ public class GestorConexion {
             conn.commit();
 
         } catch (SQLException e) {
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                System.out.println("Error al hacer el rollback");
-                throw new RuntimeException(ex);
-            }
+            conn.rollback();
             throw new RuntimeException(e);
+        } finally {
+            conn.setAutoCommit(true);
+        }
+    }
+
+
+    // Día 13-01 
+    
+    public static int ejecutarSentencia(Connection conn, String sql, Object... params)  {
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            setParametros(stmt,params);
+            return (stmt.executeUpdate());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -99;
+        }
+    }
+
+    public static int insertarYretornarClaveGenerada(Connection conn, String sql, Object params) {
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            setParametros(ps, params);
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                throw new SQLException("No se generó clave primaria");
+            }
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -99;
         }
     }
 
