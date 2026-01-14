@@ -392,7 +392,7 @@ public class EmpresaDAO {
 
     }
 
-    public int eliminarEmpregadosDeProxecto( int numProxecto) {
+    public int eliminarEmpregadosDeProxecto(int numProxecto) {
         String sql = """
                 DELETE FROM EMPREGADO_PROXECTO WHERE NumProxecto = ?
                 """;
@@ -406,6 +406,37 @@ public class EmpresaDAO {
                 """;
 
         GestorConexion.ejecutarSentencia(conn, sql, proxecto.getNumProxecto());
+    }
+
+    // 14/01
+
+    public void subirSueldoEmpleado(String nss, double tantoPorCiento) {
+        double sueldo = 0;
+
+        String sql_salario = """
+                SELECT SALARIO
+                FROM EMPREGADOFIXO
+                WHERE NSS = ?
+                    """;
+
+        try {
+            ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql_salario, nss);
+            if (rs.next()) {
+                sueldo = rs.getInt(1);
+                sueldo = ((sueldo * tantoPorCiento) / 100) + sueldo;
+            }
+
+            String sql = """
+                UPDATE EMPREGADOFIXO SET Salario = ?
+                WHERE NSS = ?
+                    """;
+
+        GestorConexion.ejecutarSentencia(conn, sql, sueldo, nss);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     // public List<EmpregadoSalarioFixoDTO>

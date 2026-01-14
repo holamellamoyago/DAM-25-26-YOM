@@ -1,6 +1,7 @@
 package gestores;
 
 import clases.Departamento;
+import clases.Empregado;
 import clases.Familiar;
 import clases.Proxecto;
 import clases.TipoSGBD;
@@ -10,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GestorEmpresa {
 
@@ -80,14 +82,14 @@ public class GestorEmpresa {
         if (proxecto == null) {
             System.out.println("No se puede eliminar el proxecto porque no existe");
             return;
-        } 
+        }
 
         try {
             conn.setAutoCommit(false);
 
             System.out.println("Información proxecto: \n" + proxecto);
             System.out.println(empresaDAO.obtenerEmpregadosProxecto(proxecto.getNumProxecto()));
-    
+
             empresaDAO.eliminarEmpregadosDeProxecto(proxecto.getNumProxecto());
             empresaDAO.eliminarProxecto(proxecto);
             System.out.println("\nProxecto eliminado");
@@ -105,6 +107,39 @@ public class GestorEmpresa {
             try {
                 conn.setAutoCommit(true);
             } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void subirSueldosEmpleados(List<String> empregados, double tantoPorCiento) {
+        try {
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            for (String empregado : empregados) {
+             
+                empresaDAO.subirSueldoEmpleado(empregado, tantoPorCiento);
+            }
+
+            System.out.println("Subida de sueldo completada");
+
+            conn.commit();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

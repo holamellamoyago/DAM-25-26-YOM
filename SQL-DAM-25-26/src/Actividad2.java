@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import clases.Familiar;
 import clases.TipoSGBD;
 import gestores.GestorEmpresa;
@@ -36,7 +39,9 @@ public class Actividad2 {
         //gestorEmpresa.anadirFamiliar(familiar);
 
         // Ejercicio 4. 
-        gestorEmpresa.eliminarProxecto(11);
+        //gestorEmpresa.eliminarProxecto(11);
+
+        gestorEmpresa.subirSueldosEmpleados(new ArrayList<>(List.of("0110010")), 20);
 
         
 
