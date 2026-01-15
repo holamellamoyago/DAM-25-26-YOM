@@ -439,6 +439,98 @@ public class EmpresaDAO {
 
     }
 
+    // Día 15/01
+
+    public boolean insertarProxectoDinamico(Proxecto pro) { 
+        String sql = """
+                SELECT * FROM PROXECTO
+                """;
+
+                try (ResultSet rs = GestorConexion.crearResultSetActualizable(conn, sql)) {
+
+                    rs.moveToInsertRow();
+
+                    rs.updateInt("NumProxecto", pro.getNumProxecto());
+                    rs.updateString("NomeProxecto", pro.getNomeProxecto());
+                    rs.updateString("Lugar", pro.getLugar());
+                    rs.updateInt("NumDepartControla", pro.getNumDepartControla());
+
+                    rs.insertRow();
+                    rs.moveToCurrentRow();
+                    return true;
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+    }
+
+    public int incrementarSalarioDepartamento(int incremento, int numDepartamento) {
+        String sql = """
+                SELECT EF.NSS, EF.SALARIO
+                FROM EMPREGADOFIXO EF
+                JOIN EMPREGADO E ON EF.NSS = E.NSS
+                WHERE E.NumDepartamentoPertenece = ?
+                """;
+
+        int afectados = 0;
+
+        
+        try (ResultSet rs = GestorConexion.crearResultSetActualizable2(conn, sql, numDepartamento)) {
+            conn.setAutoCommit(false);
+
+            while (rs.next()) {
+                int salarioActual = rs.getInt("Salario");
+                rs.updateInt("Salario", salarioActual + incremento);
+                rs.updateRow();
+                afectados++;
+            }
+    
+            conn.commit();
+            
+        } catch (Exception e) {
+            GestorConexion.deshacerCambios(conn);
+        } finally {
+            GestorConexion.activarAutoCommit(conn);
+        }
+
+
+        return afectados;
+
+    }
+
+    public void obtenerEmpregadosConMaisNumProxectos(int numProxectos) {
+        List<EmpregadoInfo> empregados = new ArrayList<>();
+
+        String sql = """
+                SELECT E.NSS , (E.Nome, E.Apelido1, COALESCE(E.Apelido2, '') AS NomeCompleto , E.Localidade, EF.Salario
+                FROM EMPREGADO E 
+                JOIN EMPREGADOFIXO EF ON E.NSS = EF.NSS
+                WHERE (SELECT COUNT(*)
+                        FROM EMPREGADO_PROXECTO EP 
+                        WHERE EP.NSSEmpregado = E.NSS
+                    ) > ? 
+                """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            GestorConexion.setParametros(ps, numProxectos);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                empregados.add(crearDTO(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private EmpregadoInfo crearDTO (ResultSet rs ) throws SQLException {
+        return new EmpregadoInfo(rs.getString("NSS"), rs.getString("NomeCompleto"), rs.getString("Localidade"), rs.getDouble("Salario"));
+    }
+
+
+
     // public List<EmpregadoSalarioFixoDTO>
     // mostrarDepartamentosSalarioMayorQue(String valor) {
     // List<EmpregadoSalarioFixoDTO> lista = new ArrayList<>();

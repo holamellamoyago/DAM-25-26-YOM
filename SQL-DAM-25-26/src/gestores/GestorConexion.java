@@ -29,12 +29,11 @@ public class GestorConexion {
         try {
             if (tipo == TipoSGBD.SQLITE) {
 
-                Connection con =  DriverManager.getConnection(url);
+                Connection con = DriverManager.getConnection(url);
 
                 Statement stmt = con.createStatement();
                 stmt.execute("PRAGMA foreign_keys = ON");
                 return con;
-
 
             } else {
                 return DriverManager.getConnection(url, usuario, contrasena);
@@ -104,10 +103,9 @@ public class GestorConexion {
 
     }
 
-
-    private static void setParametros(PreparedStatement ps, Object... params) throws SQLException {
+    public static void setParametros(PreparedStatement ps, Object... params) throws SQLException {
         for (int i = 0; i < params.length; i++) {
-            ps.setObject(i +1 , params[i]);
+            ps.setObject(i + 1, params[i]);
         }
     }
 
@@ -193,14 +191,14 @@ public class GestorConexion {
         }
     }
 
+    // Día 13-01
 
-    // Día 13-01 
-    
-    public static int ejecutarSentencia(Connection conn, String sql, Object... params)  {
+    public static int ejecutarSentencia(Connection conn, String sql, Object... params) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
 
-            setParametros(stmt,params);
+            setParametros(stmt, params);
             return (stmt.executeUpdate());
 
         } catch (SQLException e) {
@@ -224,11 +222,61 @@ public class GestorConexion {
                 throw new SQLException("No se generó clave primaria");
             }
 
-
-
         } catch (SQLException e) {
             e.printStackTrace();
             return -99;
+        }
+    }
+
+
+    // Día 15
+    public static ResultSet crearResultSetActualizable(Connection conn, String sql) {
+        try (Statement st = conn.createStatement(
+            ResultSet.TYPE_SCROLL_SENSITIVE,
+            ResultSet.CONCUR_UPDATABLE
+        )) {
+            return st.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ResultSet crearResultSetActualizable2(Connection conn, String sql, Object...params) {
+        try (Statement st = conn.createStatement(
+            ResultSet.TYPE_SCROLL_SENSITIVE,
+            ResultSet.CONCUR_UPDATABLE
+        )) {
+            return st.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void deshacerCambios(Connection conn) {
+        try {
+            conn.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void desactivarAutoCommit(Connection conn) {
+        try {
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void activarAutoCommit(Connection conn) {
+        try {
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
