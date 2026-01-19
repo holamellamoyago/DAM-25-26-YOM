@@ -19,15 +19,45 @@ public class Actividad2 {
             default -> throw new AssertionError();
         };
 
-        //Connection connection =  GestorConexion.getConnection(tipo, baseDatos,usuario,contrasena);
-        //System.out.println(GestorConexion.obtenerMetaDatos(connection));
-        //System.out.println(connection);
-
+        // Connection connection = GestorConexion.getConnection(tipo,
+        // baseDatos,usuario,contrasena);
+        // System.out.println(GestorConexion.obtenerMetaDatos(connection));
+        // System.out.println(connection);
 
         GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos, usuario, contrasena);
 
-        //gestorEmpresa.añadirTablaFamiliares();
-        // gestorEmpresa.obtenerDepartamentoConProxectos();
+        // Ejercicio 1. Visualizar o número e nome dos departamentos que teñen proxectos
+        // asignados.
+        gestorEmpresa.obtenerDepartamentoConProxectos();
+
+        // Ejercicio 2. Visualizar o número e nome, nombre e apelidos do director dos
+        // departamentos que teñen proxectos asignados
+        gestorEmpresa.obtenerDirectoresConProxectos();
+
+        // Ejericicio 3. Visualizar o NSS, o nome e apelidos e a idade dos empregados da
+        // empresa.
+
+        // Ejercicio 4. Dado o nome dun departamento, visualizar os empregados que
+        // traballan nese departamento especificando se se trata dun empregado fixo ou
+        // temporal.
+        gestorEmpresa.ejercicio4("PERSOAL");
+
+        /*
+         * Ejercicio 5.
+         * Dado o nome dun proxecto e unha localidade, visualizar os empregados fixos
+         * que traballan nese proxecto e
+         * que pertencen á localidade indicada. Mostrar: NSS, nome completo, salario e
+         * nome do departamento no que
+         * traballan.
+         */
+
+        /*
+         * Ejercicio 6.
+         * Visualizar, para cada departamento, o número de empregados fixos e o número
+         * de empregados temporais
+         * que traballan nel.
+         */
+
         // gestorEmpresa.mostrarDepartamentosSalarioMayorQue();
 
         Familiar familiar = new Familiar();
@@ -36,16 +66,12 @@ public class Actividad2 {
         familiar.setNombre("Yago");
         familiar.setApelido1("Otero");
 
-        //gestorEmpresa.anadirFamiliar(familiar);
+        // gestorEmpresa.anadirFamiliar(familiar);
 
-        // Ejercicio 4. 
-        //gestorEmpresa.eliminarProxecto(11);
+        // Ejercicio 4.
+        // gestorEmpresa.eliminarProxecto(11);
 
         gestorEmpresa.subirSueldosEmpleados(new ArrayList<>(List.of("0110010")), 20);
-
-        
-
-
 
     }
 }

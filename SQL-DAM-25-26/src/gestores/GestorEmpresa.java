@@ -21,10 +21,17 @@ public class GestorEmpresa {
     /*
      * ObtenerDepartamentos
      * anadirDepartamento
+     * anadirFamiliar
      * anadirTablaFamiliares
      * anadirTablaVehiculos
      * obtenerDepartamentosConProxectos
-     * 
+     * subirSueldosEmpleados
+     * obtenerDepartamentoConProxectos
+     * - eliminarProxecto
+     * departamentoQueControlan
+     * obtenerDatosProxectos
+     * numeroEmpregadoDepartamento
+     * obtenerTipoEmpregado
      */
 
     public GestorEmpresa(TipoSGBD tipo, String baseDatos, String usuario, String contrasena) {
@@ -71,9 +78,6 @@ public class GestorEmpresa {
         empresaDAO.obtenerDepartamentoConProxectos();
     }
 
-    // public void mostrarDepartamentosSalarioMayorQue() {
-    // empresaDAO.mostrarDepartamentosSalarioMayorQue("200");
-    // }
 
     public void anadirFamiliar(Familiar familiar) {
         int error = empresaDAO.anadirFamiliar(familiar);
@@ -166,5 +170,20 @@ public class GestorEmpresa {
 
     public void obtenerTipoEmpregado(String nssempregado) {
         System.out.println(empresaDAO.obtenerTipoEmpregadoFN(nssempregado) + ": " + nssempregado);
+    }
+
+    public List<DirectorProxectos> obtenerDirectoresConProxectos() {
+        //System.out.println(empresaDAO.obtenerDirectoresConProxectos());
+        return empresaDAO.obtenerDirectoresConProxectos();
+
+    }
+
+    public List<Empregado> ejercicio4(String string) {
+        System.out.println( empresaDAO.ejercicio4(string));
+        return empresaDAO.ejercicio4(string);
+    }
+
+    public void cambiarDepartamentoDeProxecto(int i) {
+        empresaDAO.mostrarDepartamentosConMinProxectos(i);
     }
 }

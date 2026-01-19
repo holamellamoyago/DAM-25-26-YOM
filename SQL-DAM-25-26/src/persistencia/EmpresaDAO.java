@@ -5,6 +5,9 @@
 package persistencia;
 
 import java.util.*;
+
+import javax.management.RuntimeErrorException;
+
 import java.sql.*;
 
 import clases.*;
@@ -100,7 +103,7 @@ public class EmpresaDAO {
         }
 
         String familiar = "CREATE TABLE FAMILIAR (" +
-                "Numero SMALLINT NOT NULL AUTO_INCREMENT," +
+                "Numero SMALLINT NOT NULL IDENTITY(1,1)," +
                 "NSS_familiar VARCHAR(15) NOT NULL, " +
                 "NSS_empregado VARCHAR(15) NOT NULL," +
                 "Nome VARCHAR(15) NOT NULL," +
@@ -679,6 +682,98 @@ public class EmpresaDAO {
     // public List<EmpregadoSalarioFixoDTO>
     // mostrarDepartamentosSalarioMayorQue(String valor) {
     // List<EmpregadoSalarioFixoDTO> lista = new ArrayList<>();
+
+    public List<DirectorProxectos> obtenerDirectoresConProxectos() {
+        List<DirectorProxectos> directores = new ArrayList<>();
+
+        String sql = """
+                            SELECT DISTINCT E.NSS, E.Nome + ' ' + E.Apelido1 + ' ' + COALESCE(E.Apelido2, '') AS NOME_COMPLETO
+                FROM EMPREGADO E
+                INNER JOIN DEPARTAMENTO D ON D.NSSDirector = E.NSS
+                INNER JOIN PROXECTO P ON P.NumDepartControla = D.NumDepartamento
+                                """;
+
+        try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql)) {
+            while (rs.next()) {
+                String nsss = rs.getString(1);
+                String nomeCompleto = rs.getString(2);
+
+                DirectorProxectos dp = new DirectorProxectos(nomeCompleto, nsss);
+                directores.add(dp);
+            }
+
+            return directores;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    public List<Empregado> ejercicio4(String string) {
+        List<Empregado> empregados = new ArrayList<>();
+        String sql = """
+                    SELECT DISTINCT
+                    E.NSS,
+                    E.Nome + ' ' + E.Apelido1 + ' ' + COALESCE(E.Apelido2, '') AS NOME_COMPLETO,
+                    (
+                        SELECT CASE
+                                WHEN EXISTS (SELECT 1 FROM EMPREGADOFIXO EF WHERE EF.NSS = E.NSS) THEN 'FIXO'
+                                ELSE 'TEMPORAL'
+                        END AS TIPO_EMPLEADO
+                    ) AS TIPO
+                FROM EMPREGADO E
+                INNER JOIN DEPARTAMENTO D ON D.NumDepartamento = E.NumDepartamentoPertenece
+                WHERE D.NomeDepartamento = ?
+                        """;
+
+        try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql, string)) {
+            while (rs.next()) {
+                Empregado e = new Empregado();
+                e.setNome(rs.getString(2));
+
+                empregados.add(e);
+            }
+
+            return empregados;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void mostrarDepartamentosConMinProxectos(int i) {
+        String sql = """
+                {
+                    call pr_DepartControlaProxec(?)
+                }
+                """;
+
+            try (CallableStatement cs = conn.prepareCall(sql)) {
+                cs.setInt(1, i);
+                boolean devuelveDatos = cs.execute();
+
+                if (devuelveDatos) {
+                    ResultSet rs = cs.getResultSet();
+
+                    while (rs.next()) {
+                        String nomeDepartamento = rs.getString("NomeDepartamento");
+                        int contador = rs.getInt("contador");
+        
+                        System.out.println("El depa" + nomeDepartamento + " " + contador);
+                        
+                    }
+                }
+
+
+
+                // Aquí estaría cogiendo los parametros pero solo tengo 1 , yo quiero el resulset
+
+
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+    }
 
     // String sql = """
     // SELECT E.NSS, E.Apelido1, Apelido2, F.SALARIO

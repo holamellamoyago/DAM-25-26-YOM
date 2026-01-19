@@ -127,7 +127,7 @@ BEGIN
 END
 
 
-
+go
 IF OBJECT_ID('sp_DatosProxectos', 'P') IS NOT NULL
 	DROP PROCEDURE sp_DatosProxectos;
 
@@ -146,3 +146,19 @@ BEGIN
 	WHERE NumProxecto = @Num_Proxecto;
 END
 GO
+
+
+IF OBJECT_ID('pr_DepartControlaProxec', 'P') IS NOT NULL
+	DROP PROCEDURE pr_DepartControlaProxec
+
+GO
+CREATE PROCEDURE pr_DepartControlaProxec
+	@NumMinProxectos int
+AS
+BEGIN 
+	SELECT D.NumDepartamento, D.NomeDepartamento, D.NSSDirector, COUNT(P.NomeProxecto) contador
+	FROM DEPARTAMENTO D
+	INNER JOIN PROXECTO P ON D.NumDepartamento = P.NumDepartControla
+	GROUP BY D.NumDepartamento, D.NomeDepartamento, D.NSSDirector
+	HAVING COUNT(P.NomeProxecto) > @NumMinProxectos
+END

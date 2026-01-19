@@ -1,3 +1,4 @@
+import clases.Departamento;
 import clases.TipoSGBD;
 import gestores.GestorEmpresa;
 
@@ -29,7 +30,18 @@ public class Actividad1 {
          * Comproba que o nome é único
          */
 
-         //gestorEmpresa.mo
+         gestorEmpresa.obtenerDepartamentos();
+
+         Departamento depa = new Departamento("Programación", "0010010");
+         gestorEmpresa.anadirNuevoDepartamento(depa);
+
+         /* 
+          * Exercicio 7. Execución de sentenzas de descrición de datos (DDL) dende a linguaxe Java
+          */
+
+          gestorEmpresa.añadirTablaFamiliares();
+          gestorEmpresa.añadirTablaVehiculos(tipo);
+
 
     }
 }
