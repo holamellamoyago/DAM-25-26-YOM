@@ -427,42 +427,41 @@ public class EmpresaDAO {
             }
 
             String sql = """
-                UPDATE EMPREGADOFIXO SET Salario = ?
-                WHERE NSS = ?
-                    """;
+                    UPDATE EMPREGADOFIXO SET Salario = ?
+                    WHERE NSS = ?
+                        """;
 
-        GestorConexion.ejecutarSentencia(conn, sql, sueldo, nss);
+            GestorConexion.ejecutarSentencia(conn, sql, sueldo, nss);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
     }
 
     // Día 15/01
 
-    public boolean insertarProxectoDinamico(Proxecto pro) { 
+    public boolean insertarProxectoDinamico(Proxecto pro) {
         String sql = """
                 SELECT * FROM PROXECTO
                 """;
 
-                try (ResultSet rs = GestorConexion.crearResultSetActualizable(conn, sql)) {
+        try (ResultSet rs = GestorConexion.crearResultSetActualizable(conn, sql)) {
 
-                    rs.moveToInsertRow();
+            rs.moveToInsertRow();
 
-                    rs.updateInt("NumProxecto", pro.getNumProxecto());
-                    rs.updateString("NomeProxecto", pro.getNomeProxecto());
-                    rs.updateString("Lugar", pro.getLugar());
-                    rs.updateInt("NumDepartControla", pro.getNumDepartControla());
+            rs.updateInt("NumProxecto", pro.getNumProxecto());
+            rs.updateString("NomeProxecto", pro.getNomeProxecto());
+            rs.updateString("Lugar", pro.getLugar());
+            rs.updateInt("NumDepartControla", pro.getNumDepartControla());
 
-                    rs.insertRow();
-                    rs.moveToCurrentRow();
-                    return true;
+            rs.insertRow();
+            rs.moveToCurrentRow();
+            return true;
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    return false;
-                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public int incrementarSalarioDepartamento(int incremento, int numDepartamento) {
@@ -475,7 +474,6 @@ public class EmpresaDAO {
 
         int afectados = 0;
 
-        
         try (ResultSet rs = GestorConexion.crearResultSetActualizable2(conn, sql, numDepartamento)) {
             conn.setAutoCommit(false);
 
@@ -485,15 +483,14 @@ public class EmpresaDAO {
                 rs.updateRow();
                 afectados++;
             }
-    
+
             conn.commit();
-            
+
         } catch (Exception e) {
             GestorConexion.deshacerCambios(conn);
         } finally {
             GestorConexion.activarAutoCommit(conn);
         }
-
 
         return afectados;
 
@@ -504,15 +501,16 @@ public class EmpresaDAO {
 
         String sql = """
                 SELECT E.NSS , (E.Nome, E.Apelido1, COALESCE(E.Apelido2, '') AS NomeCompleto , E.Localidade, EF.Salario
-                FROM EMPREGADO E 
+                FROM EMPREGADO E
                 JOIN EMPREGADOFIXO EF ON E.NSS = EF.NSS
                 WHERE (SELECT COUNT(*)
-                        FROM EMPREGADO_PROXECTO EP 
+                        FROM EMPREGADO_PROXECTO EP
                         WHERE EP.NSSEmpregado = E.NSS
-                    ) > ? 
+                    ) > ?
                 """;
 
-        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_READ_ONLY)) {
             GestorConexion.setParametros(ps, numProxectos);
 
             ResultSet rs = ps.executeQuery();
@@ -525,12 +523,159 @@ public class EmpresaDAO {
         }
     }
 
-    private EmpregadoInfo crearDTO (ResultSet rs ) throws SQLException {
-        return new EmpregadoInfo(rs.getString("NSS"), rs.getString("NomeCompleto"), rs.getString("Localidade"), rs.getDouble("Salario"));
+    private EmpregadoInfo crearDTO(ResultSet rs) throws SQLException {
+        return new EmpregadoInfo(rs.getString("NSS"), rs.getString("NomeCompleto"), rs.getString("Localidade"),
+                rs.getDouble("Salario"));
     }
 
+    public int cambioDomicilio(String nss, String rua, int numero, String piso, String cp, String localidade) {
+        String sql = """
+                ( call sp_CambioDomicilio(?,?,?,?,?,?))
+                """;
 
+        try (CallableStatement cs = conn.prepareCall(sql)) {
 
+            cs.setString(1, nss);
+            cs.setString(2, rua);
+            cs.setInt(3, numero);
+            cs.setString(4, piso);
+            cs.setString(5, cp);
+            cs.setString(6, localidade);
+
+            int filas = cs.executeUpdate();
+            return filas;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar sp_CambioDomicilio");
+        }
+
+    }
+
+    public ProxectoInfoDTO obtenerDatosProxectos(int numProxecto) {
+        String sql = """
+                {call sp_DatosProxectos(?,?,?,?)}
+                """;
+
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+
+            cs.setInt(1, numProxecto);
+            cs.registerOutParameter(2, Types.VARCHAR);
+            cs.registerOutParameter(3, Types.VARCHAR);
+            cs.registerOutParameter(4, Types.INTEGER);
+
+            cs.executeUpdate();
+
+            String nome = cs.getString(2);
+            if (nome == null) {
+                return null;
+            }
+
+            String lugar = cs.getString(3);
+            int numDepartamento = cs.getInt(4);
+
+            return new ProxectoInfoDTO(nome, lugar, numDepartamento);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar sp_DatosProxectos");
+        }
+    }
+
+    public List<Departamento> departamentoQueControlan(int valor) {
+        List<Departamento> departamentos = new ArrayList<>();
+        String sql = """
+                { call sp_DepartControlaProxec(?) }
+                """;
+
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+
+            cs.setInt(1, valor);
+
+            boolean resultado = cs.execute();
+
+            if (resultado) {
+                ResultSet rs = cs.getResultSet();
+
+                while (rs.next()) {
+                    Departamento d = new Departamento(rs.getInt("NumDepartamento"), rs.getString("NomeDepartamento"),
+                            rs.getString("NSSDirector"));
+
+                    departamentos.add(d);
+                }
+            }
+
+            return departamentos;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar sp_DepartControlaProxec");
+
+        }
+
+    }
+
+    public int numeroEmpregadoDepartamento(String nomeDepartamento) {
+        String sql = """
+                { ? = call fn_nEmpDepart(?)}
+                """;
+
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+            cs.registerOutParameter(1, Types.INTEGER);
+            cs.setString(2, nomeDepartamento);
+
+            cs.execute();
+
+            return cs.getInt(1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar fn_nEmpDepart");
+        }
+
+    }
+
+    /*
+     * DADO un nss que me duelve si es un empleado fijo , temporal o no existe
+     */
+    public String obtenerTipoEmpregadoFN(String nss) {
+        String sql = """
+                { ? = call fn_obtenerTipoEmpregado(?) }
+                            """;
+
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            cs.registerOutParameter(1, Types.VARCHAR);
+            cs.setString(2, nss);
+            cs.execute();
+
+            return cs.getString(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar fn_obtenerTipoEmpregado");
+
+        }
+    }
+
+    public String obtenerTipoEmpregadoPR(String nss) {
+        String sql = """
+                {call fn_obtenerTipoEmpregado(?, ?) }
+                            """;
+
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            cs.setString(1, nss);
+            cs.registerOutParameter(2, Types.VARCHAR);
+            cs.execute();
+
+            return cs.getString(2);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar fn_obtenerTipoEmpregado");
+
+        }
+    }
     // public List<EmpregadoSalarioFixoDTO>
     // mostrarDepartamentosSalarioMayorQue(String valor) {
     // List<EmpregadoSalarioFixoDTO> lista = new ArrayList<>();

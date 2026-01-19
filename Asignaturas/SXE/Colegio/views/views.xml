@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="colegio_aula_lista" model="ir.ui.view">
+        <field name="name">Lista Aula</field>
+        <field name="model">colegio.aula</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="nombre"/>
+                <field name="piso"/>
+                <field name="capacidad"/>
+                <field name="disponibilidad"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="colegio_aula_action_window" model="ir.actions.act_window">
+        <field name="name">Ventana Aula</field>
+        <field name="res_model">colegio.aula</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="colegio_aula_menu_root" name="Colegio"/>
+
+    <menuitem id="colegio_aula_menu_1"
+              name="Gestión de Aulas"
+              parent="colegio_aula_menu_root"
+              action="colegio_aula_action_window"/>
+</odoo>

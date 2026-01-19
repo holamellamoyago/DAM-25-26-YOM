@@ -18,6 +18,15 @@ public class GestorEmpresa {
     private Connection conn;
     private EmpresaDAO empresaDAO;
 
+    /*
+     * ObtenerDepartamentos
+     * anadirDepartamento
+     * anadirTablaFamiliares
+     * anadirTablaVehiculos
+     * obtenerDepartamentosConProxectos
+     * 
+     */
+
     public GestorEmpresa(TipoSGBD tipo, String baseDatos, String usuario, String contrasena) {
         this.conn = GestorConexion.getConnection(tipo, baseDatos, usuario, contrasena);
         empresaDAO = new EmpresaDAO(conn);
@@ -121,7 +130,7 @@ public class GestorEmpresa {
 
         try {
             for (String empregado : empregados) {
-             
+
                 empresaDAO.subirSueldoEmpleado(empregado, tantoPorCiento);
             }
 
@@ -132,16 +141,30 @@ public class GestorEmpresa {
             try {
                 conn.rollback();
             } catch (SQLException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         } finally {
             try {
                 conn.setAutoCommit(true);
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<Departamento> departamentoQueControlan(int valor) {
+        return empresaDAO.departamentoQueControlan(valor);
+    }
+
+    public void obtenerDatosProxectos(int numProxecto) {
+        System.out.println(empresaDAO.obtenerDatosProxectos(numProxecto));
+    }
+
+    public int numeroEmpregadoDepartamento(String nomeDepartamento) {
+        return empresaDAO.numeroEmpregadoDepartamento(nomeDepartamento);
+    }
+
+    public void obtenerTipoEmpregado(String nssempregado) {
+        System.out.println(empresaDAO.obtenerTipoEmpregadoFN(nssempregado) + ": " + nssempregado);
     }
 }

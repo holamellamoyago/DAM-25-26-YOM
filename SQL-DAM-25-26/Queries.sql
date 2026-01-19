@@ -41,7 +41,7 @@ IF EXISTS  (
 	WHERE NAME = 'VEHICULO_PROPIO' AND SCHEMA_ID = SCHEMA_ID('dbo'))
 	
 	BEGIN 
-		DROP TABLE dbo.VEHICULOS_PROPIO
+		DROP TABLE dbo.VEHICULO_PROPIO
 
 		PRINT ('BORRADA LA TABLA VEHICULOS PROPIOS')
 
@@ -53,7 +53,7 @@ IF EXISTS  (
 	WHERE NAME = 'VEHICULO_RENTING' AND SCHEMA_ID = SCHEMA_ID('dbo'))
 	
 	BEGIN 
-		DROP TABLE dbo.VEHICULOS_RENTING
+		DROP TABLE dbo.VEHICULO_RENTING
 
 		PRINT ('BORRADA LA TABLA VEHICULOS RENTING')
 
@@ -101,3 +101,48 @@ IF EXISTS  (
 
 GO
 SELECT * FROM SYS.TABLES
+
+
+-- 19/01 Procedimientos________________________________________________________________________________________________________
+IF OBJECT_ID('sp_CambioDomicilio', 'P') IS NOT NULL
+	DROP PROCEDURE sp_CambioDomicilio;
+
+GO -- DELIMITIER $$ EN mySQL
+CREATE PROCEDURE sp_CambioDomicilio
+	@NSS VARCHAR(15),
+	@Rua VARCHAR(30),
+	@Numero_Calle int,
+	@Piso varchar(30),
+	@CP char(5),
+	@Localidade varchar(25)
+AS
+BEGIN
+	UPDATE EMPREGADO
+	SET RUA = @Rua,
+		Numero_Calle = @Numero_Calle,
+		Piso = @Piso,
+		CP = @CP,
+		Localidade = @Localidade
+	WHERE NSS = @NSS;
+END
+
+
+
+IF OBJECT_ID('sp_DatosProxectos', 'P') IS NOT NULL
+	DROP PROCEDURE sp_DatosProxectos;
+
+GO
+CREATE PROCEDURE sp_DatosProxectos
+	@Num_Proxecto int, 
+	@Nome_Proxecto varchar(25) OUTPUT,
+	@Lugar varchar(25) OUTPUT,
+	@Num_Departamento_Controla int OUTPUT
+AS
+BEGIN
+	SELECT @Nome_Proxecto = NomeProxecto,
+		@Lugar = Lugar,
+		@Num_Departamento_Controla = NumDepartControla 
+	FROM PROXECTO 
+	WHERE NumProxecto = @Num_Proxecto;
+END
+GO
