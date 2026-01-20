@@ -22,7 +22,7 @@ public class Actividad1 {
         };
 
         
-        // GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos, usuario, contrasena);
+         GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos, usuario, contrasena);
 
         /*
          * Exercicio 6. Realización de operacións sinxelas

@@ -23,14 +23,43 @@ public class GestorConcesionario {
     }
 
 
-    public void venderVehiculo(int idCoche) {
+    public void venderVehiculo(int idCoche, int idCliente, int idVendedor) {
         boolean isDisponible = conceDAO.comprobarCocheDisponible(idCoche);
 
         if (isDisponible) {
-            System.out.println("Coche disponible venta");
+            GestorConexion.desactivarAutoCommit(conn);
+
+            //conceDAO.registrarVenta();
         } else {
             System.out.println("El coche con el id no esta disponible " + idCoche);
         }
+    }
+
+
+    public int añadirCliente(Cliente cliente) {
+        Integer id = conceDAO.comprobarExistenciaCliente(cliente);
+
+        if (id == null) {
+            System.out.println("Añadido " + cliente);
+            return conceDAO.añadirCliente(cliente);
+        } else {
+            System.out.println("Ya existe el " + cliente);
+            return id;
+        }
+
+    }
+
+    public int añadirVendedor(Vendedor vendedor) {
+        Integer id = conceDAO.comprobarExistenciaVendedor(vendedor);
+
+        if (id == null) {
+            System.out.println("Añadido " + vendedor);
+            return conceDAO.añadirVendedor(vendedor);
+        } else {
+            System.out.println("Ya existe el " + vendedor);
+            return id;
+        }
+
     }
 
     

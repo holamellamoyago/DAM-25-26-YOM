@@ -812,62 +812,65 @@ public class EmpresaDAO {
 
     //20/01
 
-    public ResultadoBorradoDTO borrarEmpregadoCompleto(String nssBorrar, String nssSupervisorNovo, String nssDirectorNovo) {
-        ResultadoBorradoDTO rb = new ResultadoBorradoDTO();
 
-        if (!existeEmpregado(nssBorrar)) {
-            throw new RuntimeException("No existe el empleado a borrar");
-        }
+    
 
-        
-        if (!existeEmpregado(nssSupervisorNovo)) {
-            throw new RuntimeException("No existe el supervisor nuevo");
-        }
+    // public ResultadoBorradoDTO borrarEmpregadoCompleto(String nssBorrar, String nssSupervisorNovo, String nssDirectorNovo) {
+    //     ResultadoBorradoDTO rb = new ResultadoBorradoDTO();
+
+    //     if (!existeEmpregado(nssBorrar)) {
+    //         throw new RuntimeException("No existe el empleado a borrar");
+    //     }
 
         
-        if (!existeEmpregado(nssDirectorNovo)) {
-            throw new RuntimeException("No existe el director nuevo");
-        }
+    //     if (!existeEmpregado(nssSupervisorNovo)) {
+    //         throw new RuntimeException("No existe el supervisor nuevo");
+    //     }
 
-        GestorConexion.ejecutarSentencia(conn, "UPDATE EMPREGADO SET NSSSupervisa = ? where NSSSupervisa = ?", nssSupervisorNovo, nssBorrar);
-        //TODO Borrar supervisor y director
+        
+    //     if (!existeEmpregado(nssDirectorNovo)) {
+    //         throw new RuntimeException("No existe el director nuevo");
+    //     }
 
-        try {
-            ResultSet rs = GestorConexion.ejecutarConsulta(conn, "SELECT NSS FROM EMPREGADOFIXO WHERE NSS = ?", nssBorrar);
-            boolean eraFixo  = rs.next();
+    //     GestorConexion.ejecutarSentencia(conn, "UPDATE EMPREGADO SET NSSSupervisa = ? where NSSSupervisa = ?", nssSupervisorNovo, nssBorrar);
+    //     //TODO Borrar supervisor y director
 
-            if (eraFixo) {
-                GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADOFIXO WHERE NSS = ?", nssBorrar);
-            } else {
-                GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADOTEMPORAL WHERE NSS = ?", nssBorrar);
-            }
+    //     try {
+    //         ResultSet rs = GestorConexion.ejecutarConsulta(conn, "SELECT NSS FROM EMPREGADOFIXO WHERE NSS = ?", nssBorrar);
+    //         boolean eraFixo  = rs.next();
 
-            GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADO WHERE NSS = ?", nssBorrar); 
+    //         if (eraFixo) {
+    //             GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADOFIXO WHERE NSS = ?", nssBorrar);
+    //         } else {
+    //             GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADOTEMPORAL WHERE NSS = ?", nssBorrar);
+    //         }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    //         GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADO WHERE NSS = ?", nssBorrar); 
+
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
 
 
-        try {
-            conn.setAutoCommit(false);
-        } catch (SQLException e) {
-            try {
-                conn.commit();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            e.printStackTrace();
-        }  finally {
-            GestorConexion.activarAutoCommit(conn);
-        }
+    //     try {
+    //         conn.setAutoCommit(false);
+    //     } catch (SQLException e) {
+    //         try {
+    //             conn.commit();
+    //         } catch (SQLException e1) {
+    //             e1.printStackTrace();
+    //         }
+    //         e.printStackTrace();
+    //     }  finally {
+    //         GestorConexion.activarAutoCommit(conn);
+    //     }
 
-    }
+    // }
 
-    private boolean existeEmpregado(String nssBorrar) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'existeEmpregado'");
-    }
+    // private boolean existeEmpregado(String nssBorrar) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'existeEmpregado'");
+    // }
 
 
 

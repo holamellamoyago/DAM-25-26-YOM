@@ -264,20 +264,28 @@ public class GestorConexion {
     //     }
     // }
 
-    // public static void desactivarAutoCommit(Connection conn) {
-    //     try {
-    //         conn.setAutoCommit(false);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
+    public static void desactivarAutoCommit(Connection conn) {
+        try {
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-    // public static void activarAutoCommit(Connection conn) {
-    //     try {
-    //         conn.setAutoCommit(true);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
+    public static void hacerCommit(Connection conn) {
+        try {
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void activarAutoCommit(Connection conn) {
+        try {
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

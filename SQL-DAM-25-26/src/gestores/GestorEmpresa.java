@@ -1,13 +1,7 @@
 package gestores;
 
-import clases.Departamento;
-import clases.DirectorProxectos;
-import clases.Empregado;
-import clases.Familiar;
-import clases.Proxecto;
-import clases.TipoSGBD;
-import persistencia.DirectorProxectos;
-import persistencia.EmpresaDAO;
+import clases.*;
+import persistencia.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -82,6 +76,9 @@ public class GestorEmpresa {
 
 
     public void anadirFamiliar(Familiar familiar) {
+
+        empresaDAO.comprobarExistenciaTabla("Familiares");
+
         int error = empresaDAO.anadirFamiliar(familiar);
 
         if (error == 1) {

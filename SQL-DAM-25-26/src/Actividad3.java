@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import clases.TipoSGBD;
-import gestores.GestorEmpresa;
+import gestores.*;
+import clases.*;
 
 public class Actividad3 {
     public static void main(String[] args) {
@@ -21,13 +22,14 @@ public class Actividad3 {
         GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos, usuario, contrasena);
         // gestorEmpresa.obtenerDatosProxectos(1);
         // gestorEmpresa.departamentoQueControlan(2);
-        gestorEmpresa.obtenerTipoEmpregado("0010010");
-        gestorEmpresa.obtenerTipoEmpregado("1341431");
-        gestorEmpresa.obtenerTipoEmpregado("11");
 
+        Familiar familiar = new Familiar();
+        familiar.setNssEmpregado("0010010");
+        familiar.setNss("0010033");
+        familiar.setNombre("Yago");
+        familiar.setApelido1("Otero");
 
-        final List<String> empregados = new ArrayList<>(List.of("0010010", "0110010", "0999900"));
-        gestorEmpresa.subirSueldosEmpleadosBatch(empregados, 20);
+        gestorEmpresa.anadirFamiliar(familiar);
 
 
     }

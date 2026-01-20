@@ -60,13 +60,7 @@ public class Actividad2 {
 
         // gestorEmpresa.mostrarDepartamentosSalarioMayorQue();
 
-        Familiar familiar = new Familiar();
-        familiar.setNssEmpregado("0010010");
-        familiar.setNss("0010033");
-        familiar.setNombre("Yago");
-        familiar.setApelido1("Otero");
-
-        // gestorEmpresa.anadirFamiliar(familiar);
+        
 
         // Ejercicio 4.
         // gestorEmpresa.eliminarProxecto(11);
