@@ -1,4 +1,4 @@
-package gestores;
+package clases;
 
 public class DirectorProxectos {
     private String nomeCompleto, nss;

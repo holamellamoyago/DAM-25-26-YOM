@@ -21,7 +21,8 @@ public class Actividad1 {
             default -> throw new AssertionError();
         };
 
-        GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos, usuario, contrasena);
+        
+        // GestorEmpresa gestorEmpresa = new GestorEmpresa(tipo, baseDatos, usuario, contrasena);
 
         /*
          * Exercicio 6. Realización de operacións sinxelas

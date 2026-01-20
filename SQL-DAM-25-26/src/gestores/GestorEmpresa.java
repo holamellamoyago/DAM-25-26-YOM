@@ -1,6 +1,7 @@
 package gestores;
 
 import clases.Departamento;
+import clases.DirectorProxectos;
 import clases.Empregado;
 import clases.Familiar;
 import clases.Proxecto;
