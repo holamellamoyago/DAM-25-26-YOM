@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import clases.TipoSGBD;
 import gestores.GestorEmpresa;
 
@@ -21,6 +24,10 @@ public class Actividad3 {
         gestorEmpresa.obtenerTipoEmpregado("0010010");
         gestorEmpresa.obtenerTipoEmpregado("1341431");
         gestorEmpresa.obtenerTipoEmpregado("11");
+
+
+        final List<String> empregados = new ArrayList<>(List.of("0010010", "0110010", "0999900"));
+        gestorEmpresa.subirSueldosEmpleadosBatch(empregados, 20);
 
 
     }
