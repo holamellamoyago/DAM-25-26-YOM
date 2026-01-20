@@ -748,32 +748,131 @@ public class EmpresaDAO {
                 }
                 """;
 
-            try (CallableStatement cs = conn.prepareCall(sql)) {
-                cs.setInt(1, i);
-                boolean devuelveDatos = cs.execute();
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+            cs.setInt(1, i);
+            boolean devuelveDatos = cs.execute();
 
-                if (devuelveDatos) {
-                    ResultSet rs = cs.getResultSet();
+            if (devuelveDatos) {
+                ResultSet rs = cs.getResultSet();
 
-                    while (rs.next()) {
-                        String nomeDepartamento = rs.getString("NomeDepartamento");
-                        int contador = rs.getInt("contador");
-        
-                        System.out.println("El depa" + nomeDepartamento + " " + contador);
-                        
-                    }
+                while (rs.next()) {
+                    String nomeDepartamento = rs.getString("NomeDepartamento");
+                    int contador = rs.getInt("contador");
+
+                    System.out.println("El depa" + nomeDepartamento + " " + contador);
+
                 }
+            }
 
+            // Aquí estaría cogiendo los parametros pero solo tengo 1 , yo quiero el
+            // resulset
 
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-                // Aquí estaría cogiendo los parametros pero solo tengo 1 , yo quiero el resulset
+    public void subirSueldosEmpleadosBatch(List<String> empregados, int salario) {
 
+        try {
+            conn.setAutoCommit(false);
 
+            String sql = """
+                    UPDATE EMPREGADOFIXO SET SALARIO = ? WHERE NSS = ?
+                    """;
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            for (String nss : empregados) {
+                ps.setObject(1, salario);
+                ps.setObject(2, nss);
+                ps.addBatch(sql);
+            }
+
+            ps.executeBatch();
+
+            conn.commit();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            throw new ArithmeticException(e.toString());
+        } finally {
+            try {
+                conn.setAutoCommit(true);
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
+
     }
+
+    //20/01
+
+    public ResultadoBorradoDTO borrarEmpregadoCompleto(String nssBorrar, String nssSupervisorNovo, String nssDirectorNovo) {
+        ResultadoBorradoDTO rb = new ResultadoBorradoDTO();
+
+        if (!existeEmpregado(nssBorrar)) {
+            throw new RuntimeException("No existe el empleado a borrar");
+        }
+
+        
+        if (!existeEmpregado(nssSupervisorNovo)) {
+            throw new RuntimeException("No existe el supervisor nuevo");
+        }
+
+        
+        if (!existeEmpregado(nssDirectorNovo)) {
+            throw new RuntimeException("No existe el director nuevo");
+        }
+
+        GestorConexion.ejecutarSentencia(conn, "UPDATE EMPREGADO SET NSSSupervisa = ? where NSSSupervisa = ?", nssSupervisorNovo, nssBorrar);
+        //TODO Borrar supervisor y director
+
+        try {
+            ResultSet rs = GestorConexion.ejecutarConsulta(conn, "SELECT NSS FROM EMPREGADOFIXO WHERE NSS = ?", nssBorrar);
+            boolean eraFixo  = rs.next();
+
+            if (eraFixo) {
+                GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADOFIXO WHERE NSS = ?", nssBorrar);
+            } else {
+                GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADOTEMPORAL WHERE NSS = ?", nssBorrar);
+            }
+
+            GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADO WHERE NSS = ?", nssBorrar); 
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            try {
+                conn.commit();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }  finally {
+            GestorConexion.activarAutoCommit(conn);
+        }
+
+    }
+
+    private boolean existeEmpregado(String nssBorrar) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'existeEmpregado'");
+    }
+
+
+
+
+
 
     // String sql = """
     // SELECT E.NSS, E.Apelido1, Apelido2, F.SALARIO

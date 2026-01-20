@@ -5,6 +5,7 @@ import clases.Empregado;
 import clases.Familiar;
 import clases.Proxecto;
 import clases.TipoSGBD;
+import persistencia.DirectorProxectos;
 import persistencia.EmpresaDAO;
 
 import java.sql.Connection;
@@ -185,5 +186,10 @@ public class GestorEmpresa {
 
     public void cambiarDepartamentoDeProxecto(int i) {
         empresaDAO.mostrarDepartamentosConMinProxectos(i);
+    }
+
+    public void subirSueldosEmpleadosBatch(List<String> empregados, int i) {
+        empresaDAO.subirSueldosEmpleadosBatch(empregados, i);
+        System.out.println("Sueldos subidos a: " + empregados);
     }
 }
