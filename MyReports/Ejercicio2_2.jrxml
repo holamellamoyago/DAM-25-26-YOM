@@ -1,0 +1,117 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Ejercicio2_2" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="00c63aff-aa29-4df7-b6c2-051c891ac0c6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<query language="SQL"><![CDATA[SELECT "DOCUMENT"."ID",
+	"DOCUMENT"."TOTAL",
+	"ADDRESS"."ID",
+	"ADDRESS"."FIRSTNAME",
+	"ADDRESS"."LASTNAME",
+	"ADDRESS"."STREET",
+	"ADDRESS"."CITY"
+FROM "ADDRESS"
+	INNER JOIN "DOCUMENT" ON 
+	 "DOCUMENT"."ADDRESSID" = "ADDRESS"."ID"]]></query>
+	<field name="ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DOCUMENT"/>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DOCUMENT"/>
+	</field>
+	<field name="COLUMN_3" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="FIRSTNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FIRSTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="FIRSTNAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="LASTNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LASTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="LASTNAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="STREET" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="STREET"/>
+		<property name="com.jaspersoft.studio.field.label" value="STREET"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="CITY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CITY"/>
+		<property name="com.jaspersoft.studio.field.label" value="CITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<group name="Gropo ciudad">
+		<expression><![CDATA[$F{CITY}]]></expression>
+		<groupHeader>
+			<band height="50">
+				<element kind="textField" uuid="253abf05-babb-4c49-9747-d9cb3caccac5" x="180" y="10" width="370" height="40" fontSize="19.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{CITY}]]></expression>
+				</element>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="130">
+				<element kind="textField" uuid="da45b92b-b44a-432c-abe1-5b3538d19feb" x="0" y="0" width="280" height="130" fontSize="22.0" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA["Datos de la ciudad:" + $F{CITY}]]></expression>
+					<box>
+						<rightPen lineWidth="1.0"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="4e73d2b0-d07d-4930-abf5-d46cf4c3786f" x="280" y="70" width="270" height="30">
+					<expression><![CDATA["Text Field"]]></expression>
+				</element>
+				<element kind="textField" uuid="4bb7d27f-8910-4cca-a138-f43514c34144" x="280" y="40" width="270" height="30">
+					<expression><![CDATA["Text Field"]]></expression>
+				</element>
+				<element kind="textField" uuid="a3d47ac8-97f0-40a9-9bd5-4532fcb3c07c" x="285" y="5" width="270" height="30">
+					<expression><![CDATA["Text Field"]]></expression>
+				</element>
+				<element kind="textField" uuid="07f2e58e-a395-43e5-9b57-4bcbc5b54765" x="280" y="100" width="270" height="30">
+					<expression><![CDATA["Text Field"]]></expression>
+				</element>
+			</band>
+		</groupFooter>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="53e7b009-68d3-41a7-9ec4-355074f5e4fd" x="0" y="0" width="550" height="79" fontSize="29.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Resumen de ventas por ciudad]]></text>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<element kind="textField" uuid="74512540-81b0-42ac-b76c-7eb0b9b0997c" x="180" y="60" width="100" height="30">
+				<expression><![CDATA[$F{ID}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6f0dfd6-8763-46d9-8029-32e271dc7e6c"/>
+			</element>
+			<element kind="textField" uuid="259b603a-5bbf-46ce-83b8-550b89589a90" x="280" y="60" width="100" height="30">
+				<expression><![CDATA[$F{STREET}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70a6802d-b687-420e-b0d6-f1ef129ef87a"/>
+			</element>
+			<element kind="textField" uuid="79216494-77a7-41e4-aa6c-28d9d22ce34b" x="380" y="60" width="100" height="30">
+				<expression><![CDATA[$F{TOTAL}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9a896e2c-8fe6-4f0b-b380-60008da0e290"/>
+			</element>
+			<element kind="staticText" uuid="b7c48c4b-87d8-4e8b-b3f7-b6e941c2bb38" x="180" y="30" width="100" height="30">
+				<text><![CDATA[ID]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6f0dfd6-8763-46d9-8029-32e271dc7e6c"/>
+			</element>
+			<element kind="staticText" uuid="41bc3b2b-59af-4b8c-987d-42ee615fd8da" x="280" y="30" width="100" height="30">
+				<text><![CDATA[CALLE]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70a6802d-b687-420e-b0d6-f1ef129ef87a"/>
+			</element>
+			<element kind="staticText" uuid="6156544e-feca-44a4-bd31-dee1988fe701" x="380" y="30" width="100" height="30">
+				<text><![CDATA[VENTA]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9a896e2c-8fe6-4f0b-b380-60008da0e290"/>
+			</element>
+		</band>
+	</detail>
+</jasperReport>
