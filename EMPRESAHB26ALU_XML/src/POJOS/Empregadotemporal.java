@@ -1,4 +1,4 @@
-package POJOS;
+package pojos;
 
 
 

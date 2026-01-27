@@ -1,8 +1,8 @@
 
-package LOGICA;
+package logica;
 
-import PERSITENCIA.EmpresaHBDAO;
-import POJOS.Proxecto;
+import persistencia.EmpresaHBDAO;
+import pojos.Proxecto;
 
 
 public class GestorEmpresaHB {

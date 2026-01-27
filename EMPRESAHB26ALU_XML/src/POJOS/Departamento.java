@@ -1,4 +1,4 @@
-package POJOS;
+package pojos;
 
 
 public class Departamento  implements java.io.Serializable {

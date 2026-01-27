@@ -1,4 +1,4 @@
-package POJOS;
+package pojos;
 
 public class Proxecto implements java.io.Serializable {
 

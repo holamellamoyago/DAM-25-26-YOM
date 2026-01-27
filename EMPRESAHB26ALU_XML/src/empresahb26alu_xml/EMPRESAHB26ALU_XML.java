@@ -6,8 +6,9 @@
 
 package empresahb26alu_xml;
 
-import LOGICA.GestorEmpresaHB;
 import java.text.ParseException;
+
+import logica.GestorEmpresaHB;
 
 
 public class EMPRESAHB26ALU_XML {
