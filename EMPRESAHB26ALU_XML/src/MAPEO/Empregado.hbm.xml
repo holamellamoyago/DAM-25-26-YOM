@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 09-feb-2023 8:57:24 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class catalog="EMPRESAHB26" name="POJOS.Empregado" schema="dbo" table="EMPREGADO">
+    <class catalog="EMPRESAHB26" name="pojos.Empregado" schema="dbo" table="EMPREGADO">
         <id name="nss" type="string">
             <column length="15" name="NSS" />
             <generator class="assigned" />

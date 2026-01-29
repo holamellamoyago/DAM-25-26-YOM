@@ -1,11 +1,16 @@
 package pojos;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Proxecto implements java.io.Serializable {
 
     private int numProxecto;
     private Departamento departamento;
     private String nomeProxecto;
     private String lugar;
+
+    private Set<ProxectoFase> proxectoFases = new HashSet<>() ;
    
     public Proxecto() {
     }
@@ -56,6 +61,16 @@ public class Proxecto implements java.io.Serializable {
     public void setLugar(String lugar) {
         this.lugar = lugar;
     }
+
+    public Set<ProxectoFase> getProxectoFases() {
+        return proxectoFases;
+    }
+
+    public void setProxectoFases(Set<ProxectoFase> proxectoFases) {
+        this.proxectoFases = proxectoFases;
+    }
+
+    
 
    
 

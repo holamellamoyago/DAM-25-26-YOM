@@ -4,46 +4,44 @@
 <hibernate-mapping>
     <class catalog="EMPRESAHB26" name="POJOS.Empregado" schema="dbo" table="EMPREGADO">
         <id name="nss" type="string">
-            <column length="15" name="NSS"/>
-            <generator class="assigned"/>
+            <column length="15" name="NSS" />
+            <generator class="assigned" />
         </id>
-    
         <property name="nome" type="string">
-            <column length="25" name="Nome" not-null="true"/>
+            <column length="25" name="Nome" not-null="true" />
         </property>
         <property name="apelido1" type="string">
-            <column length="25" name="Apelido1" not-null="true"/>
+            <column length="25" name="Apelido1" not-null="true" />
         </property>
         <property name="apelido2" type="string">
-            <column length="25" name="Apelido2"/>
-        </property>       
-        
-        <property name="rua" type="string">
-            <column length="30" name="Rua"/>
+            <column length="25" name="Apelido2" />
         </property>
-        <property name="numeroCalle" type="java.lang.Integer">
-            <column name="Numero_Calle"/>
-        </property>
-        <property name="piso" type="string">
-            <column length="4" name="Piso"/>
-        </property>
-        <property name="cp" type="string">
-            <column length="5" name="CP"/>
-        </property>
-        <property name="localidade" type="string">
-            <column length="25" name="Localidade"/>
-        </property>
-        <property name="provincia" type="string">
-            <column length="15" name="Provincia"/>
-        </property>
-        <property name="dataNacemento" type="timestamp">
-            <column length="23" name="DataNacemento"/>
+        <property name="dataNacemento" type="java.time.LocalDate">
+            <column length="23" name="DataNacemento" />
         </property>
         <property name="sexo" type="java.lang.Character">
-            <column length="1" name="Sexo"/>
+            <column length="1" name="Sexo" />
         </property>
-        
-        
+        <!-- Cambios enderezo -->
+        <component class="pojos.Enderezo" name="enderezo">
+            <property name="numeroCalle" type="java.lang.Integer">
+                <column name="Numero_Calle" />
+            </property>
+            <property name="rua" type="string">
+                <column length="30" name="Rua" />
+            </property>
+            <property name="piso" type="string">
+                <column length="4" name="Piso" />
+            </property>
+            <property name="cp" type="string">
+                <column length="5" name="CP" />
+            </property>
+            <property name="localidade" type="string">
+                <column length="25" name="Localidade" />
+            </property>
+            <property name="provincia" type="string">
+                <column length="15" name="Provincia" />
+            </property>
+        </component>
     </class>
-    
 </hibernate-mapping>

@@ -21,11 +21,11 @@ public class HibernateUtil {
 //       Registrar explícitamente todos los mappings .hbm.xml
 //Necesrio en Hibernate 5, no en la version 4, Hibernate 5 ya no busca automáticamente
 //todos los mappings en el classpath. 
-            configuration.addResource("MAPEO/Curso.hbm.xml");
-             configuration.addResource("MAPEO/Vehiculo.hbm.xml");
-            configuration.addResource("MAPEO/Empregado.hbm.xml");
-            configuration.addResource("MAPEO/Departamento.hbm.xml");
-              configuration.addResource("MAPEO/Proxecto.hbm.xml");
+            configuration.addResource("mapeo/Curso.hbm.xml");
+             configuration.addResource("mapeo/Vehiculo.hbm.xml");
+            configuration.addResource("mapeo/Empregado.hbm.xml");
+            configuration.addResource("mapeo/Departamento.hbm.xml");
+              configuration.addResource("mapeo/Proxecto.hbm.xml");
 
             // Construir el service registry usando las propiedades de configuración
             serviceRegistry = new StandardServiceRegistryBuilder()

@@ -1,7 +1,6 @@
 package pojos;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Empregado implements java.io.Serializable {
 

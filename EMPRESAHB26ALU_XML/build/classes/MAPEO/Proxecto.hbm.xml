@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="POJOS.Proxecto" table="PROXECTO" schema="dbo" catalog="EMPRESAHB2_25">
+    <class name="POJOS.Proxecto" table="PROXECTO" schema="dbo" catalog="EMPRESAHB26">
         <id name="numProxecto" type="int">
             <column name="NumProxecto" />
             <generator class="increment" />
