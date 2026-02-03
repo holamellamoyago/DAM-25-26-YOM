@@ -1,4 +1,4 @@
-package pojos;
+package POJOS;
 // Generated 09-feb-2023 8:57:23 by Hibernate Tools 3.6.0
 
 

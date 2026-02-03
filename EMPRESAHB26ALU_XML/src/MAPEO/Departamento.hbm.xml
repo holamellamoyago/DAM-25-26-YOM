@@ -1,9 +1,9 @@
- <?xml version="1.0"?>
+<?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="pojos.Departamento" table="DEPARTAMENTO" schema="dbo" catalog="EMPRESAHB26">
+    <class name="POJOS.Departamento" table="DEPARTAMENTO" schema="dbo" catalog="EMPRESAHB26">
         <id name="numDepartamento" type="int">
             <column name="NumDepartamento" />
             <generator class="increment" />
@@ -11,9 +11,30 @@
         <property name="nomeDepartamento" type="string">
             <column name="NomeDepartamento" length="25" not-null="true" unique="true" />
         </property>
-        <set name="funciones" table="DEPARTMENTOFUNCION" lazy="true">
-            <key column="NumDepartamento" not-null="true"/>
-            <element column="Funcion" type="string" length="50"/>
+        <set name="funciones" table="DEPARTAMENTOFUNCION"  >
+            <key column="NumDepartamento"/> 
+            <element column="Funcion"  type="string"/>            
         </set>
-    </class>
+      <!--  empregados que pertenecen a un departamento   -->
+    <set name="empregados" table="EMPREGADO" inverse="true" lazy="true" fetch="select">
+        <key>
+            <column name="NumDepartamentoPertenece"/>
+        </key>
+        <one-to-many class="POJOS.Empregado"/>
+    </set>
+    <!--  mapeo de los proyectos que controla  un departamento  -->
+    <bag name="proxectos" table="PROXECTO" inverse="true" lazy="true" fetch="select">
+        <key>
+            <column name="NumDepartControla" not-null="true"/>
+        </key>
+        <one-to-many class="POJOS.Proxecto"/>
+    </bag>
+    
+    <!--  mapeo del director de un departamento 
+    <many-to-one class="POJOS.Empregadofixo" name="director" fetch="select">
+        <column length="15" name="NSSDirector" not-null="true"/>
+    </many-to-one>
+         -->
+</class>
+    
 </hibernate-mapping>

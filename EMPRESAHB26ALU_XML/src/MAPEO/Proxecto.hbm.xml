@@ -14,5 +14,16 @@
         <property name="lugar" type="string">
             <column name="Lugar" length="25" not-null="true" />
         </property>
+        <!-- mapear las fase de proyecto como componente         -->
+        <set name="fases" table="PROXECTOFASE">
+            <key column="NumProxecto"/> 
+            <composite-element class="POJOS.ProxectoFase">
+                <property name="nomeFase" column="NomeFase"/>   
+                <property name="estado" column="Estado"/> 
+            </composite-element>            
+        </set>
+    
+    
+    
     </class>
 </hibernate-mapping>

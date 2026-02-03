@@ -1,4 +1,4 @@
-package pojos;
+package POJOS;
 
 public class Curso implements java.io.Serializable {
 

@@ -1,4 +1,4 @@
-package pojos;
+package POJOS;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,8 +9,8 @@ public class Proxecto implements java.io.Serializable {
     private Departamento departamento;
     private String nomeProxecto;
     private String lugar;
-
-    private Set<ProxectoFase> proxectoFases = new HashSet<>() ;
+    //mapear las fase de proyecto como componente
+    private Set<ProxectoFase> fases = new HashSet<>();
    
     public Proxecto() {
     }
@@ -62,15 +62,13 @@ public class Proxecto implements java.io.Serializable {
         this.lugar = lugar;
     }
 
-    public Set<ProxectoFase> getProxectoFases() {
-        return proxectoFases;
+    public Set<ProxectoFase> getFases() {
+        return fases;
     }
 
-    public void setProxectoFases(Set<ProxectoFase> proxectoFases) {
-        this.proxectoFases = proxectoFases;
+    public void setFases(Set<ProxectoFase> fases) {
+        this.fases = fases;
     }
-
-    
 
    
 

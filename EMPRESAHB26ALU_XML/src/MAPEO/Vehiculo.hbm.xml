@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 09-feb-2023 8:57:24 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="pojos.Vehiculo" table="VEHICULO" schema="dbo" catalog="EMPRESAHB26">
+    <class name="POJOS.Vehiculo" table="VEHICULO" schema="dbo" catalog="EMPRESAHB26">
         <id name="nss" type="string">
             <column name="NSS" length="15" />
             <generator class="foreign">

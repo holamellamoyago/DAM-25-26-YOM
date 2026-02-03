@@ -1,4 +1,4 @@
-package pojos;
+package POJOS;
 
 public class EmpregadoProxecto  implements java.io.Serializable {
 

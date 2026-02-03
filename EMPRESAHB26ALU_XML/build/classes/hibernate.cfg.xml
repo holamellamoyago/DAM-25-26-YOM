@@ -8,12 +8,13 @@
         <property name="hibernate.connection.url">jdbc:sqlserver://localhost;databaseName=EMPRESAHB26;encrypt=true; trustServerCertificate=true; </property>
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password">abc123.</property>
-        <!-- Mostrar SQL en consola -->
-        <property name="hibernate.show_sql">true</property>
+        <!-- Mostrar SQL en consola  -->
+         <!-- <property name="hibernate.show_sql">true</property> -->
         <!-- Formatear SQL para que sea legible -->
-        <property name="hibernate.format_sql">true</property>
+        <!--  <property name="hibernate.format_sql">true</property> -->
         <!-- Opcional: mostrar los valores de los parámetros -->
-        <property name="hibernate.use_sql_comments">true</property>
+         <!-- <property name="hibernate.use_sql_comments">true</property> -->
+      
         <mapping resource="MAPEO/Proxecto.hbm.xml"/>
         <mapping resource="MAPEO/Curso.hbm.xml"/>
         <mapping resource="MAPEO/Vehiculo.hbm.xml"/>
