@@ -3,16 +3,10 @@ class Agenda:
         self.contactos = []
 
     def anhadirContacto(self, contacto):
-        self.contactos += contacto
+        self.contactos.append(contacto)
 
     def mostrarContactos(self):
         for i in self.contactos:
-            print(self.contactos[i])
+            print(i)
 
-
-class Contacto:
-    def __init__(self, nombre, telefono, email):
-        self.nombre  =nombre
-        self.telefono = telefono
-        self.email = email
 
