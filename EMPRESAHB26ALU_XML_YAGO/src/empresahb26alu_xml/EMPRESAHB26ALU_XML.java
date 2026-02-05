@@ -7,15 +7,17 @@
 package empresahb26alu_xml;
 
 import LOGICA.GestorEmpresaHB;
-import java.text.ParseException;
+import POJOS.Departamento;
 
+import java.text.ParseException;
 
 public class EMPRESAHB26ALU_XML {
 
-    public static void main(String[] args) throws ParseException {
-       GestorEmpresaHB.comprobarConexion();
-       GestorEmpresaHB.visualizarProxecto(1);
-    }
-    }
-    
-
+   public static void main(String[] args) throws ParseException {
+      GestorEmpresaHB.comprobarConexion();
+      GestorEmpresaHB.visualizarProxecto(1);
+      GestorEmpresaHB.visualizarEmpregado("0010010");
+      Departamento departamento = null;
+      GestorEmpresaHB.anadirFuncionesPorDepartamento("Limpiar bancos", departamento);
+   }
+}

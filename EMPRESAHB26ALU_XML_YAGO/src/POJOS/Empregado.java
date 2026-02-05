@@ -1,8 +1,6 @@
 package POJOS;
 
-
 import java.util.Date;
-
 
 public class Empregado implements java.io.Serializable {
 
@@ -12,16 +10,14 @@ public class Empregado implements java.io.Serializable {
     private String apelido2;
     private Date dataNacemento;
     private Character sexo;
-     private String rua;
-     private Integer numeroCalle;
-     private String piso;
-     private String cp;
-     private String localidade;
-     private String provincia;
+
+    // Yago
+    private Direccion direccion;
 
     public Empregado() {
     }
- public Empregado(String nss) {
+
+    public Empregado(String nss) {
         this.nss = nss;
     }
 
@@ -31,17 +27,14 @@ public class Empregado implements java.io.Serializable {
         this.apelido1 = apelido1;
     }
 
-    public Empregado(String nss, String nome, String apelido1, String apelido2, Character sexo, String rua, Integer numeroCalle, String piso, String cp, String localidade) {
+    public Empregado(String nss, String nome, String apelido1, String apelido2, Character sexo, String rua,
+            Integer numeroCalle, String piso, String cp, String localidade, String povincia) {
         this.nss = nss;
         this.nome = nome;
         this.apelido1 = apelido1;
         this.apelido2 = apelido2;
         this.sexo = sexo;
-        this.rua = rua;
-        this.numeroCalle = numeroCalle;
-        this.piso = piso;
-        this.cp = cp;
-        this.localidade = localidade;
+        this.direccion = new Direccion(rua, numeroCalle, piso, cp, localidade, povincia);
     }
 
     public String getNss() {
@@ -51,8 +44,6 @@ public class Empregado implements java.io.Serializable {
     public void setNss(String nss) {
         this.nss = nss;
     }
-
-    
 
     public String getNome() {
         return this.nome;
@@ -94,54 +85,18 @@ public class Empregado implements java.io.Serializable {
         this.sexo = sexo;
     }
 
-    public String getRua() {
-        return rua;
+    public Direccion getDireccion() {
+        return direccion;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 
-    public Integer getNumeroCalle() {
-        return numeroCalle;
+    @Override
+    public String toString() {
+        return nome +  " , " + apelido1;
     }
 
-    public void setNumeroCalle(Integer numeroCalle) {
-        this.numeroCalle = numeroCalle;
-    }
-
-    public String getPiso() {
-        return piso;
-    }
-
-    public void setPiso(String piso) {
-        this.piso = piso;
-    }
-
-    public String getCp() {
-        return cp;
-    }
-
-    public void setCp(String cp) {
-        this.cp = cp;
-    }
-
-    public String getLocalidade() {
-        return localidade;
-    }
-
-    public void setLocalidade(String localidade) {
-        this.localidade = localidade;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-   
 
 }
