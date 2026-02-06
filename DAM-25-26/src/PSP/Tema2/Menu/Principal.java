@@ -1,16 +1,23 @@
 package PSP.Tema2.Menu;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Principal {
     public static void main(String[] args) {
 
         mostrarMenu();
 
-        //URL url = iniciarURL();
-        //System.out.println(url);
+        // URL url = iniciarURL();
+        // System.out.println(url);
 
         System.out.println("Se termino el programa");
 
@@ -41,7 +48,8 @@ public class Principal {
         int opcion;
         while (true) {
             System.out.println("MENU");
-            System.out.println("\t1 -> GET CLIENTES");
+            System.out.println("\t1 -> INICIAR URL's");
+            System.out.println("\t2 -> GET CLIENTES");
             System.out.println("\t9 -> Salir");
 
             System.out.println("\nEscribe tú opción: ");
@@ -53,6 +61,9 @@ public class Principal {
                     System.out.println(url);
                 }
                     break;
+                case 2: {
+                    getClientes();
+                }
                 case 9:
                     return;
 
@@ -61,6 +72,44 @@ public class Principal {
                     break;
             }
 
+        }
+    }
+
+    private static void getClientes() {
+
+        URL url = null;
+        HttpURLConnection con = null;
+        String json = "";
+        String strURL = "http://localhost/clientes/rest.php/clientes";
+
+        try {
+            url = new URL(strURL);
+            con = (HttpURLConnection) url.openConnection();
+            con.connect();
+            if (con.getResponseCode() == 200) {
+                BufferedReader bufferIn = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String linea;
+                while ((linea = bufferIn.readLine()) != null)
+                    json += linea;
+                bufferIn.close();
+
+                /*
+                 * Analizamos el JSON devuelto, que sabemos que es un array de objetos cliente
+                 */
+
+                JSONArray datos = new JSONArray(json);
+                for (int i = 0; i < datos.length(); i++) {
+                    JSONObject cliente = datos.getJSONObject(i);
+                    String nombre = cliente.getString("nombre");
+                    boolean vip = (cliente.getString("vip").equals("1"));
+                    int codProvincia = cliente.getInt("codProvincia");
+                    System.out.printf("%s de %d %s es VIP\n", nombre, codProvincia, vip ? "" : "no");
+                }
+            } else {
+                System.out.println("Problemas.Respuesta: (" + con.getResponseCode() + ") " + con.getResponseMessage());
+            }
+        } catch (IOException ex) {
+            System.out.println("Error en la conexión");
         }
     }
 }
