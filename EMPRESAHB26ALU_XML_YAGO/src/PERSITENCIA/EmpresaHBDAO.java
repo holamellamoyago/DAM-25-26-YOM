@@ -1,15 +1,13 @@
 package PERSITENCIA;
 
+import POJOS.Departamento;
 import POJOS.Empregado;
 import POJOS.Proxecto;
 import Utilidades.HibernateUtil;
 
-import java.util.List;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
-import org.hibernate.query.Query;
+import java.util.*;
+import org.hibernate.*;
+import org.hibernate.query.*;
 
 public class EmpresaHBDAO {
 
@@ -69,5 +67,84 @@ public class EmpresaHBDAO {
             throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
         }
     }
+
+    public static void crearTablaFunciones() {
+        Transaction transacion = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transacion = session.beginTransaction();
+
+            NativeQuery crearTabla = session.createNativeQuery("""
+                    CREATE TABLE DEPARTAMENTOFUNCIONES (
+                        NumDepartamento INT,
+                        Funcion VARCHAR(50)
+                    )
+                    """);
+
+            crearTabla.executeUpdate();
+
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            if (transacion != null)
+                transacion.rollback();
+            throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+        }
+    }
+
+    public static void anadirFuncionDerpartamento(String funcion, Departamento departamento) {
+        Transaction transacion = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transacion = session.beginTransaction();
+
+            Departamento depa = session.get(Departamento.class, departamento.getNumDepartamento());
+            depa.getFunciones().add(funcion);
+
+            session.saveOrUpdate(depa);
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            if (transacion != null)
+                transacion.rollback();
+            throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+        }
+    }
+
+    public static Departamento obtenerDepartamento(int numDepartamento) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            return session.get(Departamento.class, numDepartamento);
+
+        } catch (Exception e) {
+            throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+        }
+    }
+
+    public static boolean comprobarFuncionExistenteDepartamento(String funcion, Departamento departamento) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            departamento = session.get(Departamento.class, departamento.getNumDepartamento());
+
+            if (departamento.getFunciones().contains(funcion)) {
+                System.out.println("El departamento: " + departamento + " ya contiene la funcion: " + funcion);
+                return true;
+            } 
+            
+        } catch (Exception e) {
+            throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+        }
+
+
+        return false;
+    }
+
+    // Transaction transacion = null;
+    // try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+    // transacion = session.beginTransaction();
+
+    // session.getTransaction().commit();
+
+    // } catch (Exception e) {
+    // if (transacion != null) transacion.rollback();
+    // throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+    // }
 
 }

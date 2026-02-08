@@ -17,7 +17,10 @@ public class EMPRESAHB26ALU_XML {
       GestorEmpresaHB.comprobarConexion();
       GestorEmpresaHB.visualizarProxecto(1);
       GestorEmpresaHB.visualizarEmpregado("0010010");
-      Departamento departamento = null;
-      GestorEmpresaHB.anadirFuncionesPorDepartamento("Limpiar bancos", departamento);
+      Departamento depa = GestorEmpresaHB.obtenerDepapartamento(3);
+      System.out.println("\n" + depa);
+
+      GestorEmpresaHB.anadirFuncionesPorDepartamento("Limpiar bancos", depa);
+
    }
 }

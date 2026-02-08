@@ -49,12 +49,23 @@ public class GestorEmpresaHB {
     }
 
     public static void anadirFuncionesPorDepartamento(String funcion, Departamento departamento) {
-        if (EmpresaHBDAO.listarTodasTablas().contains("FAMILIAR")) {
-            System.out.println("Existe");
-        } else{
-            System.out.println("No existe");
+        if (!EmpresaHBDAO.listarTodasTablas().contains("DEPARTAMENTOFUNCIONES")) {
+            System.out.println("SE PROCEDE A CREAR  LA TABLA");
+            EmpresaHBDAO.crearTablaFunciones();
         }
-        
+
+        boolean existeFuncion = EmpresaHBDAO.comprobarFuncionExistenteDepartamento(funcion, departamento);
+
+
+        if (!existeFuncion) {
+            EmpresaHBDAO.anadirFuncionDerpartamento(funcion, departamento);
+            System.out.println("FUNCIÓN AÑADIDA");
+        }
+
+    }
+
+    public static Departamento obtenerDepapartamento(int numDepartamento) {
+        return EmpresaHBDAO.obtenerDepartamento(numDepartamento);
     }
 
 }

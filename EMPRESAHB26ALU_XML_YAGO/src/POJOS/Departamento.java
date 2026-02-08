@@ -1,12 +1,13 @@
 package POJOS;
 
+import java.util.Set;
+import java.util.TreeSet;
 
-public class Departamento  implements java.io.Serializable {
+public class Departamento implements java.io.Serializable {
 
-
-     private int numDepartamento;
-     private String nomeDepartamento;
-    
+    private int numDepartamento;
+    private String nomeDepartamento;
+    private Set<String> funciones = new TreeSet<>();
 
     public Departamento() {
     }
@@ -27,7 +28,17 @@ public class Departamento  implements java.io.Serializable {
         this.nomeDepartamento = nomeDepartamento;
     }
 
-   
+    public Set<String> getFunciones() {
+        return funciones;
+    }
+
+    public void setFunciones(Set<String> funciones) {
+        this.funciones = funciones;
+    }
+
+    @Override
+    public String toString() {
+        return nomeDepartamento;
+    }
+
 }
-
-
