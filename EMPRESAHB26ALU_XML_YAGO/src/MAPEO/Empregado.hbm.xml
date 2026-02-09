@@ -47,5 +47,6 @@
             <key column="NSS_Empregado"/>
             <many-to-many class="POJOS.Habilidad"  column="NumHabilidad"/>
         </set>
+        <one-to-one class="POJOS.Vehiculo" name="vehiculo" cascade="all"/>
     </class>
 </hibernate-mapping>

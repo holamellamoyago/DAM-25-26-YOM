@@ -1,10 +1,12 @@
 package POJOS;
 
-
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,17 +27,18 @@ public class Vehiculo implements java.io.Serializable {
     private String modelo;
 
     @Column(name = "DataCompra")
-    private LocalDate  dataCompra;
+    private LocalDate dataCompra;
 
-    
+    @OneToOne
+    @MapsId // La PK de Vehiculo es la misma que la PK de Empregado
+    @JoinColumn(name = "NSS", referencedColumnName = "NSS") // La columna NSS es FK
+    private Empregado empregado;
 
     public Vehiculo() {
     }
 
-   
+    public Vehiculo(String matricula, String marca, String modelo, LocalDate dataCompra) {
 
-    public Vehiculo( String matricula, String marca, String modelo, LocalDate  dataCompra) {
-       
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;
@@ -49,8 +52,6 @@ public class Vehiculo implements java.io.Serializable {
     public void setNss(String nss) {
         this.nss = nss;
     }
-
-   
 
     public String getMatricula() {
         return this.matricula;
@@ -76,11 +77,11 @@ public class Vehiculo implements java.io.Serializable {
         this.modelo = modelo;
     }
 
-    public LocalDate  getDataCompra() {
+    public LocalDate getDataCompra() {
         return this.dataCompra;
     }
 
-    public void setDataCompra(LocalDate  dataCompra) {
+    public void setDataCompra(LocalDate dataCompra) {
         this.dataCompra = dataCompra;
     }
 

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -22,6 +23,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -79,6 +81,9 @@ public class Empregado implements java.io.Serializable {
     @ManyToMany
     @JoinTable(name = "EMPREGADO_HABILIDADE", joinColumns = @JoinColumn(name = "NSS"), inverseJoinColumns = @JoinColumn(name = "IDHABILIDADE"))
     private Set<Habilidad> habilidades = new HashSet<>();
+
+    @OneToOne(mappedBy = "empregado", cascade = CascadeType.ALL)
+    private Vehiculo vehiculo;
 
     public Empregado() {
     }
