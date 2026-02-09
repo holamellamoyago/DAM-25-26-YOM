@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-feb-2023 8:57:24 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class catalog="EMPRESAHB26" name="POJOS.Habilidad" schema="dbo" table="HABILIDADES">
+        <id name="numHabilidad" type="int">
+            <column name="NumHabilidad" />
+            <generator class="identity" />
+        </id>
+        <property name="habilidad" type="string">
+            <column length="60" name="Habilidad" not-null="true" />
+        </property>
+
+        <set name="empregados" table="EMPREGADO_HABILIDAD"  inverse="true">
+            <key column="NumHabilidad"/>
+            <many-to-many class="POJOS.Empregado" column="NSS_Empregado"/>
+        </set>
+    </class>
+</hibernate-mapping>

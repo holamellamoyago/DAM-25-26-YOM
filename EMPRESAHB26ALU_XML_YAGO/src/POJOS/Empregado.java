@@ -1,6 +1,8 @@
 package POJOS;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Empregado implements java.io.Serializable {
 
@@ -11,8 +13,13 @@ public class Empregado implements java.io.Serializable {
     private Date dataNacemento;
     private Character sexo;
 
+    // Yago 09-02
+    private Set<Habilidad> habilidades = new HashSet<>();
+
     // Yago
     private Direccion direccion;
+
+    private Vehiculo vehiculo;
 
     public Empregado() {
     }
@@ -81,6 +88,14 @@ public class Empregado implements java.io.Serializable {
         return this.sexo;
     }
 
+    public Set<Habilidad> getHabilidades() {
+        return habilidades;
+    }
+
+    public void setHabilidades(Set<Habilidad> habilidades) {
+        this.habilidades = habilidades;
+    }
+
     public void setSexo(Character sexo) {
         this.sexo = sexo;
     }
@@ -96,6 +111,14 @@ public class Empregado implements java.io.Serializable {
     @Override
     public String toString() {
         return nome +  " , " + apelido1;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
 

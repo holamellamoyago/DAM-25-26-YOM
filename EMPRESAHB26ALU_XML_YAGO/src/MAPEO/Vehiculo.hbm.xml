@@ -10,6 +10,7 @@
                 <param name="property">empregado</param>
             </generator>
         </id>
+        
         <!--mapeo de las propiedades-->
         <property name="matricula" type="string" >
             <column name="Matricula" length="10" unique='true'/>

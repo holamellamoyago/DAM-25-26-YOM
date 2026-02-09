@@ -7,7 +7,6 @@
             <column length="15" name="NSS" />
             <generator class="assigned" />
         </id>
-
         <property name="nome" type="string">
             <column length="25" name="Nome" not-null="true" />
         </property>
@@ -43,8 +42,10 @@
                 <column length="15" name="Provincia" />
             </property>
         </component>
-
-
+        <!-- Yago 09/02 -->
+        <set name="habilidades"  table="EMPREGADO_HABILIDAD">
+            <key column="NSS_Empregado"/>
+            <many-to-many class="POJOS.Habilidad"  column="NumHabilidad"/>
+        </set>
     </class>
-
 </hibernate-mapping>

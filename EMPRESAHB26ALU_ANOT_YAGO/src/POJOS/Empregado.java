@@ -3,8 +3,11 @@ package POJOS;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -15,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
@@ -64,10 +69,16 @@ public class Empregado implements java.io.Serializable {
     // por c�digo
     private List<Familiar> familiares = new ArrayList();
 
-    // Yago 03/02 
+    // Yago 03/02
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NumDepartamentoPertenece")
     private Departamento departamento;
+
+    // Yago 09/02
+
+    @ManyToMany
+    @JoinTable(name = "EMPREGADO_HABILIDADE", joinColumns = @JoinColumn(name = "NSS"), inverseJoinColumns = @JoinColumn(name = "IDHABILIDADE"))
+    private Set<Habilidad> habilidades = new HashSet<>();
 
     public Empregado() {
     }
@@ -126,6 +137,14 @@ public class Empregado implements java.io.Serializable {
 
     public LocalDate getDataNacemento() {
         return this.dataNacemento;
+    }
+
+    public Set<Habilidad> getHabilidades() {
+        return habilidades;
+    }
+
+    public void setHabilidades(Set<Habilidad> habilidades) {
+        this.habilidades = habilidades;
     }
 
     public void setDataNacemento(LocalDate dataNacemento) {

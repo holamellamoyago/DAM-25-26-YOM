@@ -19,5 +19,8 @@
         <mapping resource="MAPEO/Vehiculo.hbm.xml"/>
         <mapping resource="MAPEO/Empregado.hbm.xml"/>
         <mapping resource="MAPEO/Departamento.hbm.xml"/>
+        <mapping resource="MAPEO/Habilidad.hbm.xml"/>
+
+        <!-- //TODO METER AQUI HABILIDAD -->
     </session-factory>
 </hibernate-configuration>
