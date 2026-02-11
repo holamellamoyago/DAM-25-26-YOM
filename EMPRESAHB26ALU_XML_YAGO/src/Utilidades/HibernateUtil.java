@@ -28,6 +28,7 @@ public class HibernateUtil {
             configuration.addResource("MAPEO/Departamento.hbm.xml");
             configuration.addResource("MAPEO/Proxecto.hbm.xml");
             configuration.addResource("MAPEO/Habilidad.hbm.xml");
+            configuration.addResource("MAPEO/EmpregadoProxecto.hbm.xml");
 
             // Construir el service registry usando las propiedades de configuración
             serviceRegistry = new StandardServiceRegistryBuilder()

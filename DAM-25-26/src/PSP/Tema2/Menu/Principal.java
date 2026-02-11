@@ -6,12 +6,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Principal {
+        private static URL url = null;
+        private static HttpURLConnection con = null;
+        private static String json = "";
+        private static final String baseURL = "http://localhost/clientes/rest.php";
+    // private static ArrayList<Cliente> clientes = new ArrayList<>();
+
     public static void main(String[] args) {
 
         mostrarMenu();
@@ -19,7 +26,7 @@ public class Principal {
         // URL url = iniciarURL();
         // System.out.println(url);
 
-        System.out.println("Se termino el programa");
+        System.out.println("\nSe termino el programa");
 
     }
 
@@ -50,6 +57,7 @@ public class Principal {
             System.out.println("MENU");
             System.out.println("\t1 -> INICIAR URL's");
             System.out.println("\t2 -> GET CLIENTES");
+            System.out.println("\t3 -> ACTUALIZAR CLIENTES");
             System.out.println("\t9 -> Salir");
 
             System.out.println("\nEscribe tú opción: ");
@@ -64,6 +72,12 @@ public class Principal {
                 case 2: {
                     getClientes();
                 }
+                    break;
+
+                case 3: {
+                    patchProvinciaCliente();
+                }
+                    break;
                 case 9:
                     return;
 
@@ -75,12 +89,38 @@ public class Principal {
         }
     }
 
-    private static void getClientes() {
+    private static void patchProvinciaCliente() {
+        Scanner sc = new Scanner(System.in);
 
-        URL url = null;
-        HttpURLConnection con = null;
-        String json = "";
-        String strURL = "http://localhost/clientes/rest.php/clientes";
+        Cliente cliente = null;
+        do {
+            System.out.println("De que cliente te gustaría actualizar la provincia? (Introduce el nombre)");
+            ArrayList<Cliente> clientes = getClientes();
+            System.out.println(clientes);
+
+            String nombre = sc.nextLine();
+
+            for (Cliente c : clientes) {
+                if (c.getNombre().equals(nombre)) {
+                    cliente = c;
+                    break;
+                }
+            }
+
+            if (cliente == null) {
+                System.out.println("Cliente no encontrado, vuelva a introducirlo.");
+            } else {
+                con = 
+            }
+
+        } while (cliente == null);
+
+    }
+
+    private static ArrayList<Cliente> getClientes() {
+        ArrayList<Cliente> clientes = new ArrayList<>();
+
+        baseURL += "clientes";
 
         try {
             url = new URL(strURL);
@@ -100,16 +140,20 @@ public class Principal {
                 JSONArray datos = new JSONArray(json);
                 for (int i = 0; i < datos.length(); i++) {
                     JSONObject cliente = datos.getJSONObject(i);
+                    int codCliente = cliente.getInt("codCliente");
                     String nombre = cliente.getString("nombre");
-                    boolean vip = (cliente.getString("vip").equals("1"));
+                    boolean vip = (cliente.getInt("vip") == 1);
                     int codProvincia = cliente.getInt("codProvincia");
+                    clientes.add(new Cliente(codCliente, codProvincia, nombre, vip));
                     System.out.printf("%s de %d %s es VIP\n", nombre, codProvincia, vip ? "" : "no");
                 }
             } else {
                 System.out.println("Problemas.Respuesta: (" + con.getResponseCode() + ") " + con.getResponseMessage());
             }
+
+            return clientes;
         } catch (IOException ex) {
-            System.out.println("Error en la conexión");
+            throw new RuntimeException(ex);
         }
     }
 }

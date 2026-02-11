@@ -48,5 +48,10 @@
             <many-to-many class="POJOS.Habilidad"  column="NumHabilidad"/>
         </set>
         <one-to-one class="POJOS.Vehiculo" name="vehiculo" cascade="all"/>
+        <!-- Yago 10/02 -->
+        <set name="proxectos" inverse="true" cascade="all-delete-orphan">
+            <key column="NSSEmpregado"/>
+            <one-to-many class="POJOS.EmpregadoProxecto"/>
+        </set>
     </class>
 </hibernate-mapping>

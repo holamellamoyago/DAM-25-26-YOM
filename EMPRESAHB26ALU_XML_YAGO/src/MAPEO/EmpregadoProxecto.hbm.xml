@@ -12,10 +12,13 @@
                 <column name="NumProxecto" />
             </key-property>
         </composite-id>
-         <property name="horas" type="java.lang.Integer">
+        <property name="horas" type="java.lang.Integer">
             <column name="Horas" />
         </property>
-        
-       
+        <!-- Yago 10/02 -->
+        <many-to-one name="empregado" class="POJOS.Empregado" 
+            column="NSSEmpregado" insert="false" update="false"/>
+        <many-to-one name="proxecto" class="POJOS.Proxecto"
+        column="NumProxecto" insert="false" update="false"/>
     </class>
 </hibernate-mapping>

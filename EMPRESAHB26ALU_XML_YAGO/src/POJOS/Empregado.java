@@ -16,6 +16,9 @@ public class Empregado implements java.io.Serializable {
     // Yago 09-02
     private Set<Habilidad> habilidades = new HashSet<>();
 
+    // Yago 10/02
+    private Set<EmpregadoProxecto> proxectos = new HashSet<>();
+
     // Yago
     private Direccion direccion;
 
@@ -110,7 +113,7 @@ public class Empregado implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return nome +  " , " + apelido1;
+        return nome + " , " + apelido1;
     }
 
     public Vehiculo getVehiculo() {
@@ -121,5 +124,14 @@ public class Empregado implements java.io.Serializable {
         this.vehiculo = vehiculo;
     }
 
+    public Set<EmpregadoProxecto> getProxectos() {
+        return proxectos;
+    }
+
+    public void setProxectos(Set<EmpregadoProxecto> proxectos) {
+        this.proxectos = proxectos;
+    }
+
+    
 
 }

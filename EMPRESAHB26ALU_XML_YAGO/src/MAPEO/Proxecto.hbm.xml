@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-
 <hibernate-mapping>
     <class name="POJOS.Proxecto" table="PROXECTO" schema="dbo" catalog="EMPRESAHB26">
         <id name="numProxecto" type="int">
@@ -14,5 +13,9 @@
         <property name="lugar" type="string">
             <column name="Lugar" length="25" not-null="true" />
         </property>
+        <set name="empregados" inverse="true" cascade="all-delete-orphan">
+            <key column="NumProxecto"/>
+            <one-to-many class="POJOS.EmpregadoProxecto"/>
+        </set>
     </class>
 </hibernate-mapping>

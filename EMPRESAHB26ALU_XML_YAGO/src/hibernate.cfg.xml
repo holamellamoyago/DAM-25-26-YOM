@@ -18,6 +18,7 @@
         <mapping resource="MAPEO/Curso.hbm.xml"/>
         <mapping resource="MAPEO/Vehiculo.hbm.xml"/>
         <mapping resource="MAPEO/Empregado.hbm.xml"/>
+        <mapping resource="MAPEO/EmpregadoProxecto.hbm.xml"/>
         <mapping resource="MAPEO/Departamento.hbm.xml"/>
         <mapping resource="MAPEO/Habilidad.hbm.xml"/>
 

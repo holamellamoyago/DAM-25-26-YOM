@@ -7,7 +7,7 @@ public class EmpregadoProxecto  implements java.io.Serializable {
     
      private Integer horas;
 
-     private Empregado empregrado;
+     private Empregado empregado;
      private Proxecto proxecto;
 
 
@@ -32,13 +32,13 @@ public class EmpregadoProxecto  implements java.io.Serializable {
     }
 
 
-    public Empregado getEmpregrado() {
-        return empregrado;
+    public Empregado getEmpregado() {
+        return empregado;
     }
 
 
-    public void setEmpregrado(Empregado empregrado) {
-        this.empregrado = empregrado;
+    public void setEmpregado(Empregado empregado) {
+        this.empregado = empregado;
     }
 
 
