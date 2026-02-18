@@ -77,7 +77,14 @@ public class GestorEmpresaHB {
 
     public static void anadirTelefonoEmpregado(String nss, String tlfn, String informacion) {
         Map<String, String> telefonos =  EmpresaHBDAO.obtenerTelefonosEmpregado(nss);
-        System.out.println("\n" + telefonos);
+        
+        if (telefonos.containsKey(tlfn)) {
+            System.out.println("Ya existe ese número guardado");
+            return;
+        }
+
+    
+        EmpresaHBDAO.guardarNumeroTlfn(EmpresaHBDAO.obtenerEmpregado(nss) , tlfn, informacion);
     }
 
 }

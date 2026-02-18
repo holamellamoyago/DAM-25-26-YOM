@@ -118,4 +118,20 @@ public class EmpresaHBDAO {
         }
     }
 
+    public static void guardarNumeroTlfn(Empregado empregado, String tlfn, String informacion) {
+        Transaction tx = null;
+        try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
+            tx = sesion.beginTransaction();
+
+            empregado.getTelefonos().put(tlfn, informacion);
+            sesion.saveOrUpdate(empregado);
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null)
+                tx.rollback();
+            throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+        }
+    }
+
 }
