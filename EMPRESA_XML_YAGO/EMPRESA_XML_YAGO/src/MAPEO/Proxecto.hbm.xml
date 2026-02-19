@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-
 <hibernate-mapping>
     <class name="POJOS.Proxecto" table="PROXECTO" schema="dbo" catalog="EMPRESAHB26">
         <id name="numProxecto" type="int">
@@ -13,6 +12,8 @@
         <property name="lugar" type="string">
             <column name="Lugar" length="25" not-null="true" />
         </property>
-
+        <!-- Hacer en casa 
+        <many-to-one name="departamento" class="POJOS.Departamento" column="NumDepartControla" not-null="true"/>
+        -->
     </class>
 </hibernate-mapping>
