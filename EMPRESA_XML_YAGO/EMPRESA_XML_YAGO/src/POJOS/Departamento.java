@@ -9,6 +9,8 @@ public class Departamento implements java.io.Serializable {
     private String nomeDepartamento;
     private Set<String> funciones = new HashSet<>();
 
+    private Set<Proxecto> proxectos = new HashSet<>();
+
     public Departamento() {
     }
 
