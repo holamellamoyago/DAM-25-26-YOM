@@ -1,0 +1,64 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="TareaInformes1" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7ded82a6-2fb0-403a-998e-c3eced6a0b8f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="Nombre" class="java.lang.String"/>
+	<field name="Apellidos" class="java.lang.String"/>
+	<field name="Edad" class="java.lang.Integer"/>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="6c64559e-c284-42de-8a33-d4537a2de4ed" x="80" y="0" width="200" height="79" fontSize="25.0">
+			<text><![CDATA[Gimnasio El Nano]]></text>
+		</element>
+		<element kind="image" uuid="b3df0e7b-3382-453a-8eb1-4171824b4592" x="0" y="0" width="80" height="79">
+			<expression><![CDATA["nano.jpg"]]></expression>
+		</element>
+	</title>
+	<pageHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="92622b9c-bd6a-4d80-ae05-37f546f5aba3" x="0" y="0" width="200" height="30" fontSize="17.0" bold="true">
+			<text><![CDATA[Reporte usuarios]]></text>
+		</element>
+	</pageHeader>
+	<columnHeader height="41" splitType="Stretch">
+		<element kind="staticText" uuid="7fa3199d-40ba-411c-ae7b-3314b21b9488" x="0" y="0" width="80" height="30">
+			<text><![CDATA[DNI]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c24f0da-ddf4-44c8-b7b0-9e774421d2f9"/>
+		</element>
+		<element kind="staticText" uuid="39d72e3f-0851-4cf9-82a3-e7c75bee898a" x="80" y="0" width="100" height="30">
+			<text><![CDATA[Nombre]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="322f2bba-36d8-49ba-ace3-b86daa16f170"/>
+		</element>
+		<element kind="staticText" uuid="72cfeea6-f02c-49e7-a93c-555816529ed5" x="180" y="0" width="200" height="30">
+			<text><![CDATA[Apellidos]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="53595974-ac51-4248-a380-04c9d125c17b"/>
+		</element>
+		<element kind="staticText" uuid="746a247a-7233-47a6-bab3-904aa93900ae" x="380" y="0" width="100" height="30">
+			<text><![CDATA[Edad]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6d19228f-2453-499e-8db0-c8787b3ac15e"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<element kind="textField" uuid="e79360eb-7569-422a-b5f3-49cefad863b3" x="0" y="0" width="80" height="30">
+				<expression><![CDATA[$F{DNI}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c24f0da-ddf4-44c8-b7b0-9e774421d2f9"/>
+			</element>
+			<element kind="textField" uuid="557f8813-705f-481f-b276-098c4e9f0ff6" x="80" y="0" width="100" height="30">
+				<expression><![CDATA[$F{Nombre}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="322f2bba-36d8-49ba-ace3-b86daa16f170"/>
+			</element>
+			<element kind="textField" uuid="930cf261-af52-4475-8451-399bf4d50e87" x="180" y="0" width="200" height="30">
+				<expression><![CDATA[$F{Apellidos}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="53595974-ac51-4248-a380-04c9d125c17b"/>
+			</element>
+			<element kind="textField" uuid="e3220b79-668c-4815-bd4c-7fe98f390d56" x="380" y="0" width="100" height="30">
+				<expression><![CDATA[$F{Edad}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6d19228f-2453-499e-8db0-c8787b3ac15e"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

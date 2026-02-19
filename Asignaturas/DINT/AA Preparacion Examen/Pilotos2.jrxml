@@ -1,0 +1,106 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Pilotos2" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2948211a-8a81-4947-97a9-147e8fb5f634">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conector F1 History"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="ZjFfaGlzdG9yeS5kcml2ZXJzIEFTICwxNzEsODAsMTZkNDMwN2EtNjQ3NS00ZTEzLTkyNzgtMTlm&#xa;YzYzMDI4YWExOw=="/>
+	<dataset name="Carreras Ganadas" uuid="403fbd05-0aeb-4edb-a6b9-a565ab43acc1">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conector F1 History"/>
+		<query language="SQL"><![CDATA[SELECT 
+    d.first_name, 
+    COUNT(*) AS victorias
+FROM f1_history.results r
+INNER JOIN f1_history.drivers d ON r.driver_id = d.driver_id
+WHERE r.final_position = 1
+GROUP BY d.first_name
+ORDER BY victorias DESC]]></query>
+		<field name="first_name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+			<property name="com.jaspersoft.studio.field.label" value="first_name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="drivers"/>
+		</field>
+		<field name="victorias" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="victorias"/>
+			<property name="com.jaspersoft.studio.field.label" value="victorias"/>
+		</field>
+		<group name="first_name">
+			<expression><![CDATA[$F{first_name}]]></expression>
+		</group>
+		<group name="victorias">
+			<expression><![CDATA[$F{victorias}]]></expression>
+		</group>
+	</dataset>
+	<query language="sql"><![CDATA[SELECT driver_id,
+	first_name,
+	last_name,
+	driver_code,
+	permanent_number,
+	nationality
+FROM f1_history.drivers]]></query>
+	<field name="driver_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="driver_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="driver_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="drivers"/>
+	</field>
+	<field name="first_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="drivers"/>
+	</field>
+	<field name="last_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="drivers"/>
+	</field>
+	<field name="driver_code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="driver_code"/>
+		<property name="com.jaspersoft.studio.field.label" value="driver_code"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="drivers"/>
+	</field>
+	<field name="permanent_number" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="permanent_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="permanent_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="drivers"/>
+	</field>
+	<field name="nationality" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nationality"/>
+		<property name="com.jaspersoft.studio.field.label" value="nationality"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="drivers"/>
+	</field>
+	<group name="Pilotos">
+		<groupHeader>
+			<band height="50">
+				<element kind="staticText" uuid="df6caad6-4aba-47c2-959d-4dfa6eeec582" x="0" y="20" width="80" height="30">
+					<text><![CDATA[driver_id]]></text>
+				</element>
+				<element kind="staticText" uuid="f3619087-4258-49ef-a0b4-822cc3ed7179" x="80" y="20" width="100" height="30">
+					<text><![CDATA[first_name]]></text>
+				</element>
+			</band>
+		</groupHeader>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="5d0aa8e8-2c6f-488b-bd25-767c3f871752" x="80" y="0" width="200" height="78" fontSize="35.0" bold="true" italic="true" underline="true">
+			<text><![CDATA[Formula 1]]></text>
+		</element>
+		<element kind="image" uuid="27e2ccff-d406-4035-8b87-d762efab4568" x="0" y="0" width="80" height="78">
+			<expression><![CDATA["assets/logo.jpg"]]></expression>
+		</element>
+		<element kind="staticText" uuid="7aaec9e1-5b30-4127-a95d-b5b58a2b8967" x="380" y="0" width="100" height="30">
+			<text><![CDATA[Pilotos]]></text>
+		</element>
+		<element kind="textField" uuid="eab5cd55-86e3-4133-8b7f-c16b5502a419" x="380" y="30" width="100" height="30" pattern="M/d/yy h:mm a">
+			<expression><![CDATA[new Date()]]></expression>
+		</element>
+	</title>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="textField" uuid="579aa530-6408-4567-917f-f429529f83de" x="0" y="0" width="80" height="30">
+				<expression><![CDATA[$F{driver_id}]]></expression>
+			</element>
+			<element kind="textField" uuid="1a0f3fab-81e8-4591-bd5b-65d88f5c2418" x="80" y="0" width="100" height="30">
+				<expression><![CDATA[$F{first_name}]]></expression>
+			</element>
+		</band>
+	</detail>
+</jasperReport>

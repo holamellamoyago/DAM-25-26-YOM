@@ -1,0 +1,422 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Tarefa1" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd523938-e4cf-4c38-be65-77b180513fc3">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DatabaseInterfaces"/>
+	<parameter name="IdPedido" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT interfaces.clientes.nombre,
+	interfaces.clientes.direccion,
+	interfaces.clientes.pais,
+	interfaces.clientes.descuento,
+	interfaces.clientes.id_cliente,
+	interfaces.pedidos.vendedor,
+	interfaces.pedidos.fecha_pedido,
+	interfaces.pedidos.fecha_entrega,
+	interfaces.pedidos.fecha_envio,
+	interfaces.pedidos.forma_envio,
+	interfaces.productos.id_producto,
+	interfaces.productos.id_pedido,
+	interfaces.productos.nombre,
+	interfaces.productos.cantidad,
+	interfaces.productos.precio,
+	interfaces.pedidos.cargo,
+	(interfaces.productos.precio * interfaces.productos.cantidad) *
+    (1 - interfaces.clientes.descuento / 100.0) AS precio_con_descuento,
+   ((interfaces.productos.precio * interfaces.productos.cantidad) * (1 - interfaces.clientes.descuento / 100.0)) + 
+    interfaces.pedidos.cargo  AS precio_con_cargo
+FROM interfaces.productos
+	INNER JOIN interfaces.pedidos ON 
+	 interfaces.productos.id_pedido = interfaces.pedidos.id_pedido 
+	INNER JOIN interfaces.clientes ON 
+	 interfaces.pedidos.id_cliente = interfaces.clientes.id_cliente
+WHERE 	interfaces.productos.id_pedido =  $P{IdPedido} ]]></query>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="pais" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pais"/>
+		<property name="com.jaspersoft.studio.field.label" value="pais"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="descuento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="descuento"/>
+		<property name="com.jaspersoft.studio.field.label" value="descuento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="id_cliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="vendedor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="vendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="vendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedidos"/>
+	</field>
+	<field name="fecha_pedido" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_pedido"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_pedido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedidos"/>
+	</field>
+	<field name="fecha_entrega" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_entrega"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_entrega"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedidos"/>
+	</field>
+	<field name="fecha_envio" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_envio"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_envio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedidos"/>
+	</field>
+	<field name="forma_envio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="forma_envio"/>
+		<property name="com.jaspersoft.studio.field.label" value="forma_envio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedidos"/>
+	</field>
+	<field name="id_producto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_producto"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_producto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="id_pedido" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_pedido"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_pedido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="COLUMN_13" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="precio" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precio"/>
+		<property name="com.jaspersoft.studio.field.label" value="precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="cargo" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="cargo"/>
+		<property name="com.jaspersoft.studio.field.label" value="cargo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedidos"/>
+	</field>
+	<field name="precio_con_descuento" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precio_con_descuento"/>
+		<property name="com.jaspersoft.studio.field.label" value="precio_con_descuento"/>
+	</field>
+	<field name="precio_con_cargo" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precio_con_cargo"/>
+		<property name="com.jaspersoft.studio.field.label" value="precio_con_cargo"/>
+	</field>
+	<variable name="suma_total" calculation="Sum" class="java.lang.Double">
+		<expression><![CDATA[$F{precio_con_descuento}]]></expression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="Pedido">
+		<groupHeader>
+			<band height="110">
+				<element kind="textField" uuid="ba4e448d-f842-462b-8f19-0bcba643c4c9" x="0" y="30" width="40" height="30" fontName="Arial" hTextAlign="Center">
+					<expression><![CDATA[$F{id_pedido}]]></expression>
+					<box>
+						<pen lineWidth="1.0" lineColor="#030FFF"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="5221e4ab-fe99-4be3-83cd-80ab06b8eb74" x="40" y="30" width="40" height="30" fontName="Arial" hTextAlign="Center">
+					<expression><![CDATA[$F{id_cliente}]]></expression>
+					<box>
+						<pen lineWidth="1.0" lineColor="#030FFF"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="3008217a-4b41-4cab-a74f-dc9dfb6413d1" x="80" y="30" width="100" height="30" fontName="Arial" hTextAlign="Center">
+					<expression><![CDATA[$F{vendedor}]]></expression>
+					<box>
+						<pen lineWidth="1.0" lineColor="#030FFF"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="a9f0f8b3-3b49-42e3-8042-7393ca27577b" x="180" y="30" width="100" height="30" fontName="Arial" hTextAlign="Center">
+					<expression><![CDATA[$F{fecha_pedido}]]></expression>
+					<box>
+						<pen lineWidth="1.0" lineColor="#030FFF"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="b9913a48-621e-47ef-b812-e9a8bf0cfc86" x="280" y="30" width="100" height="30" fontName="Arial" hTextAlign="Center">
+					<expression><![CDATA[$F{fecha_entrega}]]></expression>
+					<box>
+						<pen lineWidth="1.0" lineColor="#030FFF"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="f6c670e2-e088-4df5-b911-69b82752192c" x="380" y="30" width="100" height="30" fontName="Arial" blankWhenNull="true" hTextAlign="Center">
+					<expression><![CDATA[$F{fecha_envio}]]></expression>
+					<box>
+						<pen lineWidth="1.0" lineColor="#030FFF"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="a8692649-153a-44f2-88d7-0333ecc5ccbe" x="480" y="30" width="70" height="30" fontName="Arial" hTextAlign="Center">
+					<expression><![CDATA[$F{forma_envio}]]></expression>
+					<box>
+						<pen lineWidth="1.0" lineColor="#030FFF"/>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030FFF"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="82425b6a-7de9-4f60-8f7d-b36b6a5d163c" mode="Opaque" x="0" y="79" width="80" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true">
+					<text><![CDATA[Id de producto:]]></text>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d98973ae-b201-4f41-9d9c-6079b90c489e"/>
+				</element>
+				<element kind="staticText" uuid="47af21b5-e340-4a58-a583-6bfb397654bc" mode="Opaque" x="80" y="79" width="200" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true">
+					<text><![CDATA[Nombre de producto:]]></text>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="36ccbf94-6ea4-4910-a9c7-8886df510241"/>
+				</element>
+				<element kind="staticText" uuid="66f80533-9f47-4ff7-8d47-4c6e67e00432" mode="Opaque" x="280" y="79" width="50" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true">
+					<text><![CDATA[Cantidade:]]></text>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21b95b6d-77f5-42b8-aaeb-fd1f864b1fb4"/>
+				</element>
+				<element kind="staticText" uuid="b5013b1b-0656-471d-967d-946473591437" mode="Opaque" x="330" y="79" width="50" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true">
+					<text><![CDATA[Precio por unidad:]]></text>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd991044-1072-49ae-ba8f-2c1a500cc854"/>
+				</element>
+				<element kind="staticText" uuid="8d85c7cb-1fb0-449e-9b4c-f9085c381f87" mode="Opaque" x="380" y="79" width="100" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true">
+					<text><![CDATA[Descuento:]]></text>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dbf7a112-b479-487b-807f-ff7fd3ce1eb7"/>
+				</element>
+				<element kind="staticText" uuid="6cfb4429-2d3e-4aef-98b5-ba0548b2e746" mode="Opaque" x="480" y="79" width="70" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true">
+					<text><![CDATA[Precio con descuento:]]></text>
+				</element>
+				<element kind="staticText" uuid="86850bee-b618-4b77-825f-97c0135bf6b8" mode="Opaque" x="0" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true" hTextAlign="Center">
+					<text><![CDATA[Id. de pedido]]></text>
+				</element>
+				<element kind="staticText" uuid="ea91661f-9823-4228-b585-19d761f14ff5" mode="Opaque" x="40" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true" hTextAlign="Center">
+					<text><![CDATA[Id. de cliente]]></text>
+				</element>
+				<element kind="staticText" uuid="fb208b72-593e-4ac1-8671-06666cc4aa8d" mode="Opaque" x="80" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true" hTextAlign="Center">
+					<text><![CDATA[Vendedor:]]></text>
+				</element>
+				<element kind="staticText" uuid="7f1296ea-b330-4c50-b318-954fff379941" mode="Opaque" x="180" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true" hTextAlign="Center">
+					<text><![CDATA[Data de pedido:]]></text>
+				</element>
+				<element kind="staticText" uuid="2ef8d62f-3938-4753-968a-f6841581ca46" mode="Opaque" x="280" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true" hTextAlign="Center">
+					<text><![CDATA[Data de entrega:]]></text>
+				</element>
+				<element kind="staticText" uuid="b8b1df17-116a-40c4-87d8-4c1d7098aed0" mode="Opaque" x="380" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true" hTextAlign="Center">
+					<text><![CDATA[Data de envio:]]></text>
+				</element>
+				<element kind="staticText" uuid="08aa4eba-2bce-4295-a5d4-800014c6feb5" mode="Opaque" x="480" y="0" width="70" height="30" forecolor="#FFFFFF" backcolor="#030FFF" fontName="Arial" bold="true" hTextAlign="Center">
+					<text><![CDATA[Forma de envio:]]></text>
+				</element>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="80" splitType="Stretch">
+		<element kind="image" uuid="e5dad969-6ee0-44ee-9af5-21da88abe4d3" x="80" y="0" width="200" height="80">
+			<expression><![CDATA["assets/Logo Neptuno.bmp"]]></expression>
+			<box>
+				<topPen lineWidth="1.0"/>
+				<leftPen lineWidth="1.0"/>
+				<bottomPen lineWidth="1.0"/>
+				<rightPen lineWidth="1.0"/>
+			</box>
+		</element>
+		<element kind="textField" uuid="0e5bb0dd-c077-495b-a538-4f2211520397" x="450" y="30" width="100" height="30" forecolor="#2003FF" fontName="Arial" fontSize="22.0" bold="true">
+			<expression><![CDATA["PEDIDO"]]></expression>
+		</element>
+		<element kind="image" uuid="570935aa-1294-46c3-89f1-4ef354a67fee" x="0" y="0" width="80" height="80" scaleImage="FillFrame" usingCache="true" lazy="true">
+			<expression><![CDATA["assets/f1.jpg"]]></expression>
+		</element>
+	</title>
+	<pageHeader height="60" splitType="Stretch">
+		<element kind="staticText" uuid="d055ea6c-7c20-4df6-bba7-58615145086e" x="0" y="0" width="280" height="20" forecolor="#2003FF" fontName="Arial" italic="true">
+			<text><![CDATA[Calle Noria, Bajo 1, 36940, Cangas del Morrazo]]></text>
+		</element>
+		<element kind="staticText" uuid="37ce9a93-277d-46bc-adc4-bf0c7a98eaf5" x="0" y="20" width="280" height="20" forecolor="#2003FF" fontName="Arial" italic="true">
+			<text><![CDATA[Teléfono: 123456789]]></text>
+		</element>
+		<element kind="textField" uuid="09046b93-5359-4e66-91b6-88f11cb8f074" x="480" y="0" width="70" height="30" fontName="Arial" pattern="M/d/yy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="85" splitType="Stretch">
+		<element kind="staticText" uuid="f49ea976-f58a-417d-ac39-a9e174703f0c" x="0" y="0" width="80" height="20" forecolor="#030FFF" fontName="Arial" bold="true">
+			<text><![CDATA[Enviar a:]]></text>
+		</element>
+		<element kind="textField" uuid="1380136d-4091-4479-9ad8-446a654a1c70" x="80" y="20" width="100" height="30" fontName="Arial">
+			<expression><![CDATA[$F{direccion}]]></expression>
+		</element>
+		<element kind="textField" uuid="a1e29dc0-d615-45ab-9a8a-6ef11a229354" x="80" y="0" width="100" height="20" fontName="Arial">
+			<expression><![CDATA[$F{nombre}]]></expression>
+		</element>
+		<element kind="textField" uuid="a55ef2ba-bee6-4be5-b0ec-f6a4f16413a0" x="80" y="50" width="100" height="30" fontName="Arial">
+			<expression><![CDATA[$F{pais}]]></expression>
+		</element>
+		<element kind="staticText" uuid="07491c0a-dcdf-4e00-9b82-44e159302464" x="280" y="0" width="80" height="20" forecolor="#030FFF" fontName="Arial" bold="true">
+			<text><![CDATA[Facturar a:]]></text>
+		</element>
+		<element kind="textField" uuid="2535c3c0-9ebc-418a-91ae-3033f12fdbb9" x="360" y="0" width="100" height="20" fontName="Arial">
+			<expression><![CDATA[$F{nombre}]]></expression>
+		</element>
+		<element kind="textField" uuid="247cef22-c958-4a3c-8810-3cd1015cc48a" x="360" y="20" width="100" height="30" fontName="Arial">
+			<expression><![CDATA[$F{direccion}]]></expression>
+		</element>
+		<element kind="textField" uuid="e7468c6b-d231-46f7-9550-711bad03b089" x="360" y="50" width="100" height="30" fontName="Arial">
+			<expression><![CDATA[$F{pais}]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<element kind="textField" uuid="7d6ec0a6-a6d5-470e-a243-f3ceeb3eebde" x="0" y="-1" width="80" height="30" fontName="Arial">
+				<expression><![CDATA[$F{id_producto}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d98973ae-b201-4f41-9d9c-6079b90c489e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineColor="#030FFF"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="6f7d630a-1255-4cf0-a8ce-8c5e63e0a7bd" x="80" y="-1" width="200" height="30" fontName="Arial">
+				<expression><![CDATA[$F{COLUMN_13}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="36ccbf94-6ea4-4910-a9c7-8886df510241"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineColor="#030FFF"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="7c9f0e10-6387-4b96-88df-299613a7fbec" x="280" y="-1" width="50" height="30" fontName="Arial">
+				<expression><![CDATA[$F{cantidad}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21b95b6d-77f5-42b8-aaeb-fd1f864b1fb4"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineColor="#030FFF"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="5f5c1650-01a9-4663-8881-62006f7eccbd" x="330" y="-1" width="50" height="30" fontName="Arial">
+				<expression><![CDATA[$F{precio}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd991044-1072-49ae-ba8f-2c1a500cc854"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineColor="#030FFF"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="2ed22526-3624-4fb7-b45d-83d0c3810562" x="380" y="-1" width="100" height="30" fontName="Arial">
+				<expression><![CDATA[$F{descuento}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dbf7a112-b479-487b-807f-ff7fd3ce1eb7"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineColor="#030FFF"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="968ce903-c7c1-4fad-ad49-50007be26ca1" x="474" y="-1" width="75" height="30" fontName="Arial">
+				<expression><![CDATA[$F{precio_con_descuento}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6af4df3e-0dd1-4ce9-8e6e-3a5183fed073"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineColor="#030FFF"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<summary height="80" splitType="Stretch">
+		<element kind="textField" uuid="31e28b58-fa58-4f52-b255-40c4bbbbd33c" x="480" y="20" width="70" height="20" fontName="Arial">
+			<expression><![CDATA[$V{suma_total}]]></expression>
+			<box>
+				<pen lineWidth="1.0"/>
+				<topPen lineWidth="0.0"/>
+				<leftPen lineWidth="0.0"/>
+				<bottomPen lineColor="#030FFF"/>
+				<rightPen lineWidth="0.0"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="f279e6db-06bd-4b01-8f85-008a59223906" x="380" y="20" width="100" height="20" forecolor="#030FFF" fontName="Arial" hTextAlign="Center">
+			<text><![CDATA[Subtotal]]></text>
+			<box>
+				<bottomPen lineWidth="1.0"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="3dbd6740-fcbd-482a-8c44-80b9334df464" x="380" y="40" width="100" height="20" forecolor="#030FFF" fontName="Arial" hTextAlign="Center">
+			<text><![CDATA[Cargo:]]></text>
+			<box>
+				<bottomPen lineWidth="1.0"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="f0530330-23d7-4abc-9ef5-49ef4906aeac" x="380" y="60" width="100" height="20" forecolor="#030FFF" fontName="Arial" hTextAlign="Center">
+			<text><![CDATA[Total:]]></text>
+			<box>
+				<bottomPen lineWidth="1.0"/>
+			</box>
+		</element>
+		<element kind="textField" uuid="eba4687f-bb9c-4cf5-b751-30793f6e9154" x="480" y="40" width="70" height="20" fontName="Arial">
+			<expression><![CDATA[$F{cargo}]]></expression>
+			<box>
+				<pen lineWidth="1.0"/>
+				<topPen lineWidth="0.0"/>
+				<leftPen lineWidth="0.0"/>
+				<bottomPen lineColor="#030FFF"/>
+				<rightPen lineWidth="0.0"/>
+			</box>
+		</element>
+		<element kind="textField" uuid="9f99f136-cead-498a-84c1-0c06c8db892e" x="480" y="60" width="69" height="20" fontName="Arial">
+			<expression><![CDATA[$F{precio_con_cargo}]]></expression>
+			<box>
+				<pen lineWidth="1.0"/>
+				<topPen lineWidth="0.0"/>
+				<leftPen lineWidth="0.0"/>
+				<bottomPen lineColor="#030FFF"/>
+				<rightPen lineWidth="0.0"/>
+			</box>
+		</element>
+	</summary>
+</jasperReport>

@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<map version="1.0">
+   <mapID target="intro" url="html/intro.html" />
+   <mapID target="menu" url="html/menu.html" />
+</map>

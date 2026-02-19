@@ -1,0 +1,172 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="TareaInformes1" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7ded82a6-2fb0-403a-998e-c3eced6a0b8f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="Z2ltbmFzaW8udXN1YXJpbyAsMTM5LDE1LDU0NzZjMWQ3LTUxMjYtNDJmYy05MDJhLTFhZjU2NGM4&#xa;ZGYwNTtnaW1uYXNpby5oaXN0b3JpYWwgLDE1LDI4LDM5MGYxMTdhLWE3YjAtNDE1NS1hOWJhLTU5&#xa;OGNlNmMxMjVkMjs="/>
+	<dataset name="Dataset historial" uuid="92dab3d9-eca6-4676-9589-fae29bec527b">
+		<property name="com.jaspersoft.studio.data.sql.tables" value="Z2ltbmFzaW8uaGlzdG9yaWFsIEFTICwyMDMsNzcsMjc1YTUwYTgtZDE3Ny00NzVhLTkyZjMtMWU5&#xa;YjEyOGFjOTY1O2dpbW5hc2lvLnVzdWFyaW8gQVMgLDQ2LDU0LDA5ZmJmMmE1LTFiMGYtNDQ4ZC05&#xa;ZThiLTJhOTFjNTZkMDZlZDs="/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+		<query language="SQL"><![CDATA[SELECT gimnasio.usuario.`DNI`,
+	gimnasio.historial.`Accion`,
+	gimnasio.historial.`Codigo`,
+	gimnasio.usuario.`Nombre`,
+	gimnasio.usuario.`Apellidos`,
+	gimnasio.usuario.`Edad`
+FROM gimnasio.usuario
+	INNER JOIN gimnasio.historial ON 
+	 gimnasio.historial.`DNI` = gimnasio.usuario.`DNI`]]></query>
+		<field name="DNI" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DNI"/>
+			<property name="com.jaspersoft.studio.field.label" value="DNI"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+		</field>
+		<field name="Accion" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Accion"/>
+			<property name="com.jaspersoft.studio.field.label" value="Accion"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="historial"/>
+		</field>
+		<field name="Codigo" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="Codigo"/>
+			<property name="com.jaspersoft.studio.field.label" value="Codigo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="historial"/>
+		</field>
+		<field name="Nombre" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Nombre"/>
+			<property name="com.jaspersoft.studio.field.label" value="Nombre"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+		</field>
+		<field name="Apellidos" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Apellidos"/>
+			<property name="com.jaspersoft.studio.field.label" value="Apellidos"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+		</field>
+		<field name="Edad" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="Edad"/>
+			<property name="com.jaspersoft.studio.field.label" value="Edad"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+		</field>
+		<group name="DNI">
+			<expression><![CDATA[$F{DNI}]]></expression>
+		</group>
+		<group name="Accion">
+			<expression><![CDATA[$F{Accion}]]></expression>
+		</group>
+		<group name="Codigo">
+			<expression><![CDATA[$F{Codigo}]]></expression>
+		</group>
+		<group name="Nombre">
+			<expression><![CDATA[$F{Nombre}]]></expression>
+		</group>
+		<group name="Apellidos">
+			<expression><![CDATA[$F{Apellidos}]]></expression>
+		</group>
+		<group name="Edad">
+			<expression><![CDATA[$F{Edad}]]></expression>
+		</group>
+	</dataset>
+	<query language="sql"><![CDATA[SELECT gimnasio.historial.`Accion`,
+	gimnasio.historial.`Codigo`,
+	gimnasio.usuario.`Nombre`,
+	gimnasio.usuario.`Apellidos`,
+	gimnasio.usuario.`Edad`,
+	gimnasio.historial.`DNI`
+FROM gimnasio.usuario
+	INNER JOIN gimnasio.historial ON 
+	 gimnasio.historial.`DNI` = gimnasio.usuario.`DNI`]]></query>
+	<field name="Accion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Accion"/>
+		<property name="com.jaspersoft.studio.field.label" value="Accion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="historial"/>
+	</field>
+	<field name="Codigo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="historial"/>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="Nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+	</field>
+	<field name="Apellidos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Apellidos"/>
+		<property name="com.jaspersoft.studio.field.label" value="Apellidos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+	</field>
+	<field name="Edad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Edad"/>
+		<property name="com.jaspersoft.studio.field.label" value="Edad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+	</field>
+	<field name="DNI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DNI"/>
+		<property name="com.jaspersoft.studio.field.label" value="DNI"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="historial"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="6c64559e-c284-42de-8a33-d4537a2de4ed" x="80" y="0" width="200" height="79" fontSize="25.0">
+			<text><![CDATA[Gimnasio El Nano]]></text>
+		</element>
+		<element kind="image" uuid="b3df0e7b-3382-453a-8eb1-4171824b4592" x="0" y="0" width="80" height="79">
+			<expression><![CDATA["nano.jpg"]]></expression>
+		</element>
+	</title>
+	<pageHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="92622b9c-bd6a-4d80-ae05-37f546f5aba3" x="0" y="0" width="280" height="30" fontSize="17.0" bold="true">
+			<text><![CDATA[Historial Salidas / Entradas]]></text>
+		</element>
+	</pageHeader>
+	<columnHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="7f8a34c0-b6f9-435b-a929-de0a210acd73" x="0" y="0" width="80" height="30">
+			<text><![CDATA[DNI]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c24f0da-ddf4-44c8-b7b0-9e774421d2f9"/>
+		</element>
+		<element kind="staticText" uuid="de8245e0-48d8-44db-b690-9094bece84f2" x="80" y="0" width="100" height="30">
+			<text><![CDATA[Nombre]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="322f2bba-36d8-49ba-ace3-b86daa16f170"/>
+		</element>
+		<element kind="staticText" uuid="36253b6c-0c73-4079-9922-b05684e57e40" x="180" y="0" width="200" height="30">
+			<text><![CDATA[Apellidos]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="53595974-ac51-4248-a380-04c9d125c17b"/>
+		</element>
+		<element kind="staticText" uuid="718b8dca-a2cb-430d-b0af-72c3fe9f2bc1" x="380" y="0" width="100" height="30">
+			<text><![CDATA[Edad]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6d19228f-2453-499e-8db0-c8787b3ac15e"/>
+		</element>
+		<element kind="staticText" uuid="34baadaa-cdba-4228-b882-19f62a8051ac" x="480" y="0" width="80" height="30">
+			<text><![CDATA[Accion]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="64cff2b8-99b6-40c7-8450-cac48e7d7bc6"/>
+		</element>
+		<element kind="staticText" uuid="7ff6d522-e5a4-4036-94ae-bd00fe0dc0fb" x="22" y="0" width="100" height="30">
+			<text><![CDATA[DNI]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6be798ea-2fbd-4e11-a97b-06c16a67b6d0"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="textField" uuid="fc5e4527-999d-4eed-8777-1516ecc48a6c" x="180" y="0" width="200" height="30">
+				<expression><![CDATA[$F{Apellidos}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="53595974-ac51-4248-a380-04c9d125c17b"/>
+			</element>
+			<element kind="textField" uuid="e736e30d-8003-4b26-93df-e645b403c440" x="380" y="0" width="100" height="30">
+				<expression><![CDATA[$F{Edad}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6d19228f-2453-499e-8db0-c8787b3ac15e"/>
+			</element>
+			<element kind="textField" uuid="63db3081-27c7-46b9-865e-402c603bf13a" x="80" y="0" width="100" height="30">
+				<expression><![CDATA[$F{Nombre}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="322f2bba-36d8-49ba-ace3-b86daa16f170"/>
+			</element>
+			<element kind="textField" uuid="4558a0df-b860-4ddc-a29a-b8f5496fdb66" x="480" y="0" width="80" height="30">
+				<expression><![CDATA[$F{Accion}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="64cff2b8-99b6-40c7-8450-cac48e7d7bc6"/>
+			</element>
+			<element kind="textField" uuid="3b03b971-4f30-4a8f-855b-812d96e3dc76" x="0" y="0" width="80" height="30">
+				<expression><![CDATA[$F{DNI}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6be798ea-2fbd-4e11-a97b-06c16a67b6d0"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>
