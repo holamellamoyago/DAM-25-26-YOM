@@ -19,7 +19,7 @@ public class EMPRESAHB26ALU_XML {
 
    public static void main(String[] args) throws ParseException {
       GestorEmpresaHB.comprobarConexion();
-
+      
       Proxecto p = GestorEmpresaHB.visualizarProxecto(1);
       GestorEmpresaHB.cambiarLugarProxecto(p, "MOña");
 

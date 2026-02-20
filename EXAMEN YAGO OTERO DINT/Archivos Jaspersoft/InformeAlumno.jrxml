@@ -1,0 +1,318 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="InformeAlumno" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f69e3115-50d8-4107-a6e5-b37726575cd1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter Examen"/>
+	<parameter name="DNI" class="java.lang.String"/>
+	<query language="SQL"><![CDATA[SELECT examen_final_dint_centro.alumnos.dni,
+	examen_final_dint_centro.alumnos.nombre,
+	examen_final_dint_centro.alumnos.apellidos,
+	examen_final_dint_centro.curso_alumno.nota_ev1,
+	examen_final_dint_centro.curso_alumno.nota_ev2,
+	examen_final_dint_centro.curso_alumno.nota_ev3,
+	examen_final_dint_centro.curso_alumno.faltas,
+	examen_final_dint_centro.cursos.id,
+	examen_final_dint_centro.cursos.nombre,
+	examen_final_dint_centro.cursos.num_total_sesiones,
+		examen_final_dint_centro.curso_alumno.nota_ev1 + 	examen_final_dint_centro.curso_alumno.nota_ev2 
+		+ 	examen_final_dint_centro.curso_alumno.nota_ev3 / 3 AS NFINAL
+FROM examen_final_dint_centro.curso_alumno
+	INNER JOIN examen_final_dint_centro.alumnos ON 
+	 examen_final_dint_centro.curso_alumno.dni_alumno = examen_final_dint_centro.alumnos.dni 
+	INNER JOIN examen_final_dint_centro.cursos ON 
+	 examen_final_dint_centro.curso_alumno.id_curso = examen_final_dint_centro.cursos.id 
+	 where examen_final_dint_centro.alumnos.dni =  $P{DNI} ]]></query>
+	<field name="dni" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dni"/>
+		<property name="com.jaspersoft.studio.field.label" value="dni"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alumnos"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alumnos"/>
+	</field>
+	<field name="apellidos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="apellidos"/>
+		<property name="com.jaspersoft.studio.field.label" value="apellidos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alumnos"/>
+	</field>
+	<field name="nota_ev1" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nota_ev1"/>
+		<property name="com.jaspersoft.studio.field.label" value="nota_ev1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="curso_alumno"/>
+	</field>
+	<field name="nota_ev2" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nota_ev2"/>
+		<property name="com.jaspersoft.studio.field.label" value="nota_ev2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="curso_alumno"/>
+	</field>
+	<field name="nota_ev3" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nota_ev3"/>
+		<property name="com.jaspersoft.studio.field.label" value="nota_ev3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="curso_alumno"/>
+	</field>
+	<field name="faltas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="faltas"/>
+		<property name="com.jaspersoft.studio.field.label" value="faltas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="curso_alumno"/>
+	</field>
+	<field name="id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cursos"/>
+	</field>
+	<field name="COLUMN_9" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cursos"/>
+	</field>
+	<field name="num_total_sesiones" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="num_total_sesiones"/>
+		<property name="com.jaspersoft.studio.field.label" value="num_total_sesiones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cursos"/>
+	</field>
+	<field name="NFINAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="NFINAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="NFINAL"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="210" splitType="Stretch">
+		<element kind="frame" uuid="54bcd0e8-303d-4a66-b634-7e5822d6a925" x="0" y="0" width="180" height="79">
+			<property name="com.jaspersoft.studio.element.name" value="CENTRO2"/>
+			<element kind="staticText" uuid="6d71962f-45c4-49f0-8c03-b398ead18ae5" x="83" y="42" width="97" height="30">
+				<text><![CDATA[IES Chan Do Monte]]></text>
+			</element>
+			<element kind="staticText" uuid="109361b8-cfe8-4288-893e-07cd09928ca0" x="84" y="13" width="96" height="30">
+				<text><![CDATA[3615159]]></text>
+			</element>
+			<element kind="staticText" uuid="beb27054-10e3-41fb-a17e-ed5c81cb736b" x="2" y="12" width="81" height="30" bold="true">
+				<text><![CDATA[Código centro]]></text>
+			</element>
+			<element kind="staticText" uuid="0e6bf0c1-73a2-4128-995a-e613ade545b1" x="2" y="41" width="81" height="30" bold="true">
+				<text><![CDATA[Nome]]></text>
+			</element>
+			<box>
+				<pen lineStyle="Solid"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="frame" uuid="08cab1f9-20d8-4c82-b869-9423f5dccffe" x="0" y="91" width="182" height="59">
+			<element kind="staticText" uuid="fe7a9f81-96b8-4ec0-af0f-878498f5672d" x="1" y="1" width="80" height="49" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Teléfono]]></text>
+			</element>
+			<element kind="staticText" uuid="a826f67a-0646-4e2c-aa92-51250faecf71" x="81" y="2" width="99" height="48" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[123456789]]></text>
+			</element>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="frame" uuid="645b68cc-1b0d-48ca-aab9-a8538f8afb63" x="190" y="0" width="190" height="150">
+			<element kind="staticText" uuid="e762e007-4354-4841-917f-eaaf956c11e5" x="0" y="2" width="90" height="30" bold="true">
+				<text><![CDATA[Enderezo]]></text>
+			</element>
+			<element kind="staticText" uuid="618d0032-c12b-4b1b-816c-3143efa4aa6a" x="0" y="31" width="90" height="30" bold="true">
+				<text><![CDATA[Localidade]]></text>
+			</element>
+			<element kind="staticText" uuid="8f39154e-35e5-4440-a1d9-38b8fd0461fd" x="0" y="62" width="90" height="30" bold="true">
+				<text><![CDATA[Concello]]></text>
+			</element>
+			<element kind="staticText" uuid="bb33cc70-504e-4ff8-a3af-844aba3cc980" x="0" y="91" width="90" height="30" bold="true">
+				<text><![CDATA[cód postal]]></text>
+			</element>
+			<element kind="staticText" uuid="90a9e9c4-15f5-4a30-8072-d34f07ba415f" x="0" y="121" width="90" height="30" bold="true">
+				<text><![CDATA[Provincia]]></text>
+			</element>
+			<element kind="staticText" uuid="d8656146-9383-4d05-844e-a586d24cdf82" x="91" y="1" width="99" height="30">
+				<text><![CDATA[Rúa Chan Do Monte]]></text>
+			</element>
+			<element kind="staticText" uuid="b80da808-68e3-4ba8-bd6f-309da1587c53" x="92" y="32" width="98" height="30">
+				<text><![CDATA[Mogor (San Xurxo)]]></text>
+			</element>
+			<element kind="staticText" uuid="918452fa-88dc-4e7b-9a5d-8600899f5ab3" x="92" y="63" width="98" height="30">
+				<text><![CDATA[Marín]]></text>
+			</element>
+			<element kind="staticText" uuid="a3e82746-7a6c-4127-b000-c5657ec3f7f7" x="92" y="94" width="98" height="30">
+				<text><![CDATA[36911
+]]></text>
+			</element>
+			<element kind="staticText" uuid="aa9795cc-11f7-49ce-ae6c-1b829fa6af9b" x="93" y="125" width="97" height="25">
+				<text><![CDATA[Pontevedra]]></text>
+			</element>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="image" uuid="4d7785de-275d-46da-a685-361ab5d5c764" x="390" y="0" width="160" height="150">
+			<expression><![CDATA["/assets/logo.jpg"]]></expression>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="ae505452-c878-41e8-815b-6e83217eb2d5" mode="Opaque" x="-1" y="180" width="550" height="30" backcolor="#C45C5A" fontSize="13.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[INFORME DE LOS ALUMNO]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+	</title>
+	<pageHeader height="52" splitType="Stretch">
+		<element kind="staticText" uuid="7049d2f1-bbef-4ff3-ab5d-7416addaa27d" x="180" y="0" width="100" height="20" bold="true">
+			<text><![CDATA[DNI]]></text>
+		</element>
+		<element kind="staticText" uuid="6f8238cb-c416-4f3e-a026-697f3c295a85" x="180" y="20" width="100" height="20" bold="true">
+			<text><![CDATA[NOMBRE]]></text>
+		</element>
+		<element kind="textField" uuid="7a8ed288-1833-4b16-8e16-7a79204c18cc" x="280" y="0" width="100" height="19">
+			<expression><![CDATA[$F{dni}]]></expression>
+		</element>
+		<element kind="textField" uuid="95538025-226b-4074-80bb-72b7ddff6982" x="281" y="20" width="100" height="19">
+			<expression><![CDATA[$F{nombre}]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="46" splitType="Stretch">
+		<element kind="staticText" uuid="67b3ae13-10ee-4a6c-8192-831aaf70b0ab" mode="Opaque" x="478" y="-1" width="80" height="30" backcolor="#83E2FC" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Cont]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f2618ac9-37fc-4283-9ab6-c932289b4ded"/>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="996edbf3-a01e-4c56-904e-def9811c8141" mode="Opaque" x="178" y="-1" width="50" height="30" backcolor="#83E2FC" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[nota_ev1]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="813871c1-bbb6-49ce-8907-d13722b52b72"/>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="ac8c9547-e05d-49d6-ad58-94ac0a2e9840" mode="Opaque" x="378" y="-1" width="100" height="30" backcolor="#83E2FC" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[N. Final]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f2618ac9-37fc-4283-9ab6-c932289b4ded"/>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="41f2b1f2-a00b-4ce8-bbf8-3c4b39055d05" mode="Opaque" x="228" y="-1" width="51" height="30" backcolor="#83E2FC" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[nota_ev2]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="13eeb8bf-e0b2-4501-8672-ad49e5fa01c2"/>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="fba801e4-9a17-4825-a4a6-801045aab45b" mode="Opaque" x="328" y="0" width="50" height="30" backcolor="#83E2FC" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[faltas]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f2618ac9-37fc-4283-9ab6-c932289b4ded"/>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="39ac0d12-bb71-489b-8afd-d47dff070870" mode="Opaque" x="-1" y="0" width="179" height="30" backcolor="#83E2FC" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Curso_nombre]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="192a766e-c9c4-4853-8d2d-34dd7229a9ec"/>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="5027333f-002d-4631-8fb1-0207af95ca77" mode="Opaque" x="278" y="-1" width="50" height="30" backcolor="#83E2FC" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[nota_ev3]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5418479e-d328-456e-909c-2b224f0c235d"/>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="textField" uuid="2a562883-1c9f-4f09-b822-ced02b15dca7" x="280" y="0" width="50" height="30">
+				<expression><![CDATA[$F{nota_ev3}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5418479e-d328-456e-909c-2b224f0c235d"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="569c04bb-9584-4b50-9457-97e98dd3c84a" x="180" y="0" width="50" height="30">
+				<expression><![CDATA[$F{nota_ev1}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="813871c1-bbb6-49ce-8907-d13722b52b72"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="9723e3b7-fe8f-43b4-8230-36efdbbd3878" x="230" y="0" width="50" height="30">
+				<expression><![CDATA[$F{nota_ev2}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="13eeb8bf-e0b2-4501-8672-ad49e5fa01c2"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="b57eb712-2a40-48bc-81d5-bba1c2873220" x="380" y="0" width="100" height="30">
+				<expression><![CDATA[$F{NFINAL}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a09edce8-2c6c-48cb-aaa1-934828eeeddd"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="71eed534-b8ac-4885-92b8-dd14ccb27e6f" x="480" y="0" width="80" height="30">
+				<expression><![CDATA[IF($F{faltas} > ($F{num_total_sesiones} *0.5),"true","false")]]></expression>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="501d2c8a-4094-4b53-8660-f21e452c6b6c" x="330" y="0" width="50" height="30">
+				<expression><![CDATA[$F{faltas}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f2618ac9-37fc-4283-9ab6-c932289b4ded"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="896fa3f4-4522-4b19-95a2-f1ed1b80ce30" x="-1" y="0" width="179" height="30">
+				<expression><![CDATA[$F{COLUMN_9}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e514e859-0cef-46d3-8a20-743d8ccea8fa"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

@@ -1,0 +1,142 @@
+-- 1. Preparación del Entorno
+DROP DATABASE IF EXISTS F1_History;
+CREATE DATABASE IF NOT EXISTS F1_History;
+USE F1_History;
+
+-- 2. Equipos (Constructores)
+CREATE TABLE IF NOT EXISTS constructors (
+    constructor_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    nationality VARCHAR(50),
+    active BOOLEAN DEFAULT TRUE
+) ENGINE=InnoDB;
+
+-- 3. Pilotos
+CREATE TABLE IF NOT EXISTS drivers (
+    driver_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    driver_code CHAR(3) UNIQUE, -- Ej: VER, HAM
+    nationality VARCHAR(50),
+    permanent_number INT,
+    INDEX (last_name)
+) ENGINE=InnoDB;
+
+-- 4. Circuitos
+CREATE TABLE IF NOT EXISTS circuits (
+    circuit_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    location VARCHAR(100),
+    country VARCHAR(100),
+    track_length_km DECIMAL(5,3)
+) ENGINE=InnoDB;
+
+-- 5. Carreras
+CREATE TABLE IF NOT EXISTS races (
+    race_id INT PRIMARY KEY AUTO_INCREMENT,
+    year INT NOT NULL,
+    round INT NOT NULL,
+    circuit_id INT,
+    name VARCHAR(100),
+    race_date DATE,
+    FOREIGN KEY (circuit_id) REFERENCES circuits(circuit_id) ON DELETE CASCADE,
+    UNIQUE KEY (year, round) -- Evita duplicar carreras en el mismo año/ronda
+) ENGINE=InnoDB;
+
+-- 6. Resultados (Historial, Victorias, Puntos)
+CREATE TABLE IF NOT EXISTS results (
+    result_id INT PRIMARY KEY AUTO_INCREMENT,
+    race_id INT NOT NULL,
+    driver_id INT NOT NULL,
+    constructor_id INT NOT NULL,
+    grid_position INT,
+    final_position INT,
+    points DECIMAL(4,1) DEFAULT 0.0,
+    laps_completed INT,
+    fastest_lap BOOLEAN DEFAULT FALSE,
+    status VARCHAR(50) DEFAULT 'Finished',
+    FOREIGN KEY (race_id) REFERENCES races(race_id),
+    FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
+    FOREIGN KEY (constructor_id) REFERENCES constructors(constructor_id),
+    INDEX (final_position) -- Optimiza búsquedas de victorias
+) ENGINE=InnoDB;
+
+
+-- INSERCIÓN MASIVA DE DATOS REALES
+
+
+INSERT IGNORE INTO constructors (name, nationality) VALUES 
+('Ferrari', 'Italian'), ('Mercedes', 'German'), ('Red Bull', 'Austrian'), 
+('McLaren', 'British'), ('Aston Martin', 'British'), ('Williams', 'British');
+
+INSERT IGNORE INTO drivers (first_name, last_name, driver_code, nationality, permanent_number) VALUES 
+('Max', 'Verstappen', 'VER', 'Dutch', 1),
+('Lewis', 'Hamilton', 'HAM', 'British', 44),
+('Fernando', 'Alonso', 'ALO', 'Spanish', 14),
+('Charles', 'Leclerc', 'LEC', 'Monegasque', 16);
+
+INSERT IGNORE INTO circuits (name, location, country) VALUES 
+('Interlagos', 'Sao Paulo', 'Brazil'),
+('Monza', 'Monza', 'Italy'),
+('Spa-Francorchamps', 'Stavelot', 'Belgium');
+
+-- Ejemplo de Carrera y Resultado
+INSERT IGNORE INTO races (year, round, circuit_id, name, race_date) VALUES 
+(2023, 1, 2, 'Italian Grand Prix', '2023-09-03');
+
+INSERT IGNORE INTO results (race_id, driver_id, constructor_id, grid_position, final_position, points)
+VALUES (1, 1, 3, 2, 1, 25.0); -- Verstappen gana saliendo 2º
+
+
+USE F1_History;
+
+-- 1. INSERTAR EQUIPOS 2025
+INSERT IGNORE INTO constructors (name, nationality) VALUES 
+('McLaren', 'British'), ('Ferrari', 'Italian'), ('Red Bull Racing', 'Austrian'), 
+('Mercedes', 'German'), ('Aston Martin', 'British'), ('Williams', 'British'),
+('Racing Bulls', 'Italian'), ('Haas F1 Team', 'American'), ('Kick Sauber', 'Swiss'), 
+('Alpine', 'French');
+
+-- 2. INSERTAR PILOTOS 2025 (Parrilla completa)
+INSERT IGNORE INTO drivers (first_name, last_name, driver_code, nationality, permanent_number) VALUES 
+('Lando', 'Norris', 'NOR', 'British', 4),
+('Oscar', 'Piastri', 'PIA', 'Australian', 81),
+('Max', 'Verstappen', 'VER', 'Dutch', 1),
+('George', 'Russell', 'RUS', 'British', 63),
+('Charles', 'Leclerc', 'LEC', 'Monegasque', 16),
+('Lewis', 'Hamilton', 'HAM', 'British', 44),
+('Andrea Kimi', 'Antonelli', 'ANT', 'Italian', 12),
+('Alexander', 'Albon', 'ALB', 'Thai', 23),
+('Carlos', 'Sainz', 'SAI', 'Spanish', 55),
+('Fernando', 'Alonso', 'ALO', 'Spanish', 14),
+('Nico', 'Hulkenberg', 'HUL', 'German', 27),
+('Isack', 'Hadjar', 'HAD', 'French', 6),
+('Oliver', 'Bearman', 'BEA', 'British', 87),
+('Liam', 'Lawson', 'LAW', 'New Zealander', 30),
+('Esteban', 'Ocon', 'OCO', 'French', 31),
+('Lance', 'Stroll', 'STR', 'Canadian', 18),
+('Yuki', 'Tsunoda', 'TSU', 'Japanese', 22),
+('Pierre', 'Gasly', 'GAS', 'French', 10),
+('Gabriel', 'Bortoleto', 'BOR', 'Brazilian', 5),
+('Franco', 'Colapinto', 'COL', 'Argentine', 43),
+('Jack', 'Doohan', 'DOO', 'Australian', 7);
+
+-- 3. CALENDARIO Y RESULTADOS CLAVE 2025
+-- Insertamos las primeras carreras representativas
+INSERT IGNORE INTO races (year, round, circuit_id, name, race_date) VALUES 
+(2025, 1, 1, 'Australian Grand Prix', '2025-03-16'),
+(2025, 2, 2, 'Chinese Grand Prix', '2025-03-23'),
+(2025, 3, 3, 'Japanese Grand Prix', '2025-04-06');
+
+-- 4. INSERTAR RESULTADOS HISTÓRICOS 2025 (Top 3 de las primeras rondas)
+-- GP Australia: 1º Norris, 2º Verstappen, 3º Russell
+INSERT INTO results (race_id, driver_id, constructor_id, grid_position, final_position, points) VALUES 
+(2, 1, 1, 1, 1, 25.0), -- Norris (McLaren)
+(2, 3, 3, 2, 2, 18.0), -- Verstappen (Red Bull)
+(2, 4, 4, 3, 3, 15.0); -- Russell (Mercedes)
+
+-- GP China: 1º Piastri, 2º Norris, 3º Russell
+INSERT INTO results (race_id, driver_id, constructor_id, grid_position, final_position, points) VALUES 
+(3, 2, 1, 2, 1, 25.0), -- Piastri (McLaren)
+(3, 1, 1, 1, 2, 18.0), -- Norris (McLaren)
+(3, 4, 4, 4, 3, 15.0); -- Russell (Mercedes)
