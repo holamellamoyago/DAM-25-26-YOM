@@ -10,6 +10,7 @@ public class Vehiculo  implements java.io.Serializable {
      private String marca;
      private String modelo;
      private LocalDate dataCompra;
+     
       //Empleado de vehiculo
      private Empregado empregado;
 

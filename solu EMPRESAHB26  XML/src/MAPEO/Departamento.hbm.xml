@@ -11,11 +11,15 @@
         <property name="nomeDepartamento" type="string">
             <column name="NomeDepartamento" length="25" not-null="true" unique="true" />
         </property>
+
+
         <!--Mapeo de las funciones de un departamento como set de componentes-->
         <set name="funciones" table="DEPARTAMENTOFUNCION"  >
             <key column="NumDepartamento"/> 
             <element column="Funcion"  type="string"/>            
         </set>
+
+        
         <!--  empregados que pertenecen a un departamento   -->
         <set name="empregados" table="EMPREGADO" inverse="true" lazy="true" fetch="select">
             <key>

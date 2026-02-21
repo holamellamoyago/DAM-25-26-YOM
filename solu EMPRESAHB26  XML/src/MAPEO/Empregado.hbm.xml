@@ -89,7 +89,7 @@
         </list> 
        
         
-        <!-- Mapeo del departamento que pertenece un empleado -->
+        <!-- Mapeo del departamento que pertenece un empleado HECHA--> 
         <many-to-one class="POJOS.Departamento" fetch="select" name="departamento">
             <column name="NumDepartamentoPertenece"/>
         </many-to-one>
