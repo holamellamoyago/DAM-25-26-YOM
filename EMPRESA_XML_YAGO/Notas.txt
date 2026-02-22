@@ -7,3 +7,4 @@ COSAS IMPORTANTES:
 
 
 Falta por aprender la creación de claves , identity, foreign ... 
+Consultas

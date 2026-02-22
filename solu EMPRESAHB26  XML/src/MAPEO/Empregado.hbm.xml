@@ -118,6 +118,7 @@
               Hibernate elimina a fila correspondente da táboa EMPREGADO_PROXECTO
               porque queda “orfá” (sen entidade pai).
         -->
+              <!-- Mapear proxectos -->
         <set name="proxectos" inverse="true" cascade="all-delete-orphan">
             <key column="NSSEmpregado"/>
             <one-to-many class="POJOS.EmpregadoProxecto"/>

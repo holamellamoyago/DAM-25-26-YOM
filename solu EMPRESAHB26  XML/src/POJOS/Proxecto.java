@@ -6,15 +6,18 @@ import java.util.Set;
 public class Proxecto implements java.io.Serializable {
 
     private int numProxecto;
-      private String nomeProxecto;
+    private String nomeProxecto;
     private String lugar;
-    //mapear las fase de proyecto como componente
+
+    // mapear las fase de proyecto como componente
     private Set<ProxectoFase> fases = new HashSet<>();
-    //Mapeo de los empleados que participan en un proyecto
-    private Set<EmpregadoProxecto> empregados=new HashSet<>();
-    //Mapeo del departamento que controla un proyecto
-      private Departamento departamento;
-   
+
+    // Mapeo de los empleados que participan en un proyecto
+    private Set<EmpregadoProxecto> empregados = new HashSet<>();
+    
+    // Mapeo del departamento que controla un proyecto
+    private Departamento departamento;
+
     public Proxecto() {
     }
 
@@ -30,8 +33,6 @@ public class Proxecto implements java.io.Serializable {
         this.departamento = departamento;
         this.nomeProxecto = nomeProxecto;
     }
-
- 
 
     public int getNumProxecto() {
         return this.numProxecto;
@@ -80,8 +81,5 @@ public class Proxecto implements java.io.Serializable {
     public void setEmpregados(Set<EmpregadoProxecto> empregados) {
         this.empregados = empregados;
     }
-
-   
-
 
 }

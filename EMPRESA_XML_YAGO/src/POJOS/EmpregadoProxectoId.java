@@ -46,7 +46,14 @@ public class EmpregadoProxectoId  implements java.io.Serializable {
          result = 37 * result + ( getNssempregado() == null ? 0 : this.getNssempregado().hashCode() );
          result = 37 * result + this.getNumProxecto();
          return result;
+   }
+
+   @Override
+   public String toString() {
+    return "EmpregadoProxectoId [nssempregado=" + nssempregado + ", numProxecto=" + numProxecto + "]";
    }   
+
+   
 
 
 }

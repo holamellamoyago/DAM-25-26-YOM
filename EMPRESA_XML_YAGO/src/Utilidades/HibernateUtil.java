@@ -28,6 +28,8 @@ public class HibernateUtil {
             configuration.addResource("MAPEO/Empregado.hbm.xml");
             configuration.addResource("MAPEO/Departamento.hbm.xml");
             configuration.addResource("MAPEO/Proxecto.hbm.xml");
+            configuration.addResource("MAPEO/EmpregadoProxecto.hbm.xml");
+            configuration.addResource("MAPEO/Habilidad.hbm.xml");
 
             // Construir el service registry usando las propiedades de configuración
             serviceRegistry = new StandardServiceRegistryBuilder()
@@ -36,7 +38,7 @@ public class HibernateUtil {
 
             // Construir la SessionFactory con los mappings cargadosx
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-                
+
         } catch (Throwable ex) {
             System.err.println("Fallo al crear la SessionFactory: " + ex);
             throw new ExceptionInInitializerError(ex);

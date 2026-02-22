@@ -9,6 +9,8 @@ public class Proxecto implements java.io.Serializable {
     private Departamento departamento;
     private String nomeProxecto;
     private String lugar;
+
+    private Set<EmpregadoProxecto> empregados = new HashSet<>();
    
     public Proxecto() {
     }
@@ -59,6 +61,24 @@ public class Proxecto implements java.io.Serializable {
     public void setLugar(String lugar) {
         this.lugar = lugar;
     }
+
+    public Set<EmpregadoProxecto> getEmpregados() {
+        return empregados;
+    }
+
+    public void setEmpregados(Set<EmpregadoProxecto> participaciones) {
+        this.empregados = participaciones;
+    }
+
+    @Override
+    public String toString() {
+        return "Proxecto [numProxecto=" + numProxecto + ", departamento=" + departamento + ", nomeProxecto="
+                + nomeProxecto + ", lugar=" + lugar + ", empregados=" + empregados + "]";
+    }
+
+    
+
+    
     
 
    

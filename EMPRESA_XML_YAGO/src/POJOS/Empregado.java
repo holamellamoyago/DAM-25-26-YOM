@@ -1,8 +1,12 @@
 package POJOS;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Empregado implements java.io.Serializable {
 
@@ -19,6 +23,16 @@ public class Empregado implements java.io.Serializable {
     private Vehiculo vehiculo;
 
     private Map<String, String> telefonos = new HashMap<>(0);
+
+    // Relacion n:n
+    private Set<EmpregadoProxecto> proxectos = new HashSet<>();
+
+    // Relacion con sus familiaers
+    List<Familiar> familiares = new ArrayList<>();
+
+
+    // Habilidades
+    private Set<Habilidad> habilidades = new HashSet<>();
 
     public Empregado() {
     }
@@ -114,21 +128,44 @@ public class Empregado implements java.io.Serializable {
         this.departamento = departamento;
     }
 
-    
-
-    
     public Vehiculo getVehiculo() {
         return vehiculo;
     }
-    
+
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
+
+    public Set<EmpregadoProxecto> getProxectos() {
+        return proxectos;
+    }
+
+    public void setProxectos(Set<EmpregadoProxecto> participaciones) {
+        this.proxectos = participaciones;
+    }
+
+    public List<Familiar> getFamiliares() {
+        return familiares;
+    }
+
+    public void setFamiliares(List<Familiar> familiares) {
+        this.familiares = familiares;
+    }
+
     
+
     @Override
     public String toString() {
-        return nome + " " + apelido1 + " " +  departamento.getNomeDepartamento() + ", veh: " + vehiculo;
+        return nome + " " + apelido1 + " " + departamento.getNomeDepartamento() + ", veh: " + vehiculo + "\nProxectos: "
+                + proxectos.toString() + ", Habilidades: " + habilidades ;
     }
-    
+
+    public Set<Habilidad> getHabilidades() {
+        return habilidades;
+    }
+
+    public void setHabilidades(Set<Habilidad> habilidades) {
+        this.habilidades = habilidades;
+    }
 
 }

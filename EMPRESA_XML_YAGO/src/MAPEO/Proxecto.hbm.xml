@@ -15,5 +15,10 @@
         <!-- Hacer en casa 
         <many-to-one name="departamento" class="POJOS.Departamento" column="NumDepartControla" not-null="true"/>
         -->
+
+        <set name="empregados" inverse="true" cascade="all-delete-orphan" lazy="false">
+            <key column="NumProxecto"/>
+            <one-to-many class="POJOS.EmpregadoProxecto"/>
+        </set>
     </class>
 </hibernate-mapping>

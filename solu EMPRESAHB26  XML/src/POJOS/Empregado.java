@@ -18,13 +18,13 @@ public class Empregado implements java.io.Serializable {
     private Character sexo;
     //Mapeo como componente
     private Enderezo enderezo;
-    //mapeo los telefonos como una colección de componentes map
+    //mapeo los telefonos como una colecciï¿½n de componentes map
     private Map<String, String> telefonos = new HashMap();
 
     //mapeo del departamento que pertenece un empleado
     private Departamento departamento;
 
-    //mapear familiares como colección  de componentes List
+    //mapear familiares como colecciï¿½n  de componentes List
     private List<Familiar> familiares = new ArrayList();
 
     // Mapear las Habilidadades de los empregdos 
@@ -38,6 +38,7 @@ public class Empregado implements java.io.Serializable {
 
     //se guardamos el superivisor de un empleao
     private Empregado supervisor;
+    
     //mapeo de los supervisados que supervisa un empleado supervisor
     private Set<Empregado> supervisados = new HashSet(0);
 

@@ -10,6 +10,7 @@ import LOGICA.GestorEmpresaHB;
 import POJOS.Departamento;
 import POJOS.Empregado;
 import POJOS.Funcion;
+import POJOS.Habilidad;
 import POJOS.Proxecto;
 
 import java.text.ParseException;
@@ -24,30 +25,45 @@ public class EMPRESAHB26ALU_XML {
       Proxecto p = GestorEmpresaHB.visualizarProxecto(1);
       GestorEmpresaHB.cambiarLugarProxecto(p, "MOña");
 
-      GestorEmpresaHB.obtenerEmpregado("0010010");
+      Empregado e = GestorEmpresaHB.obtenerEmpregado("0010010");
+      System.out.println("\n" + e);
 
-      // Functiones
-      Funcion f1 = new Funcion();
-      f1.setFuncion("Limpiar habitaciones");
+      Habilidad h = GestorEmpresaHB.anadirHabilidad( "Streamer");
+      GestorEmpresaHB.asignarHabilidad("0010010", h);
 
-      Funcion f2 = new Funcion();
-      f2.setFuncion("Limpiar baños");
+      // // Functiones
+      // Funcion f1 = new Funcion();
+      // f1.setFuncion("Limpiar habitaciones");
 
-      Set<String> funciones = new HashSet<>(Set.of("Limpiar Baños", "Limpiar habitaciones"));
-      GestorEmpresaHB.anadirFuncionesDepartamento(1, funciones);
+      // Funcion f2 = new Funcion();
+      // f2.setFuncion("Limpiar baños");
 
-      GestorEmpresaHB.anadirTelefonoEmpregado("0010010", "692433876", "MOVIL PARTICULAR");
+      // Set<String> funciones = new HashSet<>(Set.of("Limpiar Baños", "Limpiar
+      // habitaciones"));
+      // GestorEmpresaHB.anadirFuncionesDepartamento(1, funciones);
 
-      Empregado emp = GestorEmpresaHB.obtenerEmpregado("0010010");
-      Departamento dept = GestorEmpresaHB.obtenerDepartamento(1);
+      // GestorEmpresaHB.anadirTelefonoEmpregado("0010010", "692433876", "MOVIL
+      // PARTICULAR");
 
-      System.out.println("__________________EMPREGADO____________________");
-      System.out.println(emp.getVehiculo());
-      GestorEmpresaHB.cambiarMatriculaVehiculo(emp.getNss(), "7472BGT");
-      System.out.println(emp.getVehiculo());
+      // Empregado emp = GestorEmpresaHB.obtenerEmpregado("0110010");
+      // Departamento dept = GestorEmpresaHB.obtenerDepartamento(1);
 
-      // System.out.println("__________________DEPT____________________");
-      // System.out.println(dept);
+      // System.out.println("__________________EMPREGADO____________________");
+      // // System.out.println(emp.getVehiculo());
+      // // GestorEmpresaHB.cambiarMatriculaVehiculo(emp.getNss(), "7472BGT");
+      // // System.out.println(emp.getVehiculo());
+      // // GestorEmpresaHB.eliminarVehiculoEmpregado(emp.getNss());
+
+      // // System.out.println("__________________DEPT____________________");
+      // // System.out.println(dept);
+
+      // Empregado empregado = new Empregado("0010033", "Yago", "Otero");
+      // GestorEmpresaHB.anadirEmpregado(empregado);
+
+      // System.out.println(emp);
+
+      // System.out.println("__________________FAMILIARES____________________");
+      // System.out.println(emp.getFamiliares());
 
    }
 }

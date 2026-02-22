@@ -40,8 +40,8 @@ public class EmpresaHBDAO {
         try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
             return sesion.get(Proxecto.class, proxecto);
         } catch (HibernateException e) {
-            // Lanzamos un RuntimeException 
-            throw new RuntimeException("No se pudo abrir la sesión de Hibernate", e);
+            // Lanzamos un RuntimeException
+            throw new RuntimeException("No se pudo abrir la sesiï¿½n de Hibernate", e);
         }
     }
 
@@ -94,11 +94,12 @@ public class EmpresaHBDAO {
             if (d == null) {
                 throw new RuntimeException("O departamento " + numDepartamento + " non existe.");
             }
-            // Se a función xa existe ? erro específico
+            // Se a funciï¿½n xa existe ? erro especï¿½fico
             if (d.getFunciones().contains(funcion)) {
-                throw new RuntimeException("A función '" + funcion + "' xa está asignada ao departamento " + numDepartamento + ".");
+                throw new RuntimeException(
+                        "A funciï¿½n '" + funcion + "' xa estï¿½ asignada ao departamento " + numDepartamento + ".");
             }
-            // Engadir a función
+            // Engadir a funciï¿½n
             d.getFunciones().add(funcion);
             tx.commit();
 
@@ -106,7 +107,7 @@ public class EmpresaHBDAO {
             if (tx != null) {
                 tx.rollback();
             }
-            throw new RuntimeException("Erro de Hibernate ao gardar a función no departamento", e);
+            throw new RuntimeException("Erro de Hibernate ao gardar a funciï¿½n no departamento", e);
 
         }
 
@@ -121,17 +122,15 @@ public class EmpresaHBDAO {
             Departamento d = sesion.get(Departamento.class, numDepartamento);
             if (d == null) {
                 throw new RuntimeException(
-                        "O departamento " + numDepartamento + " non existe."
-                );
+                        "O departamento " + numDepartamento + " non existe.");
             }
-            // La función no pertenece al departamento
+            // La funciï¿½n no pertenece al departamento
             if (!d.getFunciones().contains(funcion)) {
                 throw new RuntimeException(
-                        "A función '" + funcion + "' non pertence ao departamento " + numDepartamento + "."
-                );
+                        "A funciï¿½n '" + funcion + "' non pertence ao departamento " + numDepartamento + ".");
             }
 
-            // Eliminamos la función
+            // Eliminamos la funciï¿½n
             d.getFunciones().remove(funcion);
 
             tx.commit();
@@ -141,9 +140,8 @@ public class EmpresaHBDAO {
                 tx.rollback();
             }
             throw new RuntimeException(
-                    "Erro de Hibernate ao eliminar a función do departamento",
-                    e
-            );
+                    "Erro de Hibernate ao eliminar a funciï¿½n do departamento",
+                    e);
         }
     }
 
@@ -157,8 +155,8 @@ public class EmpresaHBDAO {
                 throw new RuntimeException("O proxecto " + numProxecto + " non existe.");
             }
 
-            // ver si está 
-            //sobrescrito en metodo equal y hascode
+            // ver si estï¿½
+            // sobrescrito en metodo equal y hascode
             if (p.getFases().contains(fase)) {
                 for (ProxectoFase f : p.getFases()) {
                     if (f.getNomeFase().equals(fase.getNomeFase())) {
@@ -194,7 +192,7 @@ public class EmpresaHBDAO {
 
             Empregado e = sesion.get(Empregado.class, nss);
 
-            if (e == null) {   //Si no existe devolvemos null
+            if (e == null) { // Si no existe devolvemos null
                 return null;
             }
 
@@ -216,7 +214,7 @@ public class EmpresaHBDAO {
             if (tx != null) {
                 tx.rollback();
             }
-            throw new RuntimeException("Erro ao gardar o teléfono do empregado", ex);
+            throw new RuntimeException("Erro ao gardar o telï¿½fono do empregado", ex);
         }
     }
 
@@ -231,11 +229,11 @@ public class EmpresaHBDAO {
                 return null;
             }
             Map<String, String> telefonos = e.getTelefonos();
-            // Se o teléfono non existe -> devolvemos false
+            // Se o telï¿½fono non existe -> devolvemos false
             if (!telefonos.containsKey(numero)) {
                 return false;
             }
-            // Se existe -> borrámolo
+            // Se existe -> borrï¿½molo
             telefonos.remove(numero);
             tx.commit();
             return true; // borrado correcto
@@ -244,7 +242,7 @@ public class EmpresaHBDAO {
             if (tx != null) {
                 tx.rollback();
             }
-            throw new RuntimeException("Erro ao borrar o teléfono do empregado", ex);
+            throw new RuntimeException("Erro ao borrar o telï¿½fono do empregado", ex);
         }
     }
 
@@ -267,7 +265,7 @@ public class EmpresaHBDAO {
                 }
             }
 
-            // 3. Engadir familiar -> Hibernate xera o índice automaticamente
+            // 3. Engadir familiar -> Hibernate xera o ï¿½ndice automaticamente
             e.getFamiliares().add(familiar);
 
             tx.commit();
@@ -282,31 +280,31 @@ public class EmpresaHBDAO {
     }
 
     /*
-    Puntos clave:  HQL trabaja con atributos Java, no columnas SQL
-     enderezo.localidade -> componente embebido 
-      Devuelve List<Empregado>
-    Si se hace un FROM en HQL mejor usar un alias si vas a:
-     Acceder a atributos y  Usar WHERE, SELECT, ORDER BY, etc.
+     * Puntos clave: HQL trabaja con atributos Java, no columnas SQL
+     * enderezo.localidade -> componente embebido
+     * Devuelve List<Empregado>
+     * Si se hace un FROM en HQL mejor usar un alias si vas a:
+     * Acceder a atributos y Usar WHERE, SELECT, ORDER BY, etc.
      */
     public static List<Empregado> obterEmpregadosPorLocalidadeDAO(String localidade) {
 
         try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
             /*
-        La conslta devuelve una lista de objetos de una clase asociada: Empregado
+             * La conslta devuelve una lista de objetos de una clase asociada: Empregado
              */
             String hql = """
-            FROM Empregado e
-            WHERE e.enderezo.localidade = :localidade
-        """;
+                        FROM Empregado e
+                        WHERE e.enderezo.localidade = :localidade
+                    """;
 
             return sesion.createQuery(hql, Empregado.class)
                     .setParameter("localidade", localidade)
-                    .getResultList();   // query.list() en HB5 sigue, pero  a partir de la 6 lo iliminaron 
+                    .getResultList(); // query.list() en HB5 sigue, pero a partir de la 6 lo iliminaron
             /*
-        por parte sería 
-        Query<Empregado> query = sesion.createQuery(hql, Empregado.class);
-        query.setParameter("localidade", localidade);
-         return query.getResultList();
+             * por parte serï¿½a
+             * Query<Empregado> query = sesion.createQuery(hql, Empregado.class);
+             * query.setParameter("localidade", localidade);
+             * return query.getResultList();
              */
 
         } catch (HibernateException e) {
@@ -356,23 +354,29 @@ public class EmpresaHBDAO {
     }
 
     /*
- Códigos de retorno:
-  0  ? Operación correcta
- -1  ? El empleado ya existe
- -2  ? El departamento no existe
- -9  ? Error inesperado (Hibernate)
+     * Cï¿½digos de retorno:
+     * 0 ? Operaciï¿½n correcta
+     * -1 ? El empleado ya existe
+     * -2 ? El departamento no existe
+     * -9 ? Error inesperado (Hibernate)
      */
- /*
- Comentario:
- En asociaciones bidireccionales de Hibernate, **es necesario actualizar ambos lados**:
- 1. `empregado.setDepartamento(departamento)` asegura que el empleado conoce su departamento.
- 2. `departamento.getEmpregados().add(empregado)` asegura que el departamento conoce a su empleado.
- 
- Si solo actualizamos un lado, la relación en memoria queda inconsistente y Hibernate puede:
-   - No persistir correctamente la relación en la base de datos.
-   - Dar comportamientos inesperados al navegar por la colección del departamento.
- 
- Por eso, para mantener la **coherencia entre objetos Java y la base de datos**, siempre se deben sincronizar ambos lados de la asociación.
+    /*
+     * Comentario:
+     * En asociaciones bidireccionales de Hibernate, **es necesario actualizar ambos
+     * lados**:
+     * 1. `empregado.setDepartamento(departamento)` asegura que el empleado conoce
+     * su departamento.
+     * 2. `departamento.getEmpregados().add(empregado)` asegura que el departamento
+     * conoce a su empleado.
+     * 
+     * Si solo actualizamos un lado, la relaciï¿½n en memoria queda inconsistente y
+     * Hibernate puede:
+     * - No persistir correctamente la relaciï¿½n en la base de datos.
+     * - Dar comportamientos inesperados al navegar por la colecciï¿½n del
+     * departamento.
+     * 
+     * Por eso, para mantener la **coherencia entre objetos Java y la base de
+     * datos**, siempre se deben sincronizar ambos lados de la asociaciï¿½n.
      */
     public static int crearEmpregadoConDepartamentoDAO(
             Empregado empregado, String nomeDepartamento) {
@@ -386,44 +390,53 @@ public class EmpresaHBDAO {
             if (sesion.get(Empregado.class, empregado.getNss()) != null) {
                 return -1; // empleado ya existe
             }
-//            String hql = "FROM Departamento d WHERE d.nomeDepartamento = :nome";
-//            Departamento departamento=sesion.createQuery(hql, Departamento.class)
-//                    .setParameter("nome", nomeDepartamento)
-//                    .uniqueResult();
-//            // 2. Buscar departamento
-            //Es transistorio , no está asociado con la sessin actual si lo traigo en una funcion
+            // String hql = "FROM Departamento d WHERE d.nomeDepartamento = :nome";
+            // Departamento departamento=sesion.createQuery(hql, Departamento.class)
+            // .setParameter("nome", nomeDepartamento)
+            // .uniqueResult();
+            // // 2. Buscar departamento
+            // Es transistorio , no estï¿½ asociado con la sessin actual si lo traigo en una
+            // funcion
             Departamento departamento = buscarDepartamentoPorNombreDAO(nomeDepartamento);
 
             if (departamento == null) {
                 return -2; // departamento no existe
             }
-            //Existe en la base de datos y hay que traerlo a a memoria para la cache de persistencia 
+            // Existe en la base de datos y hay que traerlo a a memoria para la cache de
+            // persistencia
             departamento = sesion.get(Departamento.class, departamento.getNumDepartamento());
-            // 3. Asociación bidireccional; importante en lso dos sentidos
+            // 3. Asociaciï¿½n bidireccional; importante en lso dos sentidos
             /*
-     Este es el único cambio que Hibernate necesita para actualizar la base de datos, porque:
-     El lado MANY (Empregado) contiene la clave foránea.Hibernate solo mira ese lado para generar el UPDATE
-     Por tanto: Con esta línea, la relación queda correctamente persistida en la base de datos.       
+             * Este es el ï¿½nico cambio que Hibernate necesita para actualizar la base de
+             * datos, porque:
+             * El lado MANY (Empregado) contiene la clave forï¿½nea.Hibernate solo mira ese
+             * lado para generar el UPDATE
+             * Por tanto: Con esta lï¿½nea, la relaciï¿½n queda correctamente persistida en la
+             * base de datos.
              */
-            empregado.setDepartamento(departamento);          // Lado "muchos" ? establecemos el departamento del empleado
+            empregado.setDepartamento(departamento); // Lado "muchos" ? establecemos el departamento del empleado
 
-            /*  Esta línea NO es necesaria para la base de datos, 
-     pero SÍ es necesaria para mantener la coherencia en memoria.
-     Si no la pones:
-    empregado.getDepartamento() ? mostrará el nuevo departamento
-    pero novoDepartamento.getEmpregados() ? NO incluirá al empleado
+            /*
+             * Esta lï¿½nea NO es necesaria para la base de datos,
+             * pero Sï¿½ es necesaria para mantener la coherencia en memoria.
+             * Si no la pones:
+             * empregado.getDepartamento() ? mostrarï¿½ el nuevo departamento
+             * pero novoDepartamento.getEmpregados() ? NO incluirï¿½ al empleado
              */
-            departamento.getEmpregados().add(empregado);     // Lado "uno" ? añadimos el empleado a la colección del departamento
+            departamento.getEmpregados().add(empregado); // Lado "uno" ? aï¿½adimos el empleado a la colecciï¿½n del
+                                                         // departamento
 
             // 4. Persistencia
             /*
-           empregado es transitaorio y por eso lo tenemos que persisteir
-           Departameto lo hemos obtenido con get y ya está en el contexto de persistencia
-           Si hacemos session.persist(departamento):
-            Hibernate intenta insertarlo como nuevo registro, y si el departamento ya tiene un ID, puede dar error de clave primaria duplicada.
-            Solo usaríamos persist() para nuevos objetos que queremos insertar.
+             * empregado es transitaorio y por eso lo tenemos que persisteir
+             * Departameto lo hemos obtenido con get y ya estï¿½ en el contexto de
+             * persistencia
+             * Si hacemos session.persist(departamento):
+             * Hibernate intenta insertarlo como nuevo registro, y si el departamento ya
+             * tiene un ID, puede dar error de clave primaria duplicada.
+             * Solo usarï¿½amos persist() para nuevos objetos que queremos insertar.
              */
-            sesion.save(empregado);  //equivalente a Save (solo Hibernate). Persist es de JPA
+            sesion.save(empregado); // equivalente a Save (solo Hibernate). Persist es de JPA
 
             tx.commit();
 
@@ -439,12 +452,12 @@ public class EmpresaHBDAO {
     }
 
     /*
- Para cambiar una relación Many-to-One bidireccional es obligatorio:
- - Eliminar el empleado del departamento antiguo
- - Añadirlo al nuevo departamento
- - Actualizar el atributo departamento del empleado
-
- Hibernate NO mantiene la coherencia de ambos lados automáticamente.
+     * Para cambiar una relaciï¿½n Many-to-One bidireccional es obligatorio:
+     * - Eliminar el empleado del departamento antiguo
+     * - Aï¿½adirlo al nuevo departamento
+     * - Actualizar el atributo departamento del empleado
+     * 
+     * Hibernate NO mantiene la coherencia de ambos lados automï¿½ticamente.
      */
     public static int cambiarDepartamentoEmpregadoDAO(
             String nssEmpregado, int numNovoDepartamento) {
@@ -462,8 +475,7 @@ public class EmpresaHBDAO {
             }
 
             // 2. Buscar nuevo departamento
-            Departamento novoDepartamento
-                    = sesion.get(Departamento.class, numNovoDepartamento);
+            Departamento novoDepartamento = sesion.get(Departamento.class, numNovoDepartamento);
 
             if (novoDepartamento == null) {
                 return -2; // departamento no existe
@@ -472,7 +484,7 @@ public class EmpresaHBDAO {
             // 3. Comprobar si ya pertenece a ese departamento
             Departamento deptActual = empregado.getDepartamento();
             if (deptActual != null && deptActual.equals(novoDepartamento)) {
-                return -3; // ya está en ese departamento
+                return -3; // ya estï¿½ en ese departamento
             }
 
             // 4. Quitar del departamento actual (si lo tiene)
@@ -481,8 +493,8 @@ public class EmpresaHBDAO {
             }
 
             // 5. Asociar al nuevo departamento (BIDIRECCIONAL)
-            empregado.setDepartamento(novoDepartamento);        // lado MANY
-            novoDepartamento.getEmpregados().add(empregado);   // lado ONE
+            empregado.setDepartamento(novoDepartamento); // lado MANY
+            novoDepartamento.getEmpregados().add(empregado); // lado ONE
 
             // 6. Commit (empregado es persistente)
             tx.commit();
@@ -507,10 +519,10 @@ public class EmpresaHBDAO {
             tx = sesion.beginTransaction();
 
             String hql = """
-            UPDATE Empregado e
-            SET e.departamento.numDepartamento = :numDept
-            WHERE e.nss = :nss
-        """;
+                        UPDATE Empregado e
+                        SET e.departamento.numDepartamento = :numDept
+                        WHERE e.nss = :nss
+                    """;
 
             int filas = sesion.createQuery(hql)
                     .setParameter("numDept", numDepartamento)
@@ -534,8 +546,9 @@ public class EmpresaHBDAO {
     }
 
     /*
-Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones constantemente. 
-
+     * Al pasar la Session como argumento, evitas el coste de abrir y cerrar
+     * conexiones constantemente.
+     * 
      */
     public static Habilidade buscarHabilidadePorNome(String nome, Session session) {
 
@@ -548,7 +561,7 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
      * Inserta solo las habilidades que no existen.
      *
      * @param listaEntrada
-     * @return Lista de objetos Habilidade que han sido insertados con éxito.
+     * @return Lista de objetos Habilidade que han sido insertados con ï¿½xito.
      */
     public static List<Habilidade> insertarHabilidadesDAO(List<Habilidade> listaEntrada) throws HibernateException {
         List<Habilidade> insertadas = new ArrayList<>();
@@ -558,11 +571,11 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             tx = session.beginTransaction();
 
             for (Habilidade hab : listaEntrada) {
-                // Comprobamos si ya existe en la BD usando la sesión actual
+                // Comprobamos si ya existe en la BD usando la sesiï¿½n actual
                 Habilidade existente = buscarHabilidadePorNome(hab.getNome(), session);
 
                 if (existente == null) {
-                    session.save(hab); // SQL Server genera el ID aquí
+                    session.save(hab); // SQL Server genera el ID aquï¿½
                     insertadas.add(hab);
                 }
             }
@@ -588,11 +601,11 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             if (h == null) {
                 return -1; // non existe
             }
-// 2. Quitamos la habilidad de cada empleado (esto limpia la tabla intermedia)
+            // 2. Quitamos la habilidad de cada empleado (esto limpia la tabla intermedia)
             for (Empregado emp : h.getEmpregados()) {
                 emp.getHabilidades().remove(h);
             }
-            session.delete(h); // borra tamén EMPREGADO_HABILIDADE
+            session.delete(h); // borra tamï¿½n EMPREGADO_HABILIDADE
             tx.commit();
             return 0;
 
@@ -613,7 +626,7 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
      *
      * @param nss
      * @param habilidades
-     * @return -1 ? empleado no existe 0 ? operación correcta
+     * @return -1 ? empleado no existe 0 ? operaciï¿½n correcta
      */
     public static int asignarHabilidadesEmpregadoDAO(
             String nss, List<Habilidade> habilidades) throws HibernateException {
@@ -661,36 +674,38 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
                 return -1; // empregado non existe
             }
 
-            // 2. Comprobar matrícula única
+            // 2. Comprobar matrï¿½cula ï¿½nica
             Vehiculo existeMat = session.createQuery(
                     "FROM Vehiculo v WHERE v.matricula = :m", Vehiculo.class)
                     .setParameter("m", v.getMatricula())
                     .uniqueResult();
 
             if (existeMat != null && !existeMat.getNss().equals(nss)) {
-                return -2; // matrícula xa usada por outro empregado
+                return -2; // matrï¿½cula xa usada por outro empregado
             }
 
             // 3. Inserir ou actualizar
             Vehiculo vehEmp = emp.getVehiculo();
 
             if (vehEmp == null) {
-                // Inserción
-                //Vehiculo es el lado propietario , el que tiene la PK
-                //En relaciones One-to-One con clave primaria compartida, basta con actualizar 
-                //el lado propietario (Vehiculo), porque es el único que escribe la relación en la base de datos.
-                //El otro lado es solo de navegación.
+                // Inserciï¿½n
+                // Vehiculo es el lado propietario , el que tiene la PK
+                // En relaciones One-to-One con clave primaria compartida, basta con actualizar
+                // el lado propietario (Vehiculo), porque es el ï¿½nico que escribe la relaciï¿½n en
+                // la base de datos.
+                // El otro lado es solo de navegaciï¿½n.
                 v.setEmpregado(emp);
-                v.setNss(emp.getNss());   // PK = FK
-                //emp.setVehiculo(vehEmp);  //no hace falta  ponerlo funciona igual. Pero si luego se utiliza si que haría falta para que tenga constancia
+                v.setNss(emp.getNss()); // PK = FK
+                // emp.setVehiculo(vehEmp); //no hace falta ponerlo funciona igual. Pero si
+                // luego se utiliza si que harï¿½a falta para que tenga constancia
                 session.save(v);
             } else {
-                // Actualización           
+                // Actualizaciï¿½n
                 vehEmp.setMatricula(v.getMatricula());
                 vehEmp.setMarca(v.getMarca());
                 vehEmp.setModelo(v.getModelo());
                 vehEmp.setDataCompra(v.getDataCompra());
-                //session.update(vehEmp); //no hace falta por que es persistente
+                // session.update(vehEmp); //no hace falta por que es persistente
             }
 
             tx.commit();
@@ -713,23 +728,24 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             // 1. Comprobar que o NSS existe como empregado
             Empregado emp = buscarEmpregadoPorNSS(nss, session);
             if (emp == null) {
-                return -2; // NSS non válido ? non existe empregado
+                return -2; // NSS non vï¿½lido ? non existe empregado
             }
 
-            // 2. Recuperar o vehículo polo NSS (PK = FK)
+            // 2. Recuperar o vehï¿½culo polo NSS (PK = FK)
             Vehiculo v = session.get(Vehiculo.class, nss);
             if (v == null) {
-                return -1; // o empregado existe pero non ten vehículo
+                return -1; // o empregado existe pero non ten vehï¿½culo
             }
 
-            // 3. Romper a relación no lado inverso (Empregado)
-            /* Se borras o vehículo sen limpar o empregado:
-          Hibernate ve que emp.getVehiculo() apunta ao obxecto borrado
-         Como tes cascade=ALL, intenta gardalo de novo
-        E salta a excepción
+            // 3. Romper a relaciï¿½n no lado inverso (Empregado)
+            /*
+             * Se borras o vehï¿½culo sen limpar o empregado:
+             * Hibernate ve que emp.getVehiculo() apunta ao obxecto borrado
+             * Como tes cascade=ALL, intenta gardalo de novo
+             * E salta a excepciï¿½n
              */
             emp.setVehiculo(null);
-            // 4. Borrar o vehículo
+            // 4. Borrar o vehï¿½culo
             session.delete(v);
 
             tx.commit();
@@ -747,8 +763,7 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-            String hql
-                    = "SELECT new DTO.EmpregadoProxectoDTO("
+            String hql = "SELECT new DTO.EmpregadoProxectoDTO("
                     + "   e.nss, e.nome, concat(e.apelido1, ' ', coalesce(e.apelido2, ''))"
                     + ", p.nomeProxecto, ep.horas"
                     + ") "
@@ -757,7 +772,8 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
                     + "LEFT JOIN ep.proxecto p "
                     + "ORDER BY e.nss";
 
-            return session.createQuery(hql, EmpregadoProxectoDTO.class).list(); // getResultList() es JPA e list() máis común en Hibernate puro
+            return session.createQuery(hql, EmpregadoProxectoDTO.class).list(); // getResultList() es JPA e list() mï¿½is
+                                                                                // comï¿½n en Hibernate puro
         }
     }
 
@@ -766,10 +782,10 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             String hql = """
-            select e.nss, e.nome, concat(e.apelido1, ' ', coalesce(e.apelido2, '')), p.nomeProxecto,ep.horas
-            from Empregado e left join e.proxectos ep left join ep.proxecto p
-            order by e.nss
-             """;
+                    select e.nss, e.nome, concat(e.apelido1, ' ', coalesce(e.apelido2, '')), p.nomeProxecto,ep.horas
+                    from Empregado e left join e.proxectos ep left join ep.proxecto p
+                    order by e.nss
+                     """;
 
             return session.createQuery(hql, Object[].class).list();
         }
@@ -794,14 +810,16 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             }
 
             // 3. Borrar o proxecto
-            //cascade = CascadeType.ALL, orphanRemoval = true BORRA AUTOMATICAMENTE TODOS LOS PROXECTOS DE EMPREGADO PROYECTOS
-            //? Borra o proxecto
-            //Borra todas as fases (porque son composite-element)
-            //Borra todas as filas de EMPREGADO_PROXECTO (porque son orfos)
+            // cascade = CascadeType.ALL, orphanRemoval = true BORRA AUTOMATICAMENTE TODOS
+            // LOS PROXECTOS DE EMPREGADO PROYECTOS
+            // ? Borra o proxecto
+            // Borra todas as fases (porque son composite-element)
+            // Borra todas as filas de EMPREGADO_PROXECTO (porque son orfos)
             /*
-        sin cascade = CascadeType.ALL, orphanRemoval = true
-        ao borrar un proxecto Hibernate non eliminaría automaticamente as relacións en EMPREGADO_PROXECTO 
-        for (EmpregadoProxecto ep : proxecto.getEmpregados()) { session.remove(ep); }
+             * sin cascade = CascadeType.ALL, orphanRemoval = true
+             * ao borrar un proxecto Hibernate non eliminarï¿½a automaticamente as relaciï¿½ns
+             * en EMPREGADO_PROXECTO
+             * for (EmpregadoProxecto ep : proxecto.getEmpregados()) { session.remove(ep); }
              */
             session.remove(proxecto);
 
@@ -823,12 +841,12 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
                 return "non existe o empregado " + nss;
             }
 
-            //  empregado existe pero NON ten supervisor
+            // empregado existe pero NON ten supervisor
             if (emp.getSupervisor() == null) {
                 return "o empregado " + nss + " existe sin supervisor ";
             }
 
-            /// Caso 3: empregado ten supervisor ? construímos mensaxe correcta 
+            /// Caso 3: empregado ten supervisor ? construï¿½mos mensaxe correcta
             Empregado sup = emp.getSupervisor();
             resultado = "O empregado " + nss + " ten como supervisor a " + sup.getNome()
                     + " " + sup.getApelido1() + (sup.getApelido2() != null ? " " + sup.getApelido2() : "")
@@ -847,16 +865,16 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             String hql = """
-            SELECT NEW DTO.EmpregadoSupervisorDTO(
-                e.nome,
-                CONCAT(e.apelido1, ' ', COALESCE(e.apelido2, '')),
-                s.nome,
-                CONCAT(s.apelido1, ' ', COALESCE(s.apelido2, ''))
-            )
-            FROM Empregado e
-            LEFT JOIN e.supervisor s
-            WHERE e.nss = :nss
-            """;
+                    SELECT NEW DTO.EmpregadoSupervisorDTO(
+                        e.nome,
+                        CONCAT(e.apelido1, ' ', COALESCE(e.apelido2, '')),
+                        s.nome,
+                        CONCAT(s.apelido1, ' ', COALESCE(s.apelido2, ''))
+                    )
+                    FROM Empregado e
+                    LEFT JOIN e.supervisor s
+                    WHERE e.nss = :nss
+                    """;
 
             return session.createQuery(hql, EmpregadoSupervisorDTO.class)
                     .setParameter("nss", nss)
@@ -906,13 +924,13 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             }
 
             String hql = """
-            FROM Empregado e
-            WHERE e.supervisor.nss = :nssSup
-            """;
+                    FROM Empregado e
+                    WHERE e.supervisor.nss = :nssSup
+                    """;
 
             return session.createQuery(hql, Empregado.class)
                     .setParameter("nssSup", nssSupervisor)
-                    .getResultList();  //o list()
+                    .getResultList(); // o list()
         }
     }
 
@@ -921,28 +939,28 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
         try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
 
             String hql = """
-            select new DTO.EmpleadoListadoDTO(
-                e.nss,
-                concat(e.nome, ' ',e.apelido1, ' ', coalesce(e.apelido2, '')),
-               case
-                     when type(e) = POJOS.Empregadofixo then 'Empregado Fixo'
-                       when type(e) = POJOS.Empregadotemporal then 'Empregado Temporal'
-                end,
-               d.nomeDepartamento
-            )
-            from Empregado e inner  join e.deptodirector d
-            order by e.nome
-            """;
+                    select new DTO.EmpleadoListadoDTO(
+                        e.nss,
+                        concat(e.nome, ' ',e.apelido1, ' ', coalesce(e.apelido2, '')),
+                       case
+                             when type(e) = POJOS.Empregadofixo then 'Empregado Fixo'
+                               when type(e) = POJOS.Empregadotemporal then 'Empregado Temporal'
+                        end,
+                       d.nomeDepartamento
+                    )
+                    from Empregado e inner  join e.deptodirector d
+                    order by e.nome
+                    """;
 
             return sesion.createQuery(hql, EmpregadoListadoDepartamentoDTO.class).list();
         }
     }
 
     /*
-    0 ? inserción correcta
-    -1 ? NSS ya existe
-    -2 ? departamento no existe
-    -4 ? error genérico
+     * 0 ? inserciï¿½n correcta
+     * -1 ? NSS ya existe
+     * -2 ? departamento no existe
+     * -4 ? error genï¿½rico
      */
     public static int insertarEmpregadoDAO(Empregado emp, String nomeDepto) {
 
@@ -955,7 +973,7 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             // 0. Comprobar si ya existe un NSS igual
             Empregado existente = session.get(Empregado.class, emp.getNss());
             if (existente != null) {
-                return -1;   // NSS ya existe
+                return -1; // NSS ya existe
             }
 
             // 1. Buscar el departamento al que pertenece
@@ -965,7 +983,7 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
                     .uniqueResult();
 
             if (depto == null) {
-                return -2;  // Departamento no existe
+                return -2; // Departamento no existe
             }
 
             // 2. Asignar el departamento al que pertenece
@@ -975,23 +993,23 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             session.save(emp);
 
             tx.commit();
-            return 0; // Éxito
+            return 0; // ï¿½xito
 
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
             }
-            return -4; // Error genérico 
+            return -4; // Error genï¿½rico
         }
     }
 
     /**
      * Inserta o modifica as horas extras dun empregado fixo.
      *
-     * Devolve: 0 ? horas extras insertadas (non existía esa data) 1 ? horas
-     * extras actualizadas (xa existían) -1 ? non existe un empregado con ese
-     * NSS -2 ? o empregado existe pero non é fixo -3 ? erro na operación
-     * (excepción)
+     * Devolve: 0 ? horas extras insertadas (non existï¿½a esa data) 1 ? horas
+     * extras actualizadas (xa existï¿½an) -1 ? non existe un empregado con ese
+     * NSS -2 ? o empregado existe pero non ï¿½ fixo -3 ? erro na operaciï¿½n
+     * (excepciï¿½n)
      *
      * @param nss
      * @param fecha
@@ -1008,14 +1026,14 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
                 return -1; // No existe
             }
             if (!(emp instanceof Empregadofixo)) {
-                return -2; // No es fijo       
+                return -2; // No es fijo
             }
             Empregadofixo fijo = (Empregadofixo) emp;
 
             Map<LocalDate, Double> mapa = fijo.getHorasextras();
-            //Para saber si es una insercción o actualización 
+            // Para saber si es una insercciï¿½n o actualizaciï¿½n
             boolean existe = mapa.containsKey(fecha);
-            mapa.put(fecha, horas); // inserta o actualiza automáticamente
+            mapa.put(fecha, horas); // inserta o actualiza automï¿½ticamente
             session.update(fijo);
             tx.commit();
             return existe ? 1 : 0; // 1 = actualizado, 0 = insertado
@@ -1025,7 +1043,7 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             if (tx != null) {
                 tx.rollback();
             }
-            return -3; //error
+            return -3; // error
         }
     }
 
@@ -1054,7 +1072,7 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
     }
 
     public static double totalHorasExtrasMesDAO(String nss, int mes, int ano) {
-        // Usamos try-with-resources para asegurar el cierre automático de la sesión
+        // Usamos try-with-resources para asegurar el cierre automï¿½tico de la sesiï¿½n
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             // 1. Verificamos la existencia del empleado y si es de tipo Fijo
@@ -1067,15 +1085,15 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
                 return -2.0;
             }
 
-            // 2. Consulta HQL sobre la colección Map 'horasextras'
+            // 2. Consulta HQL sobre la colecciï¿½n Map 'horasextras'
             // Usamos key(h) para la fecha y value(h) para el valor de las horas
             String hql = """
-            SELECT COALESCE(SUM(value(h)), 0.0)
-            FROM Empregadofixo e JOIN e.horasextras h
-            WHERE e.nss = :nss
-              AND MONTH(key(h)) = :mes
-              AND YEAR(key(h)) = :ano
-        """;
+                        SELECT COALESCE(SUM(value(h)), 0.0)
+                        FROM Empregadofixo e JOIN e.horasextras h
+                        WHERE e.nss = :nss
+                          AND MONTH(key(h)) = :mes
+                          AND YEAR(key(h)) = :ano
+                    """;
 
             // 3. Ejecutamos la consulta
             Double total = session.createQuery(hql, Double.class)
@@ -1088,8 +1106,8 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             return (total != null) ? total : 0.0;
 
         } catch (Exception e) {
-            // Al no usar transacción manual, el catch captura el error sin conflictos
-            System.err.println("Erro técnico: " + e.getMessage());
+            // Al no usar transacciï¿½n manual, el catch captura el error sin conflictos
+            System.err.println("Erro tï¿½cnico: " + e.getMessage());
             return -3.0;
         }
     }
@@ -1108,17 +1126,18 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
                 return null;
             }
 
-            // 2. Si existe, usamos su método getter
+            // 2. Si existe, usamos su mï¿½todo getter
             List<String> nombres = new ArrayList<>();
             for (Lugar l : depto.getLugares()) {
                 nombres.add(l.getLugar());
             }
-            //con consulta hql sería
+            // con consulta hql serï¿½a
             /*
-        String hql = "select l.lugar " + "from Lugar l " + "where l.departamento.nome = :nomeDpto";
-        return session.createQuery(hql, String.class)
-        .setParameter("nomeDpto", 
-        nomeDpto) .list();
+             * String hql = "select l.lugar " + "from Lugar l " +
+             * "where l.departamento.nome = :nomeDpto";
+             * return session.createQuery(hql, String.class)
+             * .setParameter("nomeDpto",
+             * nomeDpto) .list();
              */
 
             return nombres;
@@ -1133,13 +1152,13 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
         Transaction tx = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-            //  Buscamos al director. Si no existe, retornamos -1
+            // Buscamos al director. Si no existe, retornamos -1
             Empregadofixo director = session.get(Empregadofixo.class, nssDirector);
             if (director == null) {
                 return -1;
             }
 
-            // Comprobación de nome único
+            // Comprobaciï¿½n de nome ï¿½nico
             Query<Departamento> q = session.createQuery(
                     "from Departamento where nomeDepartamento = :nome",
                     Departamento.class);
@@ -1149,50 +1168,58 @@ Al pasar la Session como argumento, evitas el coste de abrir y cerrar conexiones
             if (existente != null) {
                 return -2; // xa existe un departamento co mesmo nome
             }
-     // 1. Comprobar se o director xa dirixe outro departamento 
-            Query<Departamento> q1 = session.createQuery("from Departamento where director.nss = :nss", Departamento.class);
+            // 1. Comprobar se o director xa dirixe outro departamento
+            Query<Departamento> q1 = session.createQuery("from Departamento where director.nss = :nss",
+                    Departamento.class);
             q1.setParameter("nss", nssDirector);
             Departamento existente1 = q1.uniqueResult();
             if (existente1 != null) {
-                return -3; // o director xa é director noutro departamento 
+                return -3; // o director xa ï¿½ director noutro departamento
 
             }
             tx = session.beginTransaction();
             /*
-    O departamento é o propietario lóxico da relación co director, pero en Hibernate sempre se debe actualizar o lado que contén
-    a clave foránea (FK). Neste caso, a FK NSSDirector está na táboa DEPARTAMENTO, polo que debemos asignar
-    o director chamando a  dpto.setDirector(director).
-    Non é necesario facer nada no outro sentido (deptodirector.setDepartamento),
-    porque Empregadofixo NON ten unha FK nin mapea esta relación.
+             * O departamento ï¿½ o propietario lï¿½xico da relaciï¿½n co director, pero en
+             * Hibernate sempre se debe actualizar o lado que contï¿½n
+             * a clave forï¿½nea (FK). Neste caso, a FK NSSDirector estï¿½ na tï¿½boa
+             * DEPARTAMENTO, polo que debemos asignar
+             * o director chamando a dpto.setDirector(director).
+             * Non ï¿½ necesario facer nada no outro sentido (deptodirector.setDepartamento),
+             * porque Empregadofixo NON ten unha FK nin mapea esta relaciï¿½n.
              */
             dpto.setDirector(director);
-            director.setDeptodirector(dpto); //no es necesario para insertar en la BD, pero si para coherencia en la memoria
+            director.setDeptodirector(dpto); // no es necesario para insertar en la BD, pero si para coherencia en la
+                                             // memoria
 
-            //  Al ser Set en el POJO, addAll filtra duplicados automáticamente
-            // es componente 
+            // Al ser Set en el POJO, addAll filtra duplicados automï¿½ticamente
+            // es componente
             if (funciones != null) {
                 dpto.getFunciones().addAll(funciones);
             }
 
-            // Los lugares se añaden al Set de la entidad
+            // Los lugares se aï¿½aden al Set de la entidad
             if (lugares != null) {
                 for (String l : lugares) {
                     Lugar novoLugar = new Lugar(l);
-                    novoLugar.setDepartamento(dpto); //único lado que Hibernate usa para actualizar a base de datos é o lado propietario, é dicir:é o lado que contén a FK Num_departamento.
-                    dpto.getLugares().add(novoLugar); // NON é necesario para insertar en la bd BD, pero SI para manter o modelo en memoria consistente.
-                    //Se non o fas, dpto.getLugares() non mostrará o novo lugar ata recargar desde a BD.
+                    novoLugar.setDepartamento(dpto); // ï¿½nico lado que Hibernate usa para actualizar a base de datos ï¿½ o
+                                                     // lado propietario, ï¿½ dicir:ï¿½ o lado que contï¿½n a FK
+                                                     // Num_departamento.
+                    dpto.getLugares().add(novoLugar); // NON ï¿½ necesario para insertar en la bd BD, pero SI para manter
+                                                      // o modelo en memoria consistente.
+                    // Se non o fas, dpto.getLugares() non mostrarï¿½ o novo lugar ata recargar desde
+                    // a BD.
                 }
             }
             // 4. Guardamos (CascadeType.ALL de lugares se encarga de guardarlos)
             session.save(dpto);
             tx.commit();
-            return 0; // Éxito 
+            return 0; // ï¿½xito
 
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
             }
-            return -4; // Error 
+            return -4; // Error
         }
     }
 
