@@ -61,7 +61,7 @@ public class EmpresaHBDAO_Consultas {
             Query<Proxecto> query = sesion.createQuery(hql, Proxecto.class);
             query.setParameter("nomeLugar", "Pontevedra");
 
-            List<Proxecto> list = query.getResultList();
+            List<Proxecto> list = query.getResultList().get(0);
             return list;
 
         } catch (HibernateException e) {
