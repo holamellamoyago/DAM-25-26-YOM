@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-feb-2023 8:57:24 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <!-- Crear una clase -->
+    <class name="POJOS.EmpregadoProxecto" table="EMPREGADO_PROXECTO" schema="dbo"
+        catalog="EMPRESAHB26">
+
+        <!-- CREACIÓN DE CLAVES -->
+        <!-- Clave compuesta: -->
+        <composite-id name="id" class="POJOS.EmpregadoProxectoId">
+            <key-property name="nssempregado" type="string">
+                <column name="NSSEmpregado" length="15" />
+            </key-property>
+            <key-property name="numProxecto" type="int">
+                <column name="NumProxecto" />
+            </key-property>
+        </composite-id>
+
+        <!-- Clave única -->
+        <id name="codigo" type="int">
+            <column name="Codigo" />
+            <generator class="identity" />
+        </id>
+
+        <!-- Clave cogida de otro clase -->
+        <id name="nss" type="string">
+            <column name="NSS" length="15" />
+            <generator class="foreign">
+                <param name="property">empregado</param> <!-- Esto es un objeto que esta dentro de la
+                case -->
+            </generator>
+        </id>
+
+        <!-- Tipos de generator de claves primarias -->
+        <generator class="increment" /> <!-- Hace el Max(codigo ) +1 -->
+        <generator class="identity" /> <!-- Deja el trabajo al gestor de bd-->
+        <generator class="assigned" />
+
+
+        <!-- Tipos de datos 
+            java.lang.Integer  
+            date       
+            java.lang.Character
+            timestamp
+        -->
+
+
+        <!-- Creación de componentes -->
+        <!-- Direccion -->
+        <component name="direccion" class="POJOS.Direccion">
+            <property name="rua" type="string">
+                <column length="30" name="Rua" />
+            </property>
+            <property name="numeroCalle" type="java.lang.Integer">
+                <column name="Numero_Calle" />
+            </property>
+            <property name="piso" type="string">
+                <column length="4" name="Piso" />
+            </property>
+            <property name="cp" type="string">
+                <column length="5" name="CP" />
+            </property>
+            <property name="localidade" type="string">
+                <column length="25" name="Localidade" />
+            </property>
+            <property name="provincia" type="string">
+                <column length="15" name="Provincia" />
+            </property>
+        </component>
+
+        <!-- RELACIONES 1:1 
+            Se tiene que poner en ambos sentidos y en la que no es importnate el constrained 
+        -->
+        <one-to-one name="vehiculo" class="POJOS.Vehiculo" fetch="select" lazy="false" cascade="all" />
+        <one-to-one name="empregado" class="POJOS.Empregado" constrained="true" />
+
+        <!-- Relaciones n:1 -->
+        <many-to-one class="POJOS.Departamento" fetch="select" name="departamento" lazy="false">
+            <column name="NumDepartamentoPertenece" />
+        </many-to-one>
+
+        <!-- Relaciones 1:n -->
+        <set name="proxectos" inverse="true" cascade="all-delete-orphan" lazy="false">
+            <key column="NSSEmpregado" />
+            <one-to-many class="POJOS.EmpregadoProxecto" />
+        </set>
+
+        <!-- Relaciones n:n sin informacion intermediaria -->
+        <set name="habilidades" table="HABILIDAD_EMPREGADO" lazy="false" fetch="select">
+            <key column="NSS" />
+            <many-to-many class="POJOS.Habilidad" column="codigoHabilidad" />
+        </set>
+
+        <!-- Uso de listas -->
+        <list name="familiares" table="FAMILIAR" lazy="false">
+            <key>
+                <column name="NSS_Empregado" />
+            </key>
+            <list-index base="1" column="Numero" />
+            <composite-element class="POJOS.Familiar">
+                <property name="nss" type="string">
+                    <column name="NSS"></column>
+                </property>
+            </composite-element>
+        </list>
+
+    </class>
+</hibernate-mapping>

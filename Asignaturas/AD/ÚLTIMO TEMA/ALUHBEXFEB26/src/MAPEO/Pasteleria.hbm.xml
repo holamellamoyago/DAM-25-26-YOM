@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="POJOS.Pasteleria" table="PASTELERIA" schema="dbo" catalog="HBPASTELERIA26" >
+        <id name="codigo" type="int">
+            <column name="codigo" />
+            <!-- Cambio a identity para que se encarge el gestor -->
+            <generator class="identity" />
+        </id>
+        <property name="nome" type="string">
+            <column name="Nome" length="30" not-null="true"  />
+        </property>
+        <property name="categoria" type="string">
+            <column name="Categoria" length="40" />
+        </property>
+        <property name="localidade" type="string">
+            <column name="Localidade" length="40" not-null="true" />
+        </property>
+        <!-- Asociacion de n pastelerias a 1 dueno -->
+        <many-to-one class="POJOS.Pastelero" fetch="select" name="pastelero" lazy="false" >
+            <column name="Codpastelero"/>
+        </many-to-one>
+        <!-- Asociacion n:n con productos -->
+        <set name="productos" table="PASTELERIAPRODUCTO" lazy="false" fetch="select">
+            <key column="Codpasteleria"/>
+            <many-to-many class="POJOS.Producto" column="CodProducto" />
+        </set>
+    </class>
+</hibernate-mapping>

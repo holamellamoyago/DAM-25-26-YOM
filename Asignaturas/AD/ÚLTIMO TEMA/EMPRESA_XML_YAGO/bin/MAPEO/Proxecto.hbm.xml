@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="POJOS.Proxecto" table="PROXECTO" schema="dbo" catalog="EMPRESAHB26">
+        <id name="numProxecto" type="int">
+            <column name="NumProxecto" />
+            <generator class="increment" />
+        </id>
+        <property name="nomeProxecto" type="string">
+            <column name="NomeProxecto" length="25" not-null="true" unique="true" />
+        </property>
+        <property name="lugar" type="string">
+            <column name="Lugar" length="25" not-null="true" />
+        </property>
+        <!-- Hacer en casa 
+        <many-to-one name="departamento" class="POJOS.Departamento" column="NumDepartControla" not-null="true"/>
+        -->
+
+        <set name="empregados" inverse="true" cascade="all-delete-orphan" lazy="false">
+            <key column="NumProxecto"/>
+            <one-to-many class="POJOS.EmpregadoProxecto"/>
+        </set>
+    </class>
+</hibernate-mapping>
