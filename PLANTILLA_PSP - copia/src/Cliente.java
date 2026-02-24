@@ -1,4 +1,6 @@
 
+
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -44,19 +46,12 @@ public class Cliente {
                         // Si el servidor te duelve false es que se apagó
                         if (!input.readBoolean()) {
                             servidorEncendido = false;
-                        } else
+                        }
+                        else
                             System.out.println(Config.STR_CONEXIONES_ACTIVAS);
                         break;
                     default:
-                        String codigo = input.readUTF();
-                        System.out.println(codigo);
-
-                        if (codigo.equals(Config.COD_NO_STOCK + "")) {
-                            System.out.println("No hay stock de esa prenda");
-                            System.err.println(input.readUTF());
-                            System.out.println("Ya se encontro");
-                        }
-
+                        System.out.println(input.readUTF());
                 }
             }
         } catch (IOException ex) {

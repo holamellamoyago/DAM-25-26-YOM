@@ -23,7 +23,7 @@ public class PrendaRopa {
 
     @Override
     public String toString() {
-        return nombre;
+        return "\n" + nombre;
     }
 
     @Override

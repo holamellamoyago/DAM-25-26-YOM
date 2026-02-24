@@ -10,7 +10,6 @@ public class Config {
     static final String CMD_INFO = "INFO";
     static final String CMD_SALIR = "SALIR";
     static final String CMD_APAGAR = "APAGAR";
-    static final String CMD_JSON = "JSON";
 
     static final String STR_NO_CONEXION = "Imposible realizar conexión";
     static final String STR_CONEXIONES_ACTIVAS = "Imposible apagar. Hay conexiones activas";
@@ -21,11 +20,4 @@ public class Config {
     static final String STR_FORMATO_COMANDOS = String.format(
             "Sintaxis: [%s|%s|%s|%s] [material cantidad] (* mejorar)",
             CMD_GET, CMD_PUT, CMD_INFO, CMD_SALIR);
-
-
-    static final int COD_NO_ENCONTRADO = 400;
-    static final int COD_NO_STOCK = 401;
-    static final int COD_TODO_CORRECTO = 200;
-
-
 }

@@ -27,8 +27,9 @@ public class ConexionServidor extends Thread {
         this.codCliente = socket.getRemoteSocketAddress().toString();
         servidorEncendido = gestorConexiones.login(codCliente);
         this.usuario = gestorAlmacenamiento.buscarUsuario(codCliente);
-
+        
         // Esto te devolviería algo como /192.168.1.100:54321
+
 
         this.gestorConexiones = gestorConexiones;
 
@@ -51,11 +52,10 @@ public class ConexionServidor extends Thread {
                 switch (entradaUsuario) {
                     case Config.CMD_INFO:
                         output.writeUTF(gestorConexiones.getInfo());
-
+                        
                         break;
                     case Config.CMD_SALIR:
-                        output.writeUTF(
-                                gestorAlmacenamiento.getInfoUsuario(gestorAlmacenamiento.buscarUsuario(codCliente)));
+                        output.writeUTF(gestorAlmacenamiento.getInfoUsuario(gestorAlmacenamiento.buscarUsuario(codCliente)));
                         servidorEncendido = false;
                         break;
                     case Config.CMD_APAGAR:
@@ -65,9 +65,6 @@ public class ConexionServidor extends Thread {
                         if (sePuedeApagar)
                             servidorEncendido = false;
                         break;
-                    
-                    case Config.CMD_JSON: 
-                        output.writeUTF(GestorAlmacenamiento.stockToJson()); break;
 
                     default:
                         Pattern pattern = Pattern.compile(Config.CMD_REGEXP, Pattern.CASE_INSENSITIVE);
@@ -85,33 +82,12 @@ public class ConexionServidor extends Thread {
                                 break;
                             }
 
-                            int codigo;
                             switch (comando) {
                                 case Config.CMD_GET:
-
-                                    codigo = gestorAlmacenamiento.get(gestorAlmacenamiento.buscarUsuario(codCliente),
-                                            new PrendaRopa(prendaRopa), cantidad);
-
-                                    switch (codigo) {
-                                        case Config.COD_NO_ENCONTRADO:
-                                            output.writeUTF(Config.STR_MATERIAL_DESCONOCIDO);
-                                            break;
-
-                                        case Config.COD_NO_STOCK:
-                                            output.writeUTF(Config.COD_NO_STOCK + "");
-                                            // Simula que va a buscarlo a otras tiendas ,,, 
-                                            sleep(1000);
-                                            output.writeUTF(gestorAlmacenamiento.get(usuario, new PrendaRopa(prendaRopa), cantidad) + "");
-                                            break;
-
-                                        default:
-                                            break;
-                                    }
-
+                                    output.writeUTF(gestorAlmacenamiento.get(gestorAlmacenamiento.buscarUsuario(codCliente), new PrendaRopa(prendaRopa), cantidad));
                                     break;
                                 case Config.CMD_PUT:
-                                    codigo = gestorAlmacenamiento.put(usuario, new PrendaRopa(prendaRopa), cantidad);
-                                    output.writeUTF(String.valueOf(Config.COD_TODO_CORRECTO));
+                                    output.writeUTF(gestorAlmacenamiento.put(usuario, new PrendaRopa(prendaRopa), cantidad));
                                     break;
                                 case Config.CMD_DELETE:
                                     output.writeUTF(gestorAlmacenamiento.delete(usuario, new PrendaRopa(prendaRopa)));
@@ -125,9 +101,6 @@ public class ConexionServidor extends Thread {
             }
         } catch (IOException ex) {
             System.out.printf("Problemas en el servidor");
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
         gestorConexiones.logout(gestorAlmacenamiento.buscarUsuario(codCliente));
