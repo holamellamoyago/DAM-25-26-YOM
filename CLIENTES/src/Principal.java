@@ -15,11 +15,13 @@ import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+
 import clases.Cliente;
 
 public class Principal {
     private static Scanner sc = new Scanner(System.in);
     private static String baseURL = "http://localhost/clientes/index.php/clientes";
+    private static String URI_GET_CLIENTE = "http://localhost/clientes/index.php/cliente/";
 
     private static HttpClient client;
     private static HttpRequest request;
@@ -31,6 +33,8 @@ public class Principal {
             System.out.println("\t1.Listar clientes");
             System.out.println("\t2.Registrar clientes");
             System.out.println("\t3.Borrar cliente");
+            System.out.println("\t4.Obtener un cliente");
+            System.out.println("\t5.Actualizar nombre de un cliente");
             // System.out.println("\t3.Actualizar clientes");
 
             int opcion = sc.nextInt();
@@ -47,6 +51,14 @@ public class Principal {
                     borrarCliente();
                     break;
 
+                case 4:
+                    System.out.println(obtenerCliente(5));
+                    break;
+
+                case 5:
+                    actualizarNombreCliente();
+                    break;
+
                 default:
                     break;
             }
@@ -55,16 +67,33 @@ public class Principal {
     }
 
     private static void actualizarNombreCliente() {
-        int codCliente = 6; // ID del cliente a modificar
+        Scanner sc = new Scanner(System.in);
+
+        Cliente cliente = null;
+        while (cliente == null) {
+            System.out.println("Que cliente te gustaría escoger? Escribe su código.");
+            obtenerClientes().forEach(t -> t.toStringSimple());
+
+            int codCliente = sc.nextInt();
+            cliente = obtenerCliente(codCliente);
+
+            if (cliente == null)
+                System.out.println("Cliente no encuentrado, vuelve a intentarlo");
+        }
 
         client = HttpClient.newHttpClient();
         JSONObject clienteJson = new JSONObject();
 
         // PATCH solo modifica el campo nombre
-        clienteJson.put("nombre", "NuevoNombre");
+
+        System.out.println("Cual es el nuevo nombre para este cliente?");
+        sc.nextLine();
+        String nuevoNombre = sc.nextLine();
+
+        clienteJson.put("nombre", nuevoNombre);
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseURL + codCliente))
+                .uri(URI.create(URI_GET_CLIENTE + cliente.getCodCliente()))
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .method("PATCH", HttpRequest.BodyPublishers.ofString(clienteJson.toString()))
@@ -77,11 +106,11 @@ public class Principal {
 
             switch (response.statusCode()) {
                 case 200:
-                    System.out.println("Nombre del cliente " + codCliente + " actualizado correctamente");
+                    System.out.println("Nombre del cliente " + cliente.getCodCliente() + " actualizado correctamente");
                     System.out.println(response.body());
                     break;
                 case 404:
-                    System.out.println("Cliente " + codCliente + " no encontrado");
+                    System.out.println("Cliente " + cliente.getCodCliente() + " no encontrado");
                     break;
                 case 400:
                     System.out.println("Error en la petición");
@@ -192,6 +221,38 @@ public class Principal {
         }
     }
 
+    private static Cliente obtenerCliente(int codCliente) {
+
+        try {
+            client = HttpClient.newHttpClient();
+            request = HttpRequest.newBuilder()
+                    .uri(URI.create(URI_GET_CLIENTE + codCliente))
+                    .header("Accept", "application/json")
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+
+            switch (statusCode) {
+                case 200:
+                    return procesarCliente(response.body());
+                case 400:
+                    throw new RuntimeException("Error en la peticion");
+                case 500:
+                    throw new RuntimeException("Error en el servidor");
+                default:
+                    System.out.println("Error inesperado: " + statusCode);
+                    System.out.println("Respuesta del servidor:");
+                    throw new RuntimeException(response.body());
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Hubo un problema a la hora de solicitar los clientes");
+        }
+
+    }
+
     private static ArrayList<Cliente> obtenerClientes() {
         try {
             client = HttpClient.newHttpClient();
@@ -233,24 +294,25 @@ public class Principal {
             String nombre = c.getString("nombre");
             int codProvincia = c.getInt("codProvincia");
             String nif = c.getString("NIF");
+            int codCliente = c.getInt("codCliente");
 
             // procesar los datos del cliente
-            clientes.add(new Cliente(nombre, codProvincia, nif));
+            clientes.add(new Cliente(codCliente, nombre, codProvincia, nif));
         }
 
         clientes.forEach(System.out::println);
         return clientes;
     }
 
-    // private static JSONArray obtenerJSON(BufferedReader bufferIn) throws
-    // IOException {
-    // String json = "";
-    // String linea;
+    private static Cliente procesarCliente(String json) {
+        JSONObject c = new JSONObject(json);
 
-    // while ((linea = bufferIn.readLine()) != null)
-    // json += linea;
-    // bufferIn.close();
+        String nombre = c.getString("nombre");
+        int codProvincia = c.getInt("codProvincia");
+        String nif = c.getString("NIF");
+        int codCliente = c.getInt("codCliente");
 
-    // return new JSONArray(json);
-    // }
+        // procesar los datos del cliente
+        return new Cliente(codCliente, nombre, codProvincia, nif);
+    }
 }
