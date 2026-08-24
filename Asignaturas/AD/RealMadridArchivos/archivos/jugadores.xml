@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plantilla>
+    <equipo nombre="Real Madrid CF" temporada="2024-2025">
+        <porteros>
+            <jugador dorsal="1">
+                <nombre>Thibaut Courtois</nombre>
+                <nacionalidad>Bélgica</nacionalidad>
+            </jugador>
+            <jugador dorsal="13">
+                <nombre>Andriy Lunin</nombre>
+                <nacionalidad>Ucrania</nacionalidad>
+            </jugador>
+        </porteros>
+        <defensas>
+            <jugador dorsal="2">
+                <nombre>Dani Carvajal</nombre>
+                <nacionalidad>España</nacionalidad>
+            </jugador>
+            <jugador dorsal="3">
+                <nombre>Éder Militão</nombre>
+                <nacionalidad>Brasil</nacionalidad>
+            </jugador>
+            <jugador dorsal="4">
+                <nombre>David Alaba</nombre>
+                <nacionalidad>Austria</nacionalidad>
+            </jugador>
+            <jugador dorsal="22">
+                <nombre>Antonio Rüdiger</nombre>
+                <nacionalidad>Alemania</nacionalidad>
+            </jugador>
+            <jugador dorsal="23">
+                <nombre>Ferland Mendy</nombre>
+                <nacionalidad>Francia</nacionalidad>
+            </jugador>
+            <jugador dorsal="20">
+                <nombre>Fran García</nombre>
+                <nacionalidad>España</nacionalidad>
+            </jugador>
+        </defensas>
+        <centrocampistas>
+            <jugador dorsal="5">
+                <nombre>Jude Bellingham</nombre>
+                <nacionalidad>Inglaterra</nacionalidad>
+            </jugador>
+            <jugador dorsal="8">
+                <nombre>Federico Valverde</nombre>
+                <nacionalidad>Uruguay</nacionalidad>
+            </jugador>
+            <jugador dorsal="10">
+                <nombre>Luka Modrić</nombre>
+                <nacionalidad>Croacia</nacionalidad>
+            </jugador>
+            <jugador dorsal="14">
+                <nombre>Aurélien Tchouaméni</nombre>
+                <nacionalidad>Francia</nacionalidad>
+            </jugador>
+            <jugador dorsal="15">
+                <nombre>Arda Güler</nombre>
+                <nacionalidad>Turquía</nacionalidad>
+            </jugador>
+            <jugador dorsal="19">
+                <nombre>Dani Ceballos</nombre>
+                <nacionalidad>España</nacionalidad>
+            </jugador>
+        </centrocampistas>
+        <delanteros>
+            <jugador dorsal="7">
+                <nombre>Vinícius Júnior</nombre>
+                <nacionalidad>Brasil</nacionalidad>
+            </jugador>
+            <jugador dorsal="9">
+                <nombre>Kylian Mbappé</nombre>
+                <nacionalidad>Francia</nacionalidad>
+            </jugador>
+            <jugador dorsal="11">
+                <nombre>Rodrygo Goes</nombre>
+                <nacionalidad>Brasil</nacionalidad>
+            </jugador>
+            <jugador dorsal="16">
+                <nombre>Endrick</nombre>
+                <nacionalidad>Brasil</nacionalidad>
+            </jugador>
+            <jugador dorsal="21">
+                <nombre>Brahim Díaz</nombre>
+                <nacionalidad>Marruecos</nacionalidad>
+            </jugador>
+        </delanteros>
+    </equipo>
+</plantilla>

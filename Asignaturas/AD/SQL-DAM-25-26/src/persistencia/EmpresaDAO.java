@@ -1,0 +1,922 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package persistencia;
+
+import java.util.*;
+
+import javax.management.RuntimeErrorException;
+
+import java.sql.*;
+
+import clases.*;
+import gestores.*;
+
+/**
+ *
+ * @author usuario
+ */
+public class EmpresaDAO {
+
+    private Connection conn;
+
+    public EmpresaDAO(Connection conn) {
+        this.conn = conn;
+    }
+
+    public ArrayList<Departamento> mostrarDepartamentos() {
+        ArrayList<Departamento> lista = new ArrayList<>();
+        String sql = "SELECT NumDepartamento, NomeDepartamento, NSSDirector FROM DEPARTAMENTO";
+
+        try {
+            ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql, new ArrayList<>());
+
+            while (rs.next()) {
+                int numDepartamento = rs.getInt(1);
+                String nombreDepartamento = rs.getString(2);
+                String nssDirector = rs.getString(3);
+
+                Departamento dep = new Departamento(numDepartamento, nombreDepartamento, nssDirector);
+                lista.add(dep);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return lista;
+    }
+
+    public int obtenerSiguienteCodigo(String nombreTabla) {
+        final String SQL = "SELECT count(*) FROM " + nombreTabla;
+        int codigo;
+
+        try {
+            ResultSet rs = GestorConexion.ejecutarConsulta(conn, SQL, new ArrayList<>());
+
+            rs.next();
+            codigo = rs.getInt(1);
+            return codigo + 1;
+
+        } catch (SQLException e) {
+            System.out.println("Problemas al ejecutar la consulta de códigos");
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void anadirDepartamento(Departamento dp) {
+        final String SQL = "INSERT INTO DEPARTAMENTO (NumDepartamento, NomeDepartamento, NSSDirector) VALUES (?, ?, ?)";
+
+        try {
+
+            dp.setNumDepartamento(obtenerSiguienteCodigo("DEPARTAMENTO"));
+            GestorConexion.insertarDatos(conn, SQL, dp.getNumDepartamento(), dp.getNomeDepartamento(),
+                    dp.getNssDirector());
+
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el departamento");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertarProxecto(Proxecto p) {
+        p.setNumProxecto(obtenerSiguienteCodigo("PROXECTO"));
+        final String SQL = "INSERT INTO PROXECTO +" +
+                " (NumProxecto, NomeProxecto, Lugar, NumDepartControla)" +
+                "VALUES (?, ?, ?, ?)";
+
+        try {
+            GestorConexion.insertarDatos(conn, SQL, p.getNumProxecto(), p.getNomeProxecto(), p.getLugar(),
+                    p.getNumDepartControla());
+        } catch (SQLException e) {
+            System.out.println("Problemas al insertar en proyecto");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void crearTablaFamiliar() throws SQLException {
+        if (GestorConexion.tablaExiste(conn, "FAMILIAR")) {
+            System.out.println("Ya existe la tabla FAMILIAR");
+            return;
+        }
+
+        String familiar = "CREATE TABLE FAMILIAR (" +
+                "Numero SMALLINT NOT NULL IDENTITY(1,1)," +
+                "NSS_familiar VARCHAR(15) NOT NULL, " +
+                "NSS_empregado VARCHAR(15) NOT NULL," +
+                "Nome VARCHAR(15) NOT NULL," +
+                "Apelido1 VARCHAR(15) NOT NULL," +
+                "Apelido2 VARCHAR(15) NULL," +
+                "Parentesco VARCHAR(20) NOT NULL," +
+                "Sexo CHAR(1) NOT NULL," +
+                "constraint PK_FAMILIAR PRIMARY KEY (Numero))";
+        // DataNacemento DATE,
+
+        String pkFamiliar = "ALTER TABLE FAMILIAR " +
+                "ADD CONSTRAINT PK_FAMILIAR PRIMARY KEY (Numero)";
+
+        String uqFamiliar = "ALTER TABLE FAMILIAR" +
+                " ADD CONSTRAINT UQ_FAMILIAR_NSS UNIQUE (NSS_familiar)";
+
+        String eqSexo = "" +
+                "ALTER TABLE FAMILIAR" +
+                " ADD CONSTRAINT CK_SEXO_FAMILIAR CHECK (Sexo = 'H' OR Sexo = 'M') ";
+
+        GestorConexion.ejecutarLoteTransacioneal(conn, familiar, uqFamiliar, eqSexo);
+
+    }
+
+    public void crearTablaFamiliar_SQLite() {
+        // Hayq ue hace otra por que no tiene ALTER
+
+        /*
+         * Es todo lo mismo que la anterior pero en esta ya se lo añadimos todo al final
+         * directamenteç:
+         * sexo TEXT NOT NULL,
+         * CONSTRAINT PK , UK, FK ....
+         */
+    }
+
+    public boolean comprobarExistenciaTabla(String nombreTabla) {
+        final String SQL = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
+
+        try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, SQL, nombreTabla)) {
+            if (rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar la existencia de la tabla");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public void añadirTablaVehiculos() {
+        final String NOMBRE_TABLA_1 = "VEHICULOS";
+        final String NOMBRE_TABLA_2 = "VEHICULOS_PROPIOS";
+        final String NOMBRE_TABLA_3 = "VEHICULOS_RENTING";
+
+        if (GestorConexion.tablaExiste(conn, NOMBRE_TABLA_1)) {
+            System.out.println("Existe la tabla en la DB la TABLA " + NOMBRE_TABLA_1);
+            return;
+        }
+        if (GestorConexion.tablaExiste(conn, NOMBRE_TABLA_2)) {
+            System.out.println("Existe la tabla en la DB la tabla " + NOMBRE_TABLA_2);
+            return;
+        }
+        if (GestorConexion.tablaExiste(conn, NOMBRE_TABLA_3)) {
+            System.out.println("Existe la tabla en la DB la tabla " + NOMBRE_TABLA_3);
+            return;
+        }
+
+        final String MYSQL_VEHICULOS = "CREATE TABLE IF NOT EXISTS VEHICULOS (" +
+                "CODIGO_VEHICULO SMALLINT AUTO_INCREMENT," +
+                "MATRICULA VARCHAR(15)," +
+                "MODELO VARCHAR(15)," +
+                "COMBUSTIBLE VARCHAR(15)," +
+                "CONSTRAINT PK_VEHICULOS PRIMARY KEY (CODIGO_VEHICULO))";
+
+        final String MYSQL_PROPIOS = "CREATE TABLE IF NOT EXISTS  VEHICULOS_PROPIOS (" +
+                "CODIGO_PROPIO SMALLINT AUTO_INCREMENT," +
+                "CODIGO_VEHICULO SMALLINT NOT NULL," +
+                "FECHA_COMPRA DATE NOT NULL," +
+                "PRECIO_PAGADO FLOAT NOT NULL, " +
+                "CONSTRAINT PK_VEHICULOS_PROPIOS PRIMARY KEY (CODIGO_PROPIO), " +
+                "CONSTRAINT FK_VPROPIO_VEHICULOS FOREIGN KEY (CODIGO_VEHICULO) REFERENCES VEHICULOS(CODIGO_VEHICULO))";
+
+        final String MYSQL_RENTING = "CREATE TABLE IF NOT EXISTS VEHICULOS_RENTING (" +
+                "CODIGO_RENTING SMALLINT AUTO_INCREMENT," +
+                "CODIGO VEHICULO SMALLINT NOT NULL," +
+                "FECHA_INICIO DATE NOT NULL," +
+                "PRECIO_MENSUAL FLOAT NOT NULL, " +
+                "MESES_CONTRATADOS SMALLINT NOT NULL, " +
+                "CONSTRAINT PK_VEHICULOS_PROPIOS PRIMARY KEY (CODIGO_RENTING), " +
+                "CONSTRAINT FK_VRENTING_VEHICULOS FOREIGN KEY (CODIGO_VEHICULO) REFERENCES VEHICULOS(CODIGO_VEHICULO))";
+
+        final String SQLSERVER_VEHICULOS = "CREATE TABLE VEHICULOS (" +
+                "CODIGO_VEHICULO SMALLINT IDENTITY(1,1)," +
+                "MATRICULA VARCHAR(15)," +
+                "MODELO VARCHAR(15)," +
+                "COMBUSTIBLE VARCHAR(15)," +
+                "CONSTRAINT PK_VEHICULOS PRIMARY KEY (CODIGO_VEHICULO))";
+
+        final String SQLSERVER_PROPIOS = "CREATE TABLE VEHICULOS_PROPIOS (" +
+                "CODIGO_PROPIO SMALLINT IDENTITY(1,1)," +
+                "CODIGO_VEHICULO SMALLINT NOT NULL," +
+                "FECHA_COMPRA DATE NOT NULL," +
+                "PRECIO_PAGADO FLOAT NOT NULL, " +
+                "CONSTRAINT PK_VEHICULOS_PROPIOS PRIMARY KEY (CODIGO_PROPIO), " +
+                "CONSTRAINT FK_VPROPIO_VEHICULOS FOREIGN KEY (CODIGO_VEHICULO) REFERENCES VEHICULOS(CODIGO_VEHICULO))";
+
+        final String SQLSERVER_RENTING = "CREATE TABLE VEHICULOS_RENTING (" +
+                "CODIGO_RENTING SMALLINT IDENTITY(1,1)," +
+                "CODIGO_VEHICULO SMALLINT NOT NULL," +
+                "FECHA_INICIO DATE NOT NULL," +
+                "PRECIO_MENSUAL FLOAT NOT NULL, " +
+                "MESES_CONTRATADOS INT NOT NULL, " +
+                "CONSTRAINT PK_VEHICULOS_RENTING PRIMARY KEY (CODIGO_RENTING), " +
+                "CONSTRAINT FK_VRENTING_VEHICULOS FOREIGN KEY (CODIGO_VEHICULO) REFERENCES VEHICULOS(CODIGO_VEHICULO))";
+
+        try {
+            GestorConexion.ejecutarLoteTransacioneal(conn, SQLSERVER_VEHICULOS, SQLSERVER_PROPIOS, SQLSERVER_RENTING);
+        } catch (SQLException e) {
+            System.out.println("Problemas al ejecutar el lote");
+            e.printStackTrace();
+        }
+        System.out.println("Tabla añadida VEHICULO");
+    }
+
+    public List<Departamento> obtenerDepartamentoConProxectos() {
+        List<Departamento> departamentos = new ArrayList<>();
+
+        String sql = "SELECT D.NumDepartamento, d.NomeDepartamento " +
+                "FROM DEPARTAMENTO d " +
+                "WHERE EXISTS (" +
+                "SELECT 1 FROM PROXECTO P)";
+
+        try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql, new ArrayList<>())) {
+            while (rs.next()) {
+                int numero = rs.getInt(1);
+                String nombre = rs.getString(2);
+
+                Departamento dep = new Departamento(numero, nombre, null);
+                departamentos.add(dep);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return departamentos;
+    }
+
+    public int anadirFamiliar(Familiar familiar) {
+        try {
+            conn.setAutoCommit(false);
+
+            String sqlMax = """
+                    SELECT COALESCE (MAX(Numero), 0)
+                    FROM FAMILIARES
+                    WHERE NSS_EMPREGADO = ?
+                    """;
+
+            int numero = 1;
+
+            ResultSet rs = GestorConexion.ejecutarConsulta(conn, sqlMax, familiar.getNssEmpregado());
+
+            if (rs.next()) {
+                numero = rs.getInt(1) + 1;
+            }
+
+            String sqlInsert = """
+                    INSERT INTO FAMILIARES (
+                        NUMERO, NSS, NSS_EMPREGADO, NOMBRE, APELIDO1 , APELIDO2
+                    ) VALUES (?, ?, ? , ? , ? , ?)
+                    """;
+
+            GestorConexion.ejecutarSentencia(conn, sqlInsert, numero, familiar.getNss(), familiar.getNssEmpregado(),
+                    familiar.getNombre(), familiar.getApelido1(), familiar.getApelido2());
+
+            conn.commit();
+            conn.setAutoCommit(true);
+
+            return 1;
+
+        } catch (SQLException e) {
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+            return -99;
+        }
+    }
+
+    public void anhadirVehiculo(Vehiculo vehiculo) {
+
+        // TODO Queda anadir los datos generales más despues los específicicos
+
+        final String sql_general = """
+                INSERT INTO VEHICULO (MATRICULA, MARCA, MODELO) VALUES (?,?,?)
+                """;
+
+        GestorConexion.ejecutarSentencia(conn, sql_general, vehiculo.getMatricula(), vehiculo.getMarca(),
+                vehiculo.getModelo());
+
+        if (vehiculo instanceof VehiculoPropio) {
+            insertarVehiculoPropio(vehiculo);
+        }
+    }
+
+    private void insertarVehiculoPropio(Vehiculo vehiculo) {
+        final String sql = """
+                INSERT INTO VEHICULO_PROPIO VALUES ()
+                """;
+    }
+
+    // Ejercicio 3
+    public int cambiarDepartamentoProxecto(String nomeDepartamento, String nomeProxecto) {
+        String sql = """
+                UPDATE PROXECTO
+                SET NumDepartControla = (
+                        SELECT NumDepartamento FROM DEPARTAMENTO WHERE NomeDepartamento = ?
+                )  WHERE NomeProxecto = ?
+                """;
+
+        int filas = GestorConexion.ejecutarSentencia(conn, sql, nomeDepartamento, nomeProxecto);
+
+        if (filas == 0) {
+            return -2; // El proyecto no existe
+        }
+
+        return 0; // Todo OK
+    }
+
+    public Proxecto comprobarExistenciaProxecto(int codigo) {
+        String sql = """
+                SELECT NumProxecto , NomeProxecto, Lugar, NumDepartControla FROM PROXECTO WHERE NumProxecto = ?
+                """;
+
+        try {
+            ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql, codigo);
+            if (rs.next()) {
+                Proxecto pro = new Proxecto();
+
+                pro.setNumProxecto(rs.getInt(1));
+                pro.setNomeProxecto(rs.getString(2));
+                pro.setLugar(rs.getString(3));
+                pro.setNumDepartControla(rs.getInt(4));
+
+                return pro;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public List<Empregado> obtenerEmpregadosProxecto(int numProxecto) {
+        List<Empregado> empregados = new ArrayList<>();
+
+        String sql = """
+                SELECT NSS, NOME, APELIDO1
+                FROM EMPREGADO E
+                INNER JOIN EMPREGADO_PROXECTO EP ON E.NSS = EP.NSSEmpregado
+                WHERE EP.NumProxecto  = ?
+                    """;
+
+        try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql, numProxecto)) {
+
+            while (rs.next()) {
+                Empregado em = new Empregado();
+
+                em.setNss(rs.getString(1));
+                em.setNome(rs.getString(2));
+                em.setApelido1(rs.getString(3));
+
+                empregados.add(em);
+            }
+
+            return empregados;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return empregados;
+        }
+
+    }
+
+    public int eliminarEmpregadosDeProxecto(int numProxecto) {
+        String sql = """
+                DELETE FROM EMPREGADO_PROXECTO WHERE NumProxecto = ?
+                """;
+
+        return GestorConexion.ejecutarSentencia(conn, sql, numProxecto);
+    }
+
+    public void eliminarProxecto(Proxecto proxecto) {
+        String sql = """
+                DELETE FROM PROXECTO WHERE NumProxecto = ?
+                """;
+
+        GestorConexion.ejecutarSentencia(conn, sql, proxecto.getNumProxecto());
+    }
+
+    // 14/01
+
+    public void subirSueldoEmpleado(String nss, double tantoPorCiento) {
+        double sueldo = 0;
+
+        String sql_salario = """
+                SELECT SALARIO
+                FROM EMPREGADOFIXO
+                WHERE NSS = ?
+                    """;
+
+        try {
+            ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql_salario, nss);
+            if (rs.next()) {
+                sueldo = rs.getInt(1);
+                sueldo = ((sueldo * tantoPorCiento) / 100) + sueldo;
+            }
+
+            String sql = """
+                    UPDATE EMPREGADOFIXO SET Salario = ?
+                    WHERE NSS = ?
+                        """;
+
+            GestorConexion.ejecutarSentencia(conn, sql, sueldo, nss);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // Día 15/01
+
+    public boolean insertarProxectoDinamico(Proxecto pro) {
+        String sql = """
+                SELECT * FROM PROXECTO
+                """;
+
+        try (ResultSet rs = GestorConexion.crearResultSetActualizable(conn, sql)) {
+
+            rs.moveToInsertRow();
+
+            rs.updateInt("NumProxecto", pro.getNumProxecto());
+            rs.updateString("NomeProxecto", pro.getNomeProxecto());
+            rs.updateString("Lugar", pro.getLugar());
+            rs.updateInt("NumDepartControla", pro.getNumDepartControla());
+
+            rs.insertRow();
+            rs.moveToCurrentRow();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int incrementarSalarioDepartamento(int incremento, int numDepartamento) {
+        String sql = """
+                SELECT EF.NSS, EF.SALARIO
+                FROM EMPREGADOFIXO EF
+                JOIN EMPREGADO E ON EF.NSS = E.NSS
+                WHERE E.NumDepartamentoPertenece = ?
+                """;
+
+        int afectados = 0;
+
+        try (ResultSet rs = GestorConexion.crearResultSetActualizable2(conn, sql, numDepartamento)) {
+            conn.setAutoCommit(false);
+
+            while (rs.next()) {
+                int salarioActual = rs.getInt("Salario");
+                rs.updateInt("Salario", salarioActual + incremento);
+                rs.updateRow();
+                afectados++;
+            }
+
+            conn.commit();
+
+        } catch (Exception e) {
+            GestorConexion.deshacerCambios(conn);
+        } finally {
+            GestorConexion.activarAutoCommit(conn);
+        }
+
+        return afectados;
+
+    }
+
+    public void obtenerEmpregadosConMaisNumProxectos(int numProxectos) {
+        List<EmpregadoInfo> empregados = new ArrayList<>();
+
+        String sql = """
+                SELECT E.NSS , (E.Nome, E.Apelido1, COALESCE(E.Apelido2, '') AS NomeCompleto , E.Localidade, EF.Salario
+                FROM EMPREGADO E
+                JOIN EMPREGADOFIXO EF ON E.NSS = EF.NSS
+                WHERE (SELECT COUNT(*)
+                        FROM EMPREGADO_PROXECTO EP
+                        WHERE EP.NSSEmpregado = E.NSS
+                    ) > ?
+                """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_READ_ONLY)) {
+            GestorConexion.setParametros(ps, numProxectos);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                empregados.add(crearDTO(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private EmpregadoInfo crearDTO(ResultSet rs) throws SQLException {
+        return new EmpregadoInfo(rs.getString("NSS"), rs.getString("NomeCompleto"), rs.getString("Localidade"),
+                rs.getDouble("Salario"));
+    }
+
+    public int cambioDomicilio(String nss, String rua, int numero, String piso, String cp, String localidade) {
+        String sql = """
+                ( call sp_CambioDomicilio(?,?,?,?,?,?))
+                """;
+
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+
+            cs.setString(1, nss);
+            cs.setString(2, rua);
+            cs.setInt(3, numero);
+            cs.setString(4, piso);
+            cs.setString(5, cp);
+            cs.setString(6, localidade);
+
+            int filas = cs.executeUpdate();
+            return filas;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al ejecutar sp_CambioDomicilio");
+        }
+
+    }
+
+    public ProxectoInfoDTO obtenerDatosProxectos(int numProxecto) {
+        String sql = """
+                {call sp_DatosProxectos(?,?,?,?)}
+                """;
+
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+
+            cs.setInt(1, numProxecto);
+            cs.registerOutParameter(2, Types.VARCHAR);
+            cs.registerOutParameter(3, Types.VARCHAR);
+            cs.registerOutParameter(4, Types.INTEGER);
+
+            cs.executeUpdate();
+
+            String nome = cs.getString(2);
+            if (nome == null) {
+                return null;
+            }
+
+            String lugar = cs.getString(3);
+            int numDepartamento = cs.getInt(4);
+
+            return new ProxectoInfoDTO(nome, lugar, numDepartamento);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar sp_DatosProxectos");
+        }
+    }
+
+    public List<Departamento> departamentoQueControlan(int valor) {
+        List<Departamento> departamentos = new ArrayList<>();
+        String sql = """
+                { call sp_DepartControlaProxec(?) }
+                """;
+
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+
+            cs.setInt(1, valor);
+
+            boolean resultado = cs.execute();
+
+            if (resultado) {
+                ResultSet rs = cs.getResultSet();
+
+                while (rs.next()) {
+                    Departamento d = new Departamento(rs.getInt("NumDepartamento"), rs.getString("NomeDepartamento"),
+                            rs.getString("NSSDirector"));
+
+                    departamentos.add(d);
+                }
+            }
+
+            return departamentos;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar sp_DepartControlaProxec");
+
+        }
+
+    }
+
+    public int numeroEmpregadoDepartamento(String nomeDepartamento) {
+        String sql = """
+                { ? = call fn_nEmpDepart(?)}
+                """;
+
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+            cs.registerOutParameter(1, Types.INTEGER);
+            cs.setString(2, nomeDepartamento);
+
+            cs.execute();
+
+            return cs.getInt(1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar fn_nEmpDepart");
+        }
+
+    }
+
+    /*
+     * DADO un nss que me duelve si es un empleado fijo , temporal o no existe
+     */
+    public String obtenerTipoEmpregadoFN(String nss) {
+        String sql = """
+                { ? = call fn_obtenerTipoEmpregado(?) }
+                            """;
+
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            cs.registerOutParameter(1, Types.VARCHAR);
+            cs.setString(2, nss);
+            cs.execute();
+
+            return cs.getString(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar fn_obtenerTipoEmpregado");
+
+        }
+    }
+
+    public String obtenerTipoEmpregadoPR(String nss) {
+        String sql = """
+                {call fn_obtenerTipoEmpregado(?, ?) }
+                            """;
+
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            cs.setString(1, nss);
+            cs.registerOutParameter(2, Types.VARCHAR);
+            cs.execute();
+
+            return cs.getString(2);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al ejecutar fn_obtenerTipoEmpregado");
+
+        }
+    }
+    // public List<EmpregadoSalarioFixoDTO>
+    // mostrarDepartamentosSalarioMayorQue(String valor) {
+    // List<EmpregadoSalarioFixoDTO> lista = new ArrayList<>();
+
+    public List<DirectorProxectos> obtenerDirectoresConProxectos() {
+        List<DirectorProxectos> directores = new ArrayList<>();
+
+        String sql = """
+                            SELECT DISTINCT E.NSS, E.Nome + ' ' + E.Apelido1 + ' ' + COALESCE(E.Apelido2, '') AS NOME_COMPLETO
+                FROM EMPREGADO E
+                INNER JOIN DEPARTAMENTO D ON D.NSSDirector = E.NSS
+                INNER JOIN PROXECTO P ON P.NumDepartControla = D.NumDepartamento
+                                """;
+
+        try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql)) {
+            while (rs.next()) {
+                String nsss = rs.getString(1);
+                String nomeCompleto = rs.getString(2);
+
+                DirectorProxectos dp = new DirectorProxectos(nomeCompleto, nsss);
+                directores.add(dp);
+            }
+
+            return directores;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.toString());
+        }
+    }
+
+    public List<Empregado> ejercicio4(String string) {
+        List<Empregado> empregados = new ArrayList<>();
+        String sql = """
+                    SELECT DISTINCT
+                    E.NSS,
+                    E.Nome + ' ' + E.Apelido1 + ' ' + COALESCE(E.Apelido2, '') AS NOME_COMPLETO,
+                    (
+                        SELECT CASE
+                                WHEN EXISTS (SELECT 1 FROM EMPREGADOFIXO EF WHERE EF.NSS = E.NSS) THEN 'FIXO'
+                                ELSE 'TEMPORAL'
+                        END AS TIPO_EMPLEADO
+                    ) AS TIPO
+                FROM EMPREGADO E
+                INNER JOIN DEPARTAMENTO D ON D.NumDepartamento = E.NumDepartamentoPertenece
+                WHERE D.NomeDepartamento = ?
+                        """;
+
+        try (ResultSet rs = GestorConexion.ejecutarConsulta(conn, sql, string)) {
+            while (rs.next()) {
+                Empregado e = new Empregado();
+                e.setNome(rs.getString(2));
+
+                empregados.add(e);
+            }
+
+            return empregados;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void mostrarDepartamentosConMinProxectos(int i) {
+        String sql = """
+                {
+                    call pr_DepartControlaProxec(?)
+                }
+                """;
+
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+            cs.setInt(1, i);
+            boolean devuelveDatos = cs.execute();
+
+            if (devuelveDatos) {
+                ResultSet rs = cs.getResultSet();
+
+                while (rs.next()) {
+                    String nomeDepartamento = rs.getString("NomeDepartamento");
+                    int contador = rs.getInt("contador");
+
+                    System.out.println("El depa" + nomeDepartamento + " " + contador);
+
+                }
+            }
+
+            // Aquí estaría cogiendo los parametros pero solo tengo 1 , yo quiero el
+            // resulset
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void subirSueldosEmpleadosBatch(List<String> empregados, int salario) {
+
+        try {
+            conn.setAutoCommit(false);
+
+            String sql = """
+                    UPDATE EMPREGADOFIXO SET SALARIO = ? WHERE NSS = ?
+                    """;
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            for (String nss : empregados) {
+                ps.setObject(1, salario);
+                ps.setObject(2, nss);
+                ps.addBatch(sql);
+            }
+
+            ps.executeBatch();
+
+            conn.commit();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            throw new ArithmeticException(e.toString());
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    //20/01
+
+
+    
+
+    // public ResultadoBorradoDTO borrarEmpregadoCompleto(String nssBorrar, String nssSupervisorNovo, String nssDirectorNovo) {
+    //     ResultadoBorradoDTO rb = new ResultadoBorradoDTO();
+
+    //     if (!existeEmpregado(nssBorrar)) {
+    //         throw new RuntimeException("No existe el empleado a borrar");
+    //     }
+
+        
+    //     if (!existeEmpregado(nssSupervisorNovo)) {
+    //         throw new RuntimeException("No existe el supervisor nuevo");
+    //     }
+
+        
+    //     if (!existeEmpregado(nssDirectorNovo)) {
+    //         throw new RuntimeException("No existe el director nuevo");
+    //     }
+
+    //     GestorConexion.ejecutarSentencia(conn, "UPDATE EMPREGADO SET NSSSupervisa = ? where NSSSupervisa = ?", nssSupervisorNovo, nssBorrar);
+    //     //TODO Borrar supervisor y director
+
+    //     try {
+    //         ResultSet rs = GestorConexion.ejecutarConsulta(conn, "SELECT NSS FROM EMPREGADOFIXO WHERE NSS = ?", nssBorrar);
+    //         boolean eraFixo  = rs.next();
+
+    //         if (eraFixo) {
+    //             GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADOFIXO WHERE NSS = ?", nssBorrar);
+    //         } else {
+    //             GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADOTEMPORAL WHERE NSS = ?", nssBorrar);
+    //         }
+
+    //         GestorConexion.ejecutarSentencia(conn, "DELETE FROM EMPREGADO WHERE NSS = ?", nssBorrar); 
+
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+
+
+    //     try {
+    //         conn.setAutoCommit(false);
+    //     } catch (SQLException e) {
+    //         try {
+    //             conn.commit();
+    //         } catch (SQLException e1) {
+    //             e1.printStackTrace();
+    //         }
+    //         e.printStackTrace();
+    //     }  finally {
+    //         GestorConexion.activarAutoCommit(conn);
+    //     }
+
+    // }
+
+    // private boolean existeEmpregado(String nssBorrar) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'existeEmpregado'");
+    // }
+
+
+
+
+
+
+    // String sql = """
+    // SELECT E.NSS, E.Apelido1, Apelido2, F.SALARIO
+    // FROM EMPREGADO E
+    // JOIN EMPREGADOFIXO F ON F.NSS = E.NSS
+    // WHERE SALARIO > ?
+    // ORDER BY F.SALARIO
+    // """;
+
+    // try (PreparedStatement ps = conn.prepareStatement(sql,
+    // ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+    // ResultSet rs = ps.executeQuery();
+
+    // rs.afterLast();
+    // while (rs.previous()) {
+    // String nombreDpto = rs.getString("NomeDepartamento");
+
+    // String nombre
+    // }
+
+    // } catch (SQLException e1) {
+    // e1.printStackTrace();
+    // }
+
+    // return lista;
+    // }
+
+    // public List<Empregado> obtenerDirectoresConProxectos() {
+    // List<Empregado> directores = new ArrayList<>();
+
+    // String sql = """
+    // SELECT D.NumDepartamento, d.NombreDepartamento, e.nome, e.apelido1,
+    // e.apelido2
+    // FROM DEPARTAMENTO d
+    // INNER JOIN EMPREGADO e ON d.NSSDirector = e.NSS
+    // WHERE EXISTS (
+    // SELECT 1
+    // FROM EMPREGADO
+    // )
+    // """;
+
+    // }
+
+}

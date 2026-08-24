@@ -1,0 +1,51 @@
+services:
+  # ---------------------------------------------------------------
+  # MariaDB — base de datos "clientes" + "BDEMPRESA25" (MySQL)
+  # ---------------------------------------------------------------
+  mariadb:
+    image: mariadb:10.4
+    container_name: dam-mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: clientes
+    ports:
+      - "3306:3306"
+    volumes:
+      # Scripts de inicialización (se ejecutan en orden al primer arranque).
+      # Se montan solo los compatibles con MariaDB (no los de SQL Server/SQLite).
+      - ./bd/empresa-mysql.sql:/docker-entrypoint-initdb.d/01-empresa.sql:ro
+      - ./bd/clientes.sql:/docker-entrypoint-initdb.d/02-clientes.sql:ro
+      # Datos persistentes
+      - dam-mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------
+  # SQL Server 2019 — base de datos "BDEMPRESA25" (T-SQL)
+  #   NOTA: imagen pesada (~1.5 GB). Si solo necesitas la versión
+  #   MySQL/MariaDB, puedes comentar este servicio.
+  # ---------------------------------------------------------------
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: dam-sqlserver
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${MSSQL_SA_PASSWORD:-YagoDAM2026!}
+    ports:
+      - "1433:1433"
+    volumes:
+      - dam-sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dam-mariadb-data:
+  dam-sqlserver-data:

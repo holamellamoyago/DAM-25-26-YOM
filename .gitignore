@@ -1,4 +1,63 @@
-.vscode
-.class
-/SQL-DAM-25-26/nbproject/private/
-/SQL-DAM-25-26/build/
+# ============================================================
+#  DAM 2025-2026 · Yago Otero Martínez
+#  .gitignore — no subir binarios, compilados ni config local
+# ============================================================
+
+# ---------- Entornos de desarrollo (IDE) ----------
+.idea/
+.vscode/
+*.iml
+*.suo
+*.user
+*.swp
+.settings/
+.metadata/
+.recommenders/
+
+# ---------- Java · NetBeans ----------
+build/
+dist/
+nbproject/private/
+nbproject/*-impl.xml
+nbproject/genfiles.properties
+nbproject/configs/
+*.class
+
+# ---------- Java · Eclipse ----------
+bin/
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# ---------- Archivos comprimidos y copias de seguridad ----------
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.bak
+*.backup
+
+# ---------- Bases de datos y binarios ----------
+*.db
+*.sqlite
+*.sqlite3
+*.dll
+*.so
+*.dylib
+
+# ---------- Sistema operativo ----------
+Thumbs.db
+.DS_Store
+Desktop.ini
+*.tmp
+
+# ---------- Logs ----------
+*.log
+logs/
